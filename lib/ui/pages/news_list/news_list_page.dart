@@ -11,21 +11,31 @@ class _NewsPageState extends State<NewsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(26.0),
-            child: NewsListItem(
-              news: NewsViewEntity(
-                  title: "Egypt Is on Edge as Security Tightens Over Protests",
-                  date: "Sept. 26, 2019",
-                  time: "1:41 PM",
-                  imageUrl: "https://i.picsum.photos/id/9/250/250.jpg"),
-            ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(26.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Middle East",
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              NewsListItem(
+                news: NewsViewEntity(
+                    title:
+                        "Egypt Is on Edge as Security Tightens Over Protests",
+                    date: "Sept. 26, 2019",
+                    time: "1:41 PM",
+                    imageUrl: "https://i.picsum.photos/id/9/250/250.jpg"),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
-

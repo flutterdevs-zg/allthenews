@@ -1,5 +1,4 @@
-import 'package:allthenews/ui/common/style/text_style_provider.dart';
-import 'package:allthenews/ui/common/widget/dot.dart';
+import 'package:allthenews/ui/common/widget/dot_separator.dart';
 import 'package:allthenews/ui/pages/news_list/news_view_entity.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +11,6 @@ class NewsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyleProvider = TextStyleProvider(buildContext: context);
     return Row(
       children: [
         _buildImage(),
@@ -21,9 +19,9 @@ class NewsListItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTitle(textStyleProvider),
+              _buildTitle(context),
               SizedBox(height: 8),
-              _buildSubtitle(textStyleProvider),
+              _buildSubtitle(context),
             ],
           ),
         )
@@ -31,9 +29,9 @@ class NewsListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle(TextStyleProvider textStyleProvider) => Text(
+  Widget _buildTitle(BuildContext context) => Text(
         news.title,
-        style: textStyleProvider.provideTitleTextStyle(),
+        style: Theme.of(context).textTheme.subtitle2,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       );
@@ -48,22 +46,29 @@ class NewsListItem extends StatelessWidget {
         ),
       );
 
-  Widget _buildSubtitle(TextStyleProvider textStyleProvider) {
-    final style = textStyleProvider.provideSubtitleTextStyle();
+  Widget _buildSubtitle(BuildContext context) {
+    final subtitleStyle = Theme.of(context).textTheme.overline;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(news.date, style: style),
+        Text(
+          news.date,
+          style: subtitleStyle,
+        ),
         Container(
-            alignment: Alignment.center,
-            width: 20,
-            child: Dot(
-              textStyle: style,
-            )),
-        Text(news.time, style: style),
+          alignment: Alignment.center,
+          width: 20,
+          child: DotSeparator(
+            size: subtitleStyle.fontSize,
+            color: subtitleStyle.color,
+          ),
+        ),
+        Text(
+          news.time,
+          style: subtitleStyle,
+        ),
       ],
     );
   }
 }
-
