@@ -1,11 +1,11 @@
 import 'package:allthenews/ui/common/widget/dot_separator.dart';
-import 'package:allthenews/ui/pages/news_list/news_view_entity.dart';
+import 'package:allthenews/ui/pages/news_list/secondary_news_list_entity.dart';
 import 'package:flutter/material.dart';
 
-class NewsListItem extends StatelessWidget {
-  final NewsViewEntity news;
+class SecondaryNewsListItem extends StatelessWidget {
+  final SecondaryNewsListEntity news;
 
-  NewsListItem({Key key, @required this.news})
+  SecondaryNewsListItem({Key key, @required this.news})
       : assert(news != null),
         super(key: key);
 
@@ -40,7 +40,7 @@ class NewsListItem extends StatelessWidget {
   Widget _buildImage() => ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: Image.network(
-          'https://i.picsum.photos/id/9/800/800.jpg',
+          news.imageUrl,
           width: 110,
           height: 90,
           fit: BoxFit.fill,
