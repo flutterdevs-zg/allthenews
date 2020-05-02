@@ -16,26 +16,32 @@ TextTheme _buildNewsTextTheme(TextTheme base) {
   return GoogleFonts.openSansTextTheme(
     base.copyWith(
       headline1: base.headline1.copyWith(
+        color: Colors.black,
         fontWeight: FontWeight.w300,
         fontSize: 30,
       ),
       headline2: base.headline2.copyWith(
+        color: Colors.black,
         fontWeight: FontWeight.w500,
         fontSize: 28,
       ),
       headline3: base.headline3.copyWith(
+        color: Colors.black,
         fontWeight: FontWeight.w700,
         fontSize: 26,
       ),
       headline4: base.headline4.copyWith(
+        color: Colors.black,
         fontWeight: FontWeight.w700,
         fontSize: 24,
       ),
       headline5: base.headline5.copyWith(
+        color: Colors.black,
         fontWeight: FontWeight.w700,
         fontSize: 22,
       ),
       headline6: base.headline6.copyWith(
+        color: Colors.black,
         fontWeight: FontWeight.w700,
         fontSize: 20,
       ),
@@ -68,7 +74,7 @@ TextTheme _buildNewsTextTheme(TextTheme base) {
       ),
       button: base.button.copyWith(
         fontWeight: FontWeight.w600,
-        fontSize: 14,
+        fontSize: 13,
       ),
       caption: base.caption.copyWith(
         fontWeight: FontWeight.w600,
