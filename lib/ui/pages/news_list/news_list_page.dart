@@ -1,6 +1,9 @@
+import 'package:allthenews/ui/pages/news_list/primary_news_list_item.dart';
+import 'package:allthenews/ui/pages/news_list/primary_news_list_entity.dart';
+import 'package:allthenews/ui/pages/news_list/secondary_news_list_item.dart';
+import 'package:allthenews/ui/pages/news_list/secondary_news_list_entity.dart';
 import 'package:allthenews/ui/common/widget/primary_button.dart';
 import 'package:allthenews/ui/pages/news_list/news_list_view.dart';
-import 'package:allthenews/ui/pages/news_list/news_view_entity.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
@@ -25,9 +28,17 @@ class _NewsPageState extends State<NewsListPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              PrimaryNewsListItem(
+                news: PrimaryNewsListEntity(
+                  imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+                  title: "New laptops seem to be stuck to the board",
+                  authorName: "Marek Aureliusz",
+                  authorImageUrl: 'https://www.ludoviccareme.com/files/image_211_image_fr.jpg',
+                ),
+              ),
               _buildNewsSectionHeader(),
               SizedBox(height: _Constants.sectionHeaderPadding),
-              NewsListView(newsViewEntities: newsViewEntities),
+              NewsListView(secondaryNewsListEntities: secondaryNewsListEntities),
             ],
           ),
         ),
