@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 
 void injectDependencies() {
   final locator = GetIt.instance;
-  locator.registerLazySingleton<ApiKeyRepository>(() => ApiKeyLocalRepository());
+  locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
 }
 
 T inject<T>([String name]) => GetIt.instance.get<T>(instanceName: name);
