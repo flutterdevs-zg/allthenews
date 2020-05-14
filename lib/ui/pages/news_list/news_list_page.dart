@@ -13,8 +13,6 @@ abstract class _Constants {
 }
 
 class NewsListPage extends StatefulWidget {
-  static const id = "newsListPage";
-
   @override
   _NewsPageState createState() => _NewsPageState();
 }
@@ -34,12 +32,15 @@ class _NewsPageState extends State<NewsListPage> {
                 authorName: "Marek Aureliusz",
                 authorImageUrl:
                     'https://www.ludoviccareme.com/files/image_211_image_fr.jpg',
+                url:
+                    'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
               ),
             ),
             _buildSecondaryNewsSectionHeader(),
             SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
-                secondaryNewsListEntities: secondaryNewsListEntities.take(3).toList(),
+              secondaryNewsListEntities:
+                  secondaryNewsListEntities.take(3).toList(),
             ),
           ],
         ),
@@ -63,7 +64,12 @@ class _NewsPageState extends State<NewsListPage> {
             PrimaryTextButton(
               text: Strings.showAll,
               onPressed: () {
-                Navigator.pushNamed(context, SecondaryNewsListPage.id);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SecondaryNewsListPage(),
+                  ),
+                );
               },
             ),
           ],

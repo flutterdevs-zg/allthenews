@@ -1,4 +1,5 @@
 import 'package:allthenews/ui/pages/news_list/primary_news_list_entity.dart';
+import 'package:allthenews/ui/pages/web_view/web_view_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,8 @@ abstract class _Constants {
   static const authorDataSpacing = 10.0;
   static const stackItemPadding = 20.0;
   static const wrappingThresholdPercent = 0.65;
+  static const itemSplashColor = Color(0x1FD5D5D5);
+  static const itemHighlightColor = Color(0x2DD5D5D5);
 }
 
 class PrimaryNewsListItem extends StatelessWidget {
@@ -47,6 +50,27 @@ class PrimaryNewsListItem extends StatelessWidget {
           bottom: 0,
           child: _buildNewsInfo(context),
         ),
+        Positioned.fill(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(_Constants.imageRadius),
+            child: Opacity(
+              opacity: _Constants.newsImageLayerOpacity,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  splashColor: _Constants.itemSplashColor,
+                  highlightColor: _Constants.itemHighlightColor,
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WebViewPage(url: news.url),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -85,8 +109,8 @@ class PrimaryNewsListItem extends StatelessWidget {
           Text(
             news.authorName,
             style: Theme.of(context).textTheme.subtitle2.copyWith(
-                  color: Colors.white,
-                ),
+              color: Colors.white,
+            ),
           ),
         ],
       );
