@@ -1,6 +1,7 @@
 import 'package:allthenews/ui/common/util/dimens.dart';
 import 'package:allthenews/ui/common/widget/dot_separator.dart';
 import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/ui/pages/web_view/web_view_page.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
@@ -23,27 +24,37 @@ class SecondaryNewsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: Dimens.pagePadding,
-        vertical: _Constants.verticalListItemPadding,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildImage(),
-          SizedBox(width: _Constants.imageHorizontalSpacing),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTitle(context),
-                SizedBox(height: _Constants.titleVerticalSpacing),
-                _buildSubtitle(context),
-              ],
-            ),
-          )
-        ],
+    return Material(
+      child: InkWell(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WebViewPage(url: news.url),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: Dimens.pagePadding,
+            vertical: _Constants.verticalListItemPadding,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildImage(),
+              SizedBox(width: _Constants.imageHorizontalSpacing),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTitle(context),
+                    SizedBox(height: _Constants.titleVerticalSpacing),
+                    _buildSubtitle(context),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

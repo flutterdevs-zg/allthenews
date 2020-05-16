@@ -10,8 +10,6 @@ abstract class _Constants {
 }
 
 class SecondaryNewsListPage extends StatelessWidget {
-  static const id = "secondaryNewsListPage";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
