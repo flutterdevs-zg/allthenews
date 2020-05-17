@@ -30,7 +30,7 @@ class _NewsPageState extends State<NewsListPage> {
               height: 80,
             ),
             _buildNewsSectionHeader(
-              headerTitle: Strings.mostViewed,
+              title: Strings.mostViewed,
               route: null,
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
@@ -38,7 +38,7 @@ class _NewsPageState extends State<NewsListPage> {
               primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
             ),
             _buildNewsSectionHeader(
-              headerTitle: Strings.newest,
+              title: Strings.newest,
               route: (context) => SecondaryNewsListPage(),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
@@ -52,7 +52,7 @@ class _NewsPageState extends State<NewsListPage> {
   }
 
   Widget _buildNewsSectionHeader({
-    @required String headerTitle,
+    @required String title,
     @required Function route,
   }) {
     return Padding(
@@ -62,22 +62,21 @@ class _NewsPageState extends State<NewsListPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Hero(
-            tag: headerTitle,
+            tag: title,
             child: Text(
-              headerTitle,
+              title,
               style: Theme.of(context).textTheme.headline3,
             ),
           ),
           PrimaryTextButton(
             text: Strings.showAll,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: route,
+            onPressed: () =>
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: route,
+                  ),
                 ),
-              );
-            },
           ),
         ],
       ),

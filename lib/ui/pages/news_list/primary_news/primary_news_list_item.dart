@@ -10,7 +10,7 @@ abstract class _Constants {
   static const authorDataSpacing = 10.0;
   static const stackItemPadding = 20.0;
   static const wrappingThresholdPercent = 0.50;
-  static const verticalListItemPadding = 13.0;
+  static const horizontalListItemPadding = 13.0;
   static const itemSplashColor = Color(0x1FD5D5D5);
   static const itemHighlightColor = Color(0x2DD5D5D5);
 }
@@ -25,7 +25,7 @@ class PrimaryNewsListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: _Constants.verticalListItemPadding),
+      padding: EdgeInsets.symmetric(horizontal: _Constants.horizontalListItemPadding),
       child: Stack(
         children: [
           _buildImage(),
