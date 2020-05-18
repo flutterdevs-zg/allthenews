@@ -31,7 +31,7 @@ class _NewsPageState extends State<NewsListPage> {
             ),
             _buildNewsSectionHeader(
               title: Strings.mostViewed,
-              route: null,
+              routeBuilder: null,
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
             PrimaryNewsListView(
@@ -39,7 +39,7 @@ class _NewsPageState extends State<NewsListPage> {
             ),
             _buildNewsSectionHeader(
               title: Strings.newest,
-              route: (context) => SecondaryNewsListPage(),
+              routeBuilder: (context) => SecondaryNewsListPage(),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
@@ -53,7 +53,7 @@ class _NewsPageState extends State<NewsListPage> {
 
   Widget _buildNewsSectionHeader({
     @required String title,
-    @required Function route,
+    @required WidgetBuilder routeBuilder,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Dimens.pagePadding),
@@ -74,7 +74,7 @@ class _NewsPageState extends State<NewsListPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: route,
+                    builder: routeBuilder,
                   ),
                 ),
           ),
