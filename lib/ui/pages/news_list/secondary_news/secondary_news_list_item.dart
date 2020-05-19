@@ -29,7 +29,7 @@ class SecondaryNewsListItem extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WebViewPage(url: news.url),
+            builder: (context) => WebViewPage(url: news.articleUrl),
           ),
         ),
         child: Padding(

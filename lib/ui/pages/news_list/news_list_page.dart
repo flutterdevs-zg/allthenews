@@ -1,23 +1,19 @@
 import 'package:allthenews/ui/common/util/dimens.dart';
-import 'package:allthenews/ui/common/util/strings.dart';
-import 'package:allthenews/ui/common/widget/primary_text_button.dart';
-import 'package:allthenews/ui/pages/news_list/primary_news/primary_news_list_entity.dart';
-import 'package:allthenews/ui/pages/news_list/primary_news/primary_news_list_view.dart';
+import 'package:allthenews/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_page.dart';
 import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_view.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
-  static const sectionHeaderPadding = 10.0;
+  static const sectionHeaderPadding = 16.0;
 }
 
-class NewsListPage extends StatefulWidget {
-  @override
-  _NewsPageState createState() => _NewsPageState();
-}
+class NewsListPage extends StatelessWidget {
+  final List<SecondaryNewsListEntity> listEntities;
+  final String headerTitle;
 
-class _NewsPageState extends State<NewsListPage> {
+  const NewsListPage({@required this.listEntities, @required this.headerTitle});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,25 +21,10 @@ class _NewsPageState extends State<NewsListPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.maxFinite,
-              height: 80,
-            ),
-            _buildNewsSectionHeader(
-              title: Strings.mostViewed,
-              routeBuilder: null,
-            ),
-            SizedBox(height: _Constants.sectionHeaderPadding),
-            PrimaryNewsListView(
-              primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
-            ),
-            _buildNewsSectionHeader(
-              title: Strings.newest,
-              routeBuilder: (context) => SecondaryNewsListPage(),
-            ),
+            _buildHeader(context),
             SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
-              secondaryNewsListEntities: secondaryNewsListEntities.take(3).toList(),
+              secondaryNewsListEntities: listEntities,
             ),
           ],
         ),
@@ -51,35 +32,32 @@ class _NewsPageState extends State<NewsListPage> {
     );
   }
 
-  Widget _buildNewsSectionHeader({
-    @required String title,
-    @required WidgetBuilder routeBuilder,
-  }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dimens.pagePadding),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Hero(
-            tag: title,
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.headline3,
+  Widget _buildHeader(BuildContext context) =>
+      Padding(
+        padding: EdgeInsets.only(
+          top: Dimens.pagePadding,
+          left: Dimens.pagePadding,
+          right: Dimens.pagePadding,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Hero(
+              tag: headerTitle,
+              child: Text(
+                headerTitle,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline3,
+              ),
             ),
-          ),
-          PrimaryTextButton(
-            text: Strings.showAll,
-            onPressed: () =>
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: routeBuilder,
-                  ),
-                ),
-          ),
-        ],
-      ),
-    );
-  }
+            PrimaryIconButton(
+              iconData: Icons.search,
+              onPressed: () {},
+            ),
+          ],
+        ),
+      );
 }
