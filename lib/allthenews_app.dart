@@ -6,8 +6,8 @@ class AllTheNewsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: NewsListPage(),
       theme: newsTheme,
+      home: NewsListPage(),
     );
   }
 }
