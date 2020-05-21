@@ -1,11 +1,11 @@
-import 'package:allthenews/ui/common/util/dimens.dart';
-import 'package:allthenews/ui/common/util/strings.dart';
-import 'package:allthenews/ui/common/widget/primary_text_button.dart';
-import 'package:allthenews/ui/pages/news_list/primary_news/primary_news_list_entity.dart';
-import 'package:allthenews/ui/pages/news_list/primary_news/primary_news_list_view.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_page.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_view.dart';
+import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
+import 'package:allthenews/src/ui/pages/news_list/primary_news/primary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/news_list/primary_news/primary_news_list_view.dart';
+import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_page.dart';
+import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_view.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
@@ -30,7 +30,7 @@ class _NewsPageState extends State<NewsListPage> {
               height: 80,
             ),
             _buildNewsSectionHeader(
-              title: Strings.mostViewed,
+              title: Strings.of(context).mostViewed,
               routeBuilder: null,
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
@@ -38,7 +38,7 @@ class _NewsPageState extends State<NewsListPage> {
               primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
             ),
             _buildNewsSectionHeader(
-              title: Strings.newest,
+              title: Strings.of(context).newest,
               routeBuilder: (context) => SecondaryNewsListPage(),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
@@ -69,7 +69,7 @@ class _NewsPageState extends State<NewsListPage> {
             ),
           ),
           PrimaryTextButton(
-            text: Strings.showAll,
+            text: Strings.of(context).showAll,
             onPressed: () =>
                 Navigator.push(
                   context,

@@ -1,8 +1,8 @@
-import 'package:allthenews/ui/common/util/dimens.dart';
-import 'package:allthenews/ui/common/util/strings.dart';
-import 'package:allthenews/ui/common/widget/primary_icon_button.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_view.dart';
+import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
+import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_view.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
@@ -38,9 +38,9 @@ class SecondaryNewsListPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Hero(
-              tag: Strings.newest,
+              tag: Strings.of(context).newest,
               child: Text(
-                Strings.newest,
+                Strings.of(context).newest,
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),

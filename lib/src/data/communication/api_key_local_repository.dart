@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:allthenews/domain/authorization/api_key.dart';
-import 'package:allthenews/domain/authorization/api_key_repository.dart';
+import 'package:allthenews/src/domain/authorization/api_key.dart';
+import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/services.dart' show rootBundle;
 

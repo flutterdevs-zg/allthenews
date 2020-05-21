@@ -1,4 +1,4 @@
-import 'package:allthenews/ui/common/widget/primary_button.dart';
+import 'package:allthenews/src/ui/common/widget/primary_button.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
