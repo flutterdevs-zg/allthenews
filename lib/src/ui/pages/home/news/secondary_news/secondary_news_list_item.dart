@@ -1,7 +1,7 @@
-import 'package:allthenews/ui/common/util/dimens.dart';
-import 'package:allthenews/ui/common/widget/dot_separator.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/ui/pages/web_view/web_view_page.dart';
+import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/widget/dot_separator.dart';
+import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/web_view/web_view_page.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {

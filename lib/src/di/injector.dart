@@ -1,5 +1,5 @@
-import 'package:allthenews/data/communication/api_key_local_repository.dart';
-import 'package:allthenews/domain/authorization/api_key_repository.dart';
+import 'package:allthenews/src/data/communication/api_key_local_repository.dart';
+import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:get_it/get_it.dart';
 
 void injectDependencies() {
