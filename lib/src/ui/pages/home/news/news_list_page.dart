@@ -32,8 +32,7 @@ class NewsListPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) =>
-      Padding(
+  Widget _buildHeader(BuildContext context) => Padding(
         padding: EdgeInsets.only(
           top: Dimens.pagePadding,
           left: Dimens.pagePadding,

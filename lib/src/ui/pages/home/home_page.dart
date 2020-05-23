@@ -1,5 +1,6 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/util/mappers.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/pages/home/news/news_list_page.dart';
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
@@ -32,20 +33,8 @@ class _HomePageState extends State<HomePage> {
             _buildNewsSectionHeader(
               title: Strings.of(context).mostViewed,
               routeBuilder: (context) => NewsListPage(
-                headerTitle: Strings
-                    .of(context)
-                    .mostViewed,
-                listEntities: primaryNewsListEntities
-                    .map(
-                      (primaryEntity) => SecondaryNewsListEntity(
-                        title: primaryEntity.title,
-                        date: primaryEntity.date,
-                        imageUrl: primaryEntity.imageUrl,
-                        time: primaryEntity.time,
-                        articleUrl: primaryEntity.articleUrl,
-                      ),
-                    )
-                    .toList(),
+                headerTitle: Strings.of(context).mostViewed,
+                listEntities: primaryNewsListEntities.mapToSecondaryListItem(),
               ),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
@@ -57,9 +46,12 @@ class _HomePageState extends State<HomePage> {
                   .of(context)
                   .newest,
               routeBuilder: (context) =>
-                  NewsListPage(headerTitle: Strings
-                      .of(context)
-                      .newest, listEntities: secondaryNewsListEntities),
+                  NewsListPage(
+                    headerTitle: Strings
+                        .of(context)
+                        .newest,
+                    listEntities: secondaryNewsListEntities,
+                  ),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
