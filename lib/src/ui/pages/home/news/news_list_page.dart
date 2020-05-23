@@ -46,10 +46,7 @@ class NewsListPage extends StatelessWidget {
               tag: headerTitle,
               child: Text(
                 headerTitle,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline3,
+                style: Theme.of(context).textTheme.headline3,
               ),
             ),
             PrimaryIconButton(

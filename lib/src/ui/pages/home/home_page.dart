@@ -42,16 +42,11 @@ class _HomePageState extends State<HomePage> {
               primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
             ),
             _buildNewsSectionHeader(
-              title: Strings
-                  .of(context)
-                  .newest,
-              routeBuilder: (context) =>
-                  NewsListPage(
-                    headerTitle: Strings
-                        .of(context)
-                        .newest,
-                    listEntities: secondaryNewsListEntities,
-                  ),
+              title: Strings.of(context).newest,
+              routeBuilder: (context) => NewsListPage(
+                headerTitle: Strings.of(context).newest,
+                listEntities: secondaryNewsListEntities,
+              ),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
