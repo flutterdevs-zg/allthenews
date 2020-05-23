@@ -1,11 +1,11 @@
-import 'package:allthenews/ui/common/util/dimens.dart';
-import 'package:allthenews/ui/common/util/strings.dart';
-import 'package:allthenews/ui/common/widget/primary_text_button.dart';
-import 'package:allthenews/ui/pages/news_list/primary_news/primary_news_list_entity.dart';
-import 'package:allthenews/ui/pages/news_list/primary_news/primary_news_list_view.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/ui/pages/news_list/news_list_page.dart';
-import 'package:allthenews/ui/pages/news_list/secondary_news/secondary_news_list_view.dart';
+import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
+import 'package:allthenews/src/ui/pages/home/news/news_list_page.dart';
+import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_view.dart';
+import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_view.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
@@ -30,9 +30,11 @@ class _HomePageState extends State<HomePage> {
               height: 80,
             ),
             _buildNewsSectionHeader(
-              title: Strings.mostViewed,
+              title: Strings.of(context).mostViewed,
               routeBuilder: (context) => NewsListPage(
-                headerTitle: Strings.mostViewed,
+                headerTitle: Strings
+                    .of(context)
+                    .mostViewed,
                 listEntities: primaryNewsListEntities
                     .map(
                       (primaryEntity) => SecondaryNewsListEntity(
@@ -51,8 +53,13 @@ class _HomePageState extends State<HomePage> {
               primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
             ),
             _buildNewsSectionHeader(
-              title: Strings.newest,
-              routeBuilder: (context) => NewsListPage(headerTitle: Strings.newest, listEntities: secondaryNewsListEntities),
+              title: Strings
+                  .of(context)
+                  .newest,
+              routeBuilder: (context) =>
+                  NewsListPage(headerTitle: Strings
+                      .of(context)
+                      .newest, listEntities: secondaryNewsListEntities),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
@@ -82,7 +89,9 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           PrimaryTextButton(
-            text: Strings.showAll,
+            text: Strings
+                .of(context)
+                .showAll,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
