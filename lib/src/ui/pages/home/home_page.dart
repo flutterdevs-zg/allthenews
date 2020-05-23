@@ -76,9 +76,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           PrimaryTextButton(
-            text: Strings
-                .of(context)
-                .showAll,
+            text: Strings.of(context).showAll,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
