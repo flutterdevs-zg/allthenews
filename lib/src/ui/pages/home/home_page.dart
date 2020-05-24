@@ -1,6 +1,5 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
-import 'package:allthenews/src/ui/common/util/mappers.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/pages/home/news/news_list_page.dart';
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
               title: Strings.of(context).mostViewed,
               routeBuilder: (context) => NewsListPage(
                 headerTitle: Strings.of(context).mostViewed,
-                listEntities: primaryNewsListEntities.mapToSecondaryNewsListEntities(),
+                listEntities: primaryNewsListEntities.toSecondaryNewsListEntities(),
               ),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
@@ -88,4 +87,16 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+extension on List<PrimaryNewsListEntity> {
+  List<SecondaryNewsListEntity> toSecondaryNewsListEntities() => map(
+        (primaryEntity) => SecondaryNewsListEntity(
+          title: primaryEntity.title,
+          date: primaryEntity.date,
+          imageUrl: primaryEntity.imageUrl,
+          time: primaryEntity.time,
+          articleUrl: primaryEntity.articleUrl,
+        ),
+      ).toList();
 }
