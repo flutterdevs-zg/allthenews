@@ -1,15 +1,19 @@
-import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
-import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_view.dart';
+import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_view.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
   static const sectionHeaderPadding = 16.0;
 }
 
-class SecondaryNewsListPage extends StatelessWidget {
+class NewsListPage extends StatelessWidget {
+  final List<SecondaryNewsListEntity> listEntities;
+  final String headerTitle;
+
+  const NewsListPage({@required this.listEntities, @required this.headerTitle});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +24,8 @@ class SecondaryNewsListPage extends StatelessWidget {
             _buildHeader(context),
             SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
-                secondaryNewsListEntities: secondaryNewsListEntities),
+              secondaryNewsListEntities: listEntities,
+            ),
           ],
         ),
       ),
@@ -38,9 +43,9 @@ class SecondaryNewsListPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Hero(
-              tag: Strings.of(context).newest,
+              tag: headerTitle,
               child: Text(
-                Strings.of(context).newest,
+                headerTitle,
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),

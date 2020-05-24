@@ -1,6 +1,6 @@
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/widget/dot_separator.dart';
-import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/web_view/web_view_page.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ class SecondaryNewsListItem extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WebViewPage(url: news.url),
+            builder: (context) => WebViewPage(url: news.articleUrl),
           ),
         ),
         child: Padding(

@@ -1,6 +1,6 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/ui/common/theme/theme.dart';
-import 'package:allthenews/src/ui/pages/news_list/news_list_page.dart';
+import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
 
 class AllTheNewsApp extends StatelessWidget {
@@ -8,7 +8,7 @@ class AllTheNewsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: newsTheme,
-      home: NewsListPage(),
+      home: HomePage(),
       localizationsDelegates: [
         Strings.delegate,
       ],

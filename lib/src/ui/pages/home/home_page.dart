@@ -1,23 +1,23 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
-import 'package:allthenews/src/ui/pages/news_list/primary_news/primary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/news_list/primary_news/primary_news_list_view.dart';
-import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_page.dart';
-import 'package:allthenews/src/ui/pages/news_list/secondary_news/secondary_news_list_view.dart';
+import 'package:allthenews/src/ui/pages/home/news/news_list_page.dart';
+import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_view.dart';
+import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_view.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
   static const sectionHeaderPadding = 10.0;
 }
 
-class NewsListPage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _NewsPageState createState() => _NewsPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _NewsPageState extends State<NewsListPage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +31,10 @@ class _NewsPageState extends State<NewsListPage> {
             ),
             _buildNewsSectionHeader(
               title: Strings.of(context).mostViewed,
-              routeBuilder: null,
+              routeBuilder: (context) => NewsListPage(
+                headerTitle: Strings.of(context).mostViewed,
+                listEntities: primaryNewsListEntities.toSecondaryNewsListEntities(),
+              ),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
             PrimaryNewsListView(
@@ -39,7 +42,10 @@ class _NewsPageState extends State<NewsListPage> {
             ),
             _buildNewsSectionHeader(
               title: Strings.of(context).newest,
-              routeBuilder: (context) => SecondaryNewsListPage(),
+              routeBuilder: (context) => NewsListPage(
+                headerTitle: Strings.of(context).newest,
+                listEntities: secondaryNewsListEntities,
+              ),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
@@ -70,16 +76,27 @@ class _NewsPageState extends State<NewsListPage> {
           ),
           PrimaryTextButton(
             text: Strings.of(context).showAll,
-            onPressed: () =>
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: routeBuilder,
-                  ),
-                ),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: routeBuilder,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+extension on List<PrimaryNewsListEntity> {
+  List<SecondaryNewsListEntity> toSecondaryNewsListEntities() => map(
+        (primaryEntity) => SecondaryNewsListEntity(
+          title: primaryEntity.title,
+          date: primaryEntity.date,
+          imageUrl: primaryEntity.imageUrl,
+          time: primaryEntity.time,
+          articleUrl: primaryEntity.articleUrl,
+        ),
+      ).toList();
 }
