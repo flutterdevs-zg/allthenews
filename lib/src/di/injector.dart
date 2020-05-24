@@ -1,8 +1,8 @@
 import 'package:allthenews/src/data/appinfo/app_info_local_repository.dart';
-import 'package:allthenews/src/data/communication/api_key_local_repository.dart';
 import 'package:allthenews/src/data/persistence/shared_preferences_persistence_repository.dart';
 import 'package:allthenews/src/data/settings/settings_local_repository.dart';
 import 'package:allthenews/src/domain/appinfo/app_info_repository.dart';
+import 'package:allthenews/src/data/communication/api/api_key_local_repository.dart';
 import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:allthenews/src/domain/common/persistence/persistence_repository.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
