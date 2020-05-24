@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               title: Strings.of(context).mostViewed,
               routeBuilder: (context) => NewsListPage(
                 headerTitle: Strings.of(context).mostViewed,
-                listEntities: primaryNewsListEntities.mapToSecondaryListItem(),
+                listEntities: primaryNewsListEntities.mapToSecondaryNewsListEntities(),
               ),
             ),
             SizedBox(height: _Constants.sectionHeaderPadding),

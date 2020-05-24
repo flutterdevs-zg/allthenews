@@ -2,7 +2,7 @@ import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list
 import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
 
 extension PrimaryNewsEntityMapper on List<PrimaryNewsListEntity> {
-  List<SecondaryNewsListEntity> mapToSecondaryListItem() {
+  List<SecondaryNewsListEntity> mapToSecondaryNewsListEntities() {
     return this
         .map(
           (primaryEntity) => SecondaryNewsListEntity(
