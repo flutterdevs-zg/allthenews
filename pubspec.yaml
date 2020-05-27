@@ -26,6 +26,11 @@ flutter:
   uses-material-design: true
   assets:
     - auth/secrets.json
+    - assets/
+  fonts:
+    - family: Chomsky
+      fonts:
+        - asset: assets/fonts/Chomsky.otf
 flutter_intl:
   enabled: true
   class_name: Strings

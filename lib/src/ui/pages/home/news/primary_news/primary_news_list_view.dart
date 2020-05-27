@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 abstract class _Constants {
   static const listHorizontalPadding = 13.0;
+  static const listHeight = 240.0;
 }
 
 class PrimaryNewsListView extends StatelessWidget {
@@ -15,7 +16,8 @@ class PrimaryNewsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
+      height: _Constants.listHeight,
       child: ListView.builder(
         padding: EdgeInsets.symmetric(
           horizontal: _Constants.listHorizontalPadding,

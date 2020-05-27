@@ -1,15 +1,22 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
+import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/pages/home/news/news_list_page.dart';
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_view.dart';
 import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_view.dart';
+import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_item.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
+  static const appBarActionsVerticalPadding = 11.0;
+  static const appBarElevation = 0.0;
+  static const appBarTitleFontFamily = 'Chomsky';
+  static const appBarTitleLeftPadding = 10.0;
   static const sectionHeaderPadding = 10.0;
+  static const sectionSpacing = 20.0;
 }
 
 class HomePage extends StatefulWidget {
@@ -21,39 +28,74 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: _buildAppBar(context),
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.maxFinite,
-              height: 80,
-            ),
-            _buildNewsSectionHeader(
-              title: Strings.of(context).mostViewed,
-              routeBuilder: (context) => NewsListPage(
-                headerTitle: Strings.of(context).mostViewed,
-                listEntities: primaryNewsListEntities.toSecondaryNewsListEntities(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: _Constants.sectionHeaderPadding),
+                    _buildNewsSectionHeader(
+                      title: Strings.of(context).mostViewed,
+                      routeBuilder: (context) => NewsListPage(
+                        headerTitle: Strings.of(context).mostViewed,
+                        listEntities: primaryNewsListEntities.toSecondaryNewsListEntities(),
+                      ),
+                    ),
+                    SizedBox(height: _Constants.sectionHeaderPadding),
+                    PrimaryNewsListView(
+                      primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
+                    ),
+                    SizedBox(height: _Constants.sectionSpacing),
+                    _buildNewsSectionHeader(
+                      title: Strings.of(context).newest,
+                      routeBuilder: (context) => NewsListPage(
+                        headerTitle: Strings.of(context).newest,
+                        listEntities: secondaryNewsListEntities,
+                      ),
+                    ),
+                    SizedBox(height: _Constants.sectionHeaderPadding),
+                    _buildSecondaryNewsItems(),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: _Constants.sectionHeaderPadding),
-            PrimaryNewsListView(
-              primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
-            ),
-            _buildNewsSectionHeader(
-              title: Strings.of(context).newest,
-              routeBuilder: (context) => NewsListPage(
-                headerTitle: Strings.of(context).newest,
-                listEntities: secondaryNewsListEntities,
-              ),
-            ),
-            SizedBox(height: _Constants.sectionHeaderPadding),
-            SecondaryNewsListView(
-              secondaryNewsListEntities: secondaryNewsListEntities.take(3).toList(),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAppBar(BuildContext context) {
+    return AppBar(
+      elevation: _Constants.appBarElevation,
+      iconTheme: IconThemeData(color: Colors.black),
+      title: Padding(
+        padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
+        child: Text(
+          UntranslatableStrings.newYorkTimes,
+          style: Theme.of(context).textTheme.headline2.copyWith(
+                fontFamily: _Constants.appBarTitleFontFamily,
+              ),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      actions: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: _Constants.appBarActionsVerticalPadding,
+            horizontal: Dimens.pagePadding,
+          ),
+          child: PrimaryIconButton(
+            iconData: Icons.search,
+            onPressed: () {},
+          ),
+        ),
+      ],
     );
   }
 
@@ -62,7 +104,7 @@ class _HomePageState extends State<HomePage> {
     @required WidgetBuilder routeBuilder,
   }) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dimens.pagePadding),
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.pagePadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,6 +129,10 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  Widget _buildSecondaryNewsItems() => Column(
+        children: secondaryNewsListEntities.take(3).toList().map((news) => SecondaryNewsListItem(news: news)).toList(),
+      );
 }
 
 extension on List<PrimaryNewsListEntity> {
