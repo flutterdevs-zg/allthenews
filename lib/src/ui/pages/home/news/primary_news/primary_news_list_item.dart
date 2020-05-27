@@ -25,7 +25,9 @@ class PrimaryNewsListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: _Constants.horizontalListItemPadding),
+      padding: EdgeInsets.symmetric(
+        horizontal: _Constants.horizontalListItemPadding,
+      ),
       child: Stack(
         children: [
           _buildImage(),
