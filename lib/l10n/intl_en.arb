@@ -1,5 +1,13 @@
 {
+  "aboutApp": "About",
+  "emailed": "E-mailed",
+  "darkMode": "Dark mode",
   "newest": "Newest",
   "mostViewed": "Most Viewed",
-  "showAll": "Show All"
+  "popular": "Popular",
+  "shared": "Shared",
+  "settings": "Settings",
+  "showAll": "Show All",
+  "version": "Version",
+  "viewed": "Viewed"
 }

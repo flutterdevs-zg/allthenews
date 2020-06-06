@@ -1,5 +1,13 @@
 {
+  "aboutApp": "O aplikacji",
+  "emailed": "Wysyłane e-mailem",
+  "darkMode": "Tryb ciemny",
   "newest": "Najnowsze",
   "mostViewed": "Najczęściej oglądane",
-  "showAll": "Pokaż wszystkie"
+  "popular": "Popularne",
+  "shared": "Udostępniane",
+  "showAll": "Pokaż wszystkie",
+  "settings": "Ustawienia",
+  "version": "Wersja",
+  "viewed": "Wyświetlane"
 }

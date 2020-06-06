@@ -8,11 +8,12 @@ import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_view.dart';
 import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_item.dart';
+import 'package:allthenews/src/ui/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
   static const appBarActionsVerticalPadding = 11.0;
-  static const appBarElevation = 0.0;
+  static const appBarActionsIconsPadding = 8.0;
   static const appBarTitleFontFamily = 'Chomsky';
   static const appBarTitleLeftPadding = 10.0;
   static const sectionHeaderPadding = 10.0;
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildAppBar(BuildContext context) {
     return AppBar(
-      elevation: _Constants.appBarElevation,
+      elevation: Dimens.appBarElevation,
       iconTheme: IconThemeData(color: Colors.black),
       title: Padding(
         padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
@@ -88,11 +89,27 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: EdgeInsets.symmetric(
             vertical: _Constants.appBarActionsVerticalPadding,
-            horizontal: Dimens.pagePadding,
           ),
           child: PrimaryIconButton(
             iconData: Icons.search,
             onPressed: () {},
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            top: _Constants.appBarActionsVerticalPadding,
+            bottom: _Constants.appBarActionsVerticalPadding,
+            right: Dimens.pagePadding,
+            left: _Constants.appBarActionsIconsPadding,
+          ),
+          child: PrimaryIconButton(
+            iconData: Icons.settings,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
           ),
         ),
       ],
@@ -109,11 +126,13 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Hero(
-            tag: title,
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.headline3,
+          Flexible(
+            child: Hero(
+              tag: title,
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headline3,
+              ),
             ),
           ),
           PrimaryTextButton(
