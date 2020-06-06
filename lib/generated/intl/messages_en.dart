@@ -21,8 +21,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "aboutApp" : MessageLookupByLibrary.simpleMessage("About"),
+    "darkMode" : MessageLookupByLibrary.simpleMessage("Dark mode"),
+    "emailed" : MessageLookupByLibrary.simpleMessage("E-mailed"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Most Viewed"),
     "newest" : MessageLookupByLibrary.simpleMessage("Newest"),
-    "showAll" : MessageLookupByLibrary.simpleMessage("Show All")
+    "popular" : MessageLookupByLibrary.simpleMessage("Popular"),
+    "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
+    "shared" : MessageLookupByLibrary.simpleMessage("Shared"),
+    "showAll" : MessageLookupByLibrary.simpleMessage("Show All"),
+    "version" : MessageLookupByLibrary.simpleMessage("Version"),
+    "viewed" : MessageLookupByLibrary.simpleMessage("Viewed")
   };
 }

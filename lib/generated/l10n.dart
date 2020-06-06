@@ -27,6 +27,33 @@ class Strings {
     return Localizations.of<Strings>(context, Strings);
   }
 
+  String get aboutApp {
+    return Intl.message(
+      'About',
+      name: 'aboutApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get emailed {
+    return Intl.message(
+      'E-mailed',
+      name: 'emailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get darkMode {
+    return Intl.message(
+      'Dark mode',
+      name: 'darkMode',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get newest {
     return Intl.message(
       'Newest',
@@ -45,10 +72,55 @@ class Strings {
     );
   }
 
+  String get popular {
+    return Intl.message(
+      'Popular',
+      name: 'popular',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get shared {
+    return Intl.message(
+      'Shared',
+      name: 'shared',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get showAll {
     return Intl.message(
       'Show All',
       name: 'showAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get version {
+    return Intl.message(
+      'Version',
+      name: 'version',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get viewed {
+    return Intl.message(
+      'Viewed',
+      name: 'viewed',
       desc: '',
       args: [],
     );
