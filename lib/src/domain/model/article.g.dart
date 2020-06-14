@@ -8,8 +8,8 @@ part of 'article.dart';
 
 Article _$ArticleFromJson(Map<String, dynamic> json) {
   return Article(
-    id: json['id'] as int,
-    title: json['title'] as String,
+    json['id'] as int,
+    json['title'] as String,
   );
 }
 

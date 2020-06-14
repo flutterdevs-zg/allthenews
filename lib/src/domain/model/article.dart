@@ -8,7 +8,7 @@ class Article {
 
   final String title;
 
-  Article({this.id, this.title});
+  Article(this.id, this.title);
 
   factory Article.fromJson(Map<String, dynamic> json) => _$ArticleFromJson(json);
 
