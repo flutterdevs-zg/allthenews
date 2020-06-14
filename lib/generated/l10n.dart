@@ -142,6 +142,46 @@ class Strings {
       args: [],
     );
   }
+
+  /// `No internet connection`
+  String get apiExceptionNoInternet {
+    return Intl.message(
+      'No internet connection',
+      name: 'apiExceptionNoInternet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Communication error, try again later`
+  String get apiExceptionGeneral {
+    return Intl.message(
+      'Communication error, try again later',
+      name: 'apiExceptionGeneral',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error occurred`
+  String get apiExceptionUnknown {
+    return Intl.message(
+      'Unknown error occurred',
+      name: 'apiExceptionUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid login credentials`
+  String get apiExceptionUnauthorized {
+    return Intl.message(
+      'Invalid login credentials',
+      name: 'apiExceptionUnauthorized',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Strings> {

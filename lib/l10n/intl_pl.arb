@@ -9,5 +9,9 @@
   "showAll": "Pokaż wszystkie",
   "settings": "Ustawienia",
   "version": "Wersja",
-  "viewed": "Wyświetlane"
+  "viewed": "Wyświetlane",
+  "apiExceptionNoInternet": "Brak internetów",
+  "apiExceptionGeneral": "Błąd komunikacji, spróbuj ponownie później",
+  "apiExceptionUnknown": "Nieznany błąd",
+  "apiExceptionUnauthorized": "Błąd autoryzacyjny"
 }

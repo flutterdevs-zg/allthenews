@@ -9,5 +9,9 @@
   "settings": "Settings",
   "showAll": "Show All",
   "version": "Version",
-  "viewed": "Viewed"
+  "viewed": "Viewed",
+  "apiExceptionNoInternet": "No internet connection",
+  "apiExceptionGeneral": "Communication error, try again later",
+  "apiExceptionUnknown": "Unknown error occurred",
+  "apiExceptionUnauthorized": "Invalid login credentials"
 }

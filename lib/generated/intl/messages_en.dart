@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "aboutApp" : MessageLookupByLibrary.simpleMessage("About"),
+    "apiExceptionGeneral" : MessageLookupByLibrary.simpleMessage("Communication error, try again later"),
+    "apiExceptionNoInternet" : MessageLookupByLibrary.simpleMessage("No internet connection"),
+    "apiExceptionUnauthorized" : MessageLookupByLibrary.simpleMessage("Invalid login credentials"),
+    "apiExceptionUnknown" : MessageLookupByLibrary.simpleMessage("Unknown error occurred"),
     "darkMode" : MessageLookupByLibrary.simpleMessage("Dark mode"),
     "emailed" : MessageLookupByLibrary.simpleMessage("E-mailed"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Most Viewed"),
