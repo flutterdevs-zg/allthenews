@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 abstract class _Constants {
   static const radius = 8.0;
   static const elevation = 0.0;
-  static const backgroundColor = Color(0xFFE0E0E0);
 }
 
 class PrimaryButton extends StatelessWidget {
@@ -23,7 +22,7 @@ class PrimaryButton extends StatelessWidget {
       constraints: BoxConstraints(),
       child: child,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      fillColor: _Constants.backgroundColor,
+      fillColor: Theme.of(context).buttonColor,
       highlightElevation: _Constants.elevation,
       elevation: _Constants.elevation,
       splashColor: Colors.transparent,

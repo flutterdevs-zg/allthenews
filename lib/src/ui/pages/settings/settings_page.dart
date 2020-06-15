@@ -1,11 +1,11 @@
 import 'package:allthenews/generated/l10n.dart';
-import 'package:allthenews/src/di/injector.dart';
-import 'package:allthenews/src/domain/appinfo/app_info_repository.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
+import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class _Constants {
   static const aboutSectionItemSpacing = 10.0;
@@ -25,20 +25,27 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  String _appVersion;
-  bool _isDarkModeEnabled = false;
-  PopularNewsCriterion _selectedPopularNewsCriterion = PopularNewsCriterion.viewed;
 
   @override
   void initState() {
     super.initState();
-    loadApplicationVersion();
+    context.read<SettingsNotifier>().loadSettings();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (context.select((SettingsNotifier notifier) => notifier.viewState.isLoading)) {
+      return _buildProgressIndicator();
+    } else {
+      return _buildSettingsScreen(context);
+    }
+  }
+
+  Widget _buildProgressIndicator() => Center(child: CircularProgressIndicator());
+
+  Widget _buildSettingsScreen(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: _buildAppBar(context),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -68,8 +75,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildAppBar(BuildContext context) => AppBar(
         elevation: Dimens.appBarElevation,
-        iconTheme: IconThemeData(color: Colors.black54),
-        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
+        backgroundColor: Theme.of(context).backgroundColor,
       );
 
   Widget _buildHeader(BuildContext context) => Text(
@@ -88,13 +95,13 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           _buildSettingsHeader(context, Strings.of(context).darkMode),
           CupertinoSwitch(
-            value: _isDarkModeEnabled,
+            value: context.select((SettingsNotifier notifier) => notifier.viewState.isDarkModeEnabled),
             onChanged: (isSelected) {
               setState(() {
-                _isDarkModeEnabled = isSelected;
+                context.read<SettingsNotifier>().selectDarkMode(isSelected, context.read);
               });
             },
-            activeColor: Colors.black54,
+            activeColor: Theme.of(context).accentColor,
           ),
         ],
       ),
@@ -133,10 +140,10 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           _buildPopularSettingText(context, popularNewsCriterion),
           SizedBox(width: _Constants.switchLeftSpacing),
-          _buildSwitch(popularNewsCriterion == _selectedPopularNewsCriterion, (isSelected) {
+          _buildSwitch(context, popularNewsCriterion == context.select((SettingsNotifier notifier) => notifier.viewState.selectedPopularNewsCriterion), (isSelected) {
             if (isSelected) {
               setState(() {
-                _selectedPopularNewsCriterion = popularNewsCriterion;
+                context.read<SettingsNotifier>().selectPopularNewsCriterion(popularNewsCriterion);
               });
             }
           }),
@@ -166,7 +173,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 _buildAboutAppText(context, '${UntranslatableStrings.email}: ${UntranslatableStrings.flutterDevsZgEmail}'),
                 SizedBox(height: _Constants.aboutSectionItemSpacing),
-                _appVersion == null ? null : _buildAboutAppText(context, '${Strings.of(context).version}: $_appVersion'),
+                _buildAboutAppText(context, '${Strings.of(context).version}: ${context.select((SettingsNotifier notifier) => notifier.viewState.appVersion)}'),
                 SizedBox(height: _Constants.aboutSectionItemSpacing),
               ],
             ),
@@ -183,7 +190,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildAboutAppText(BuildContext context, String text) => Text(
       text,
-      style: Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.black54),
+      style: Theme.of(context).textTheme.bodyText2.copyWith(color: Theme.of(context).textTheme.caption.color),
   );
 
   Widget _buildPopularSettingText(BuildContext context, PopularNewsCriterion criterion) =>
@@ -194,20 +201,12 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       );
 
-  Widget _buildSwitch(bool value, ValueChanged<bool> onChanged) =>
+  Widget _buildSwitch(BuildContext context, bool value, ValueChanged<bool> onChanged) =>
       CupertinoSwitch(
         value: value,
         onChanged: onChanged,
-        activeColor: Colors.black54,
+        activeColor: Theme.of(context).accentColor,
       );
-
-//FIXME rozwiązanie do czasu ustalenia architektury
-  Future<void> loadApplicationVersion() async {
-    final appVersion = await inject<AppInfoRepository>().getAppVersion();
-    setState(() {
-      _appVersion = appVersion;
-    });
-  }
 }
 
 extension on PopularNewsCriterion {

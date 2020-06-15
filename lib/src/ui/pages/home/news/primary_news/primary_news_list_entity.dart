@@ -20,7 +20,7 @@ class PrimaryNewsListEntity {
 
 final primaryNewsListEntities = <PrimaryNewsListEntity>[
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "Something wrong is happening with ",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',
@@ -29,7 +29,7 @@ final primaryNewsListEntities = <PrimaryNewsListEntity>[
     articleUrl: 'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
   ),
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "New laptops seem to be stuck to the board",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',
@@ -38,7 +38,7 @@ final primaryNewsListEntities = <PrimaryNewsListEntity>[
     articleUrl: 'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
   ),
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "Huawei Loses Millions Of Users As Serious",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',
@@ -47,7 +47,7 @@ final primaryNewsListEntities = <PrimaryNewsListEntity>[
     articleUrl: 'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
   ),
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "Samsung Surprise As World’s First Smartphone ",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',
@@ -56,7 +56,7 @@ final primaryNewsListEntities = <PrimaryNewsListEntity>[
     articleUrl: 'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
   ),
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "It’s ‘Comet SWAN’ Week. ",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',
@@ -65,7 +65,7 @@ final primaryNewsListEntities = <PrimaryNewsListEntity>[
     articleUrl: 'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
   ),
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "Summer Travel To Europe",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',
@@ -74,7 +74,7 @@ final primaryNewsListEntities = <PrimaryNewsListEntity>[
     articleUrl: 'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
   ),
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "‘White Lines’ Review: Netflix’s Murder Mystery In Ibiza",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',
@@ -83,7 +83,7 @@ final primaryNewsListEntities = <PrimaryNewsListEntity>[
     articleUrl: 'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
   ),
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "What’s Going On With Comet SWAN? ",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',
@@ -92,7 +92,7 @@ final primaryNewsListEntities = <PrimaryNewsListEntity>[
     articleUrl: 'https://www.nytimes.com/2020/05/14/obituaries/jonathan-adewumi-dies-coronavirus.html',
   ),
   PrimaryNewsListEntity(
-    imageUrl: 'https://i.picsum.photos/id/9/800/800.jpg',
+    imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "Hackers Claim To Have Trump’s Dirty Laundry",
     date: 'Sept. 26, 2019',
     time: '1:41 PM',

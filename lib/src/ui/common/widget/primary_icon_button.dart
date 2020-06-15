@@ -24,6 +24,7 @@ class PrimaryIconButton extends StatelessWidget {
           child: Icon(
             iconData,
             size: _Constants.iconSize,
+            color: Colors.black,
           ),
         ),
       );
