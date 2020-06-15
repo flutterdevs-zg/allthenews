@@ -1,14 +1,36 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/theme/theme.dart';
+import 'package:allthenews/src/ui/common/theme/theme_notifier.dart';
 import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
-class AllTheNewsApp extends StatelessWidget {
+class AllTheNewsApp extends StatefulWidget {
+  @override
+  _AllTheNewsAppState createState() => _AllTheNewsAppState();
+}
+
+class _AllTheNewsAppState extends State<AllTheNewsApp> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ThemeNotifier>().initTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (context.select((ThemeNotifier notifier) => notifier.isLoading)) {
+      return _buildProgressIndicator();
+    } else {
+      return _buildMaterialApp(context);
+    }
+  }
+
+  Widget _buildMaterialApp(BuildContext context) {
     return MaterialApp(
-      theme: newsTheme,
+      theme: context.watch<ThemeNotifier>().themeData,
       home: HomePage(),
       localizationsDelegates: [
         Strings.delegate,
@@ -17,4 +39,6 @@ class AllTheNewsApp extends StatelessWidget {
       supportedLocales: Strings.delegate.supportedLocales,
     );
   }
+
+  Widget _buildProgressIndicator() => Center(child: CircularProgressIndicator());
 }

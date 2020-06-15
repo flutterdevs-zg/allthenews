@@ -1,4 +1,5 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
@@ -8,8 +9,10 @@ import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_view.dart';
 import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_item.dart';
+import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class _Constants {
   static const appBarActionsVerticalPadding = 11.0;
@@ -29,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: _buildAppBar(context),
       body: SafeArea(
         child: Column(
@@ -84,7 +87,7 @@ class _HomePageState extends State<HomePage> {
               ),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       actions: [
         Padding(
           padding: EdgeInsets.symmetric(
@@ -107,7 +110,12 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsPage()),
+                MaterialPageRoute(
+                  builder: (context) => ChangeNotifierProvider(
+                    create: (_) => inject<SettingsNotifier>(),
+                    child: SettingsPage(),
+                  ),
+                ),
               );
             },
           ),

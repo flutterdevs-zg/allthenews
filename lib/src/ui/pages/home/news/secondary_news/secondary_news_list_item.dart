@@ -25,6 +25,7 @@ class SecondaryNewsListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Theme.of(context).backgroundColor,
       child: InkWell(
         onTap: () => Navigator.push(
           context,

@@ -26,7 +26,9 @@ class PrimaryTextButton extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.button.copyWith(
+              color: Colors.black,
+            ),
           ),
         ),
       );
