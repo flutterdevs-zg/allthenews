@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -144,40 +145,30 @@ class Strings {
   }
 
   /// `No internet connection`
-  String get apiExceptionNoInternet {
+  String get apiConnectionException {
     return Intl.message(
       'No internet connection',
-      name: 'apiExceptionNoInternet',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Communication error, try again later`
-  String get apiExceptionGeneral {
-    return Intl.message(
-      'Communication error, try again later',
-      name: 'apiExceptionGeneral',
+      name: 'apiConnectionException',
       desc: '',
       args: [],
     );
   }
 
   /// `Unknown error occurred`
-  String get apiExceptionUnknown {
+  String get apiDefaultException {
     return Intl.message(
       'Unknown error occurred',
-      name: 'apiExceptionUnknown',
+      name: 'apiDefaultException',
       desc: '',
       args: [],
     );
   }
 
-  /// `Invalid login credentials`
-  String get apiExceptionUnauthorized {
+  /// `Authorization error occurred`
+  String get apiUnauthorizedException {
     return Intl.message(
-      'Invalid login credentials',
-      name: 'apiExceptionUnauthorized',
+      'Authorization error occurred',
+      name: 'apiUnauthorizedException',
       desc: '',
       args: [],
     );

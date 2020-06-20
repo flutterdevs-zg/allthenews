@@ -1,10 +1,9 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
-import 'package:allthenews/src/data/communication/api/api_exception.dart';
-import 'package:allthenews/src/data/communication/api/ny_times_repositor.dart';
-import 'package:allthenews/src/di/injector.dart';
+import 'package:allthenews/src/domain/communication/exception_extensions.dart';
+import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/ui/common/error/error_message_provider.dart';
+import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
@@ -35,6 +34,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final NYTimesRepository _nyTimesRepository = inject<NYTimesRepository>();
+  final ExceptionMapper _exceptionMapper = inject<ExceptionMapper>();
   Future<Article> _articleFuture;
 
   @override
@@ -147,8 +147,8 @@ class _HomePageState extends State<HomePage> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   } else if (snapshot.hasError) {
-                    var exception = ApiException.fromDioError(snapshot.error);
-                    return Text(ErrorMessageProvider.provideErrorMessage(exception, context));
+                    var exception = _exceptionMapper.toExceptionType(snapshot.error);
+                    return Text(exception.toErrorMessage(context));
                   } else if (snapshot.hasData) {
                     final article = snapshot.data;
                     return Text(article.toString());

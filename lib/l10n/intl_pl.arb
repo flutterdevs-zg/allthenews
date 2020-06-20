@@ -11,7 +11,7 @@
   "version": "Wersja",
   "viewed": "Wyświetlane",
   "apiExceptionNoInternet": "Brak internetów",
-  "apiExceptionGeneral": "Błąd komunikacji, spróbuj ponownie później",
-  "apiExceptionUnknown": "Nieznany błąd",
-  "apiExceptionUnauthorized": "Błąd autoryzacyjny"
+  "apiConnectionException": "Błąd komunikacji, spróbuj ponownie później",
+  "apiDefaultException": "Nieznany błąd",
+  "apiUnauthorizedException": "Błąd autoryzacyjny"
 }

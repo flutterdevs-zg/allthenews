@@ -20,21 +20,21 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static _notInlinedMessages(_) => <String, Function> {
-    "aboutApp" : MessageLookupByLibrary.simpleMessage("About"),
-    "apiExceptionGeneral" : MessageLookupByLibrary.simpleMessage("Communication error, try again later"),
-    "apiExceptionNoInternet" : MessageLookupByLibrary.simpleMessage("No internet connection"),
-    "apiExceptionUnauthorized" : MessageLookupByLibrary.simpleMessage("Invalid login credentials"),
-    "apiExceptionUnknown" : MessageLookupByLibrary.simpleMessage("Unknown error occurred"),
-    "darkMode" : MessageLookupByLibrary.simpleMessage("Dark mode"),
-    "emailed" : MessageLookupByLibrary.simpleMessage("E-mailed"),
-    "mostViewed" : MessageLookupByLibrary.simpleMessage("Most Viewed"),
-    "newest" : MessageLookupByLibrary.simpleMessage("Newest"),
-    "popular" : MessageLookupByLibrary.simpleMessage("Popular"),
-    "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
-    "shared" : MessageLookupByLibrary.simpleMessage("Shared"),
-    "showAll" : MessageLookupByLibrary.simpleMessage("Show All"),
-    "version" : MessageLookupByLibrary.simpleMessage("Version"),
-    "viewed" : MessageLookupByLibrary.simpleMessage("Viewed")
-  };
+  static _notInlinedMessages(_) => <String, Function>{
+        "aboutApp": MessageLookupByLibrary.simpleMessage("About"),
+        "apiConnectionException": MessageLookupByLibrary.simpleMessage("No internet connection"),
+        "apiDefaultException": MessageLookupByLibrary.simpleMessage("Unknown error occurred"),
+        "apiUnauthorizedException":
+            MessageLookupByLibrary.simpleMessage("Authorization error occurred"),
+        "darkMode": MessageLookupByLibrary.simpleMessage("Dark mode"),
+        "emailed": MessageLookupByLibrary.simpleMessage("E-mailed"),
+        "mostViewed": MessageLookupByLibrary.simpleMessage("Most Viewed"),
+        "newest": MessageLookupByLibrary.simpleMessage("Newest"),
+        "popular": MessageLookupByLibrary.simpleMessage("Popular"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "shared": MessageLookupByLibrary.simpleMessage("Shared"),
+        "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
+        "version": MessageLookupByLibrary.simpleMessage("Version"),
+        "viewed": MessageLookupByLibrary.simpleMessage("Viewed")
+      };
 }

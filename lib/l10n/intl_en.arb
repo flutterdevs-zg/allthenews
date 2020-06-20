@@ -10,8 +10,7 @@
   "showAll": "Show All",
   "version": "Version",
   "viewed": "Viewed",
-  "apiExceptionNoInternet": "No internet connection",
-  "apiExceptionGeneral": "Communication error, try again later",
-  "apiExceptionUnknown": "Unknown error occurred",
-  "apiExceptionUnauthorized": "Invalid login credentials"
+  "apiConnectionException": "No internet connection",
+  "apiDefaultException": "Unknown error occurred",
+  "apiUnauthorizedException": "Authorization error occurred"
 }
