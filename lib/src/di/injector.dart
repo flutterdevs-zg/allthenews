@@ -15,29 +15,29 @@ import 'package:allthenews/src/ui/common/theme/theme_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:get_it/get_it.dart';
 
-final locator = GetIt.instance;
+final _locator = GetIt.instance;
 
 abstract class _Constants {
   static const nyTimesBaseUrl = "https://api.nytimes.com/svc/";
 }
 
 void injectDependencies() {
-  locator.registerSingleton<AppInfoRepository>(AppInfoLocalRepository());
-  locator.registerSingleton<PersistenceRepository>(SharedPreferencesPersistenceRepository());
-  locator.registerSingleton<SettingsRepository>(
-      SettingsLocalRepository(locator<PersistenceRepository>()));
-  locator.registerFactory(() => ThemeNotifier(locator<SettingsRepository>()));
-  locator.registerFactory(
-      () => SettingsNotifier(locator<SettingsRepository>(), locator<AppInfoRepository>()));
+  _locator.registerSingleton<AppInfoRepository>(AppInfoLocalRepository());
+  _locator.registerSingleton<PersistenceRepository>(SharedPreferencesPersistenceRepository());
+  _locator.registerSingleton<SettingsRepository>(
+      SettingsLocalRepository(_locator<PersistenceRepository>()));
+  _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
+  _locator.registerFactory(
+      () => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
   _injectApiDependencies();
 }
 
 void _injectApiDependencies() {
-  locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
-  locator.registerSingleton<HttpClient>(
-      HttpClient(_Constants.nyTimesBaseUrl, locator<ApiKeyRepository>()));
-  locator.registerSingleton<NYTimesRepository>(NYTimesRestRepository(locator<HttpClient>()));
-  locator.registerSingleton<ExceptionMapper>(ApiExceptionMapper());
+  _locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
+  _locator.registerSingleton<HttpClient>(
+      HttpClient(_Constants.nyTimesBaseUrl, _locator<ApiKeyRepository>()));
+  _locator.registerSingleton<NYTimesRepository>(NYTimesRestRepository(_locator<HttpClient>()));
+  _locator.registerSingleton<ExceptionMapper>(ApiExceptionMapper());
 }
 
 T inject<T>({String name, dynamic param}) =>
