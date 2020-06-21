@@ -4,12 +4,12 @@ class ApiException implements Exception {
   ApiException([this.code]);
 }
 
-class UnauthorizedException extends ApiException {
-  final int code;
+class UnauthorizedException extends ApiException {}
 
-  UnauthorizedException(this.code) : super(code);
-}
+class ServerErrorException extends ApiException {}
 
-class DefaultException extends ApiException {}
+class InvalidUrlException extends ApiException {}
+
+class UnknownException extends ApiException {}
 
 class ConnectionException extends ApiException {}

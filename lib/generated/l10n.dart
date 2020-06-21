@@ -154,21 +154,41 @@ class Strings {
     );
   }
 
-  /// `Unknown error occurred`
-  String get apiDefaultException {
+  /// `Unknown error`
+  String get apiUnknownException {
     return Intl.message(
-      'Unknown error occurred',
-      name: 'apiDefaultException',
+      'Unknown error',
+      name: 'apiUnknownException',
       desc: '',
       args: [],
     );
   }
 
-  /// `Authorization error occurred`
+  /// `Authorization error`
   String get apiUnauthorizedException {
     return Intl.message(
-      'Authorization error occurred',
+      'Authorization error',
       name: 'apiUnauthorizedException',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Internal server error`
+  String get apiServerException {
+    return Intl.message(
+      'Internal server error',
+      name: 'apiServerException',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resource not found`
+  String get apiInvalidUrlException {
+    return Intl.message(
+      'Resource not found',
+      name: 'apiInvalidUrlException',
       desc: '',
       args: [],
     );

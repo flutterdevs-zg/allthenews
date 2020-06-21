@@ -13,23 +13,27 @@ class ApiExceptionMapper extends ExceptionMapper {
           if (error.error is SocketException) {
             return ConnectionException();
           }
-          return DefaultException();
+          return UnknownException();
         case DioErrorType.RESPONSE:
           return _fromStatusCode(error.response.statusCode);
         default:
-          return DefaultException();
+          return UnknownException();
       }
     } else {
-      return DefaultException();
+      return UnknownException();
     }
   }
 
   ApiException _fromStatusCode(int code) {
     switch (code) {
       case 401:
-        return UnauthorizedException(code);
+        return UnauthorizedException();
+      case 404:
+        return ServerErrorException();
+      case 500:
+        return InvalidUrlException();
       default:
-        return DefaultException();
+        return UnknownException();
     }
   }
 }

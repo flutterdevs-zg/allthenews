@@ -1,5 +1,4 @@
 import 'package:allthenews/src/data/communication/api/request.dart';
-import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -7,14 +6,18 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 abstract class _Constants {
   static const logPrintWidthSize = 300;
+  static const apiKeyParam = "api-key";
 }
 
-class NetworkRequest {
-  final ApiKeyRepository _apiKeyRepository = inject<ApiKeyRepository>();
+class HttpClient {
   final Dio _dio = Dio();
-  final _baseUrl;
+  final String _baseUrl;
+  final ApiKeyRepository _apiKeyRepository;
 
-  NetworkRequest(this._baseUrl) {
+  HttpClient(
+    this._baseUrl,
+    this._apiKeyRepository,
+  ) {
     _dio.options.baseUrl = _baseUrl;
 
     _dio.interceptors
@@ -34,7 +37,7 @@ class NetworkRequest {
 
   void _onRequest(RequestOptions options) async {
     var apiKey = await _apiKeyRepository.getKey();
-    options.queryParameters = {"api-key": apiKey.value};
+    options.queryParameters = {_Constants.apiKeyParam: apiKey.value};
   }
 
   Future<dynamic> get(Request request) async {

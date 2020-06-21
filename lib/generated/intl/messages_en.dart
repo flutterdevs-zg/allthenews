@@ -20,12 +20,14 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
+
   static _notInlinedMessages(_) => <String, Function>{
         "aboutApp": MessageLookupByLibrary.simpleMessage("About"),
         "apiConnectionException": MessageLookupByLibrary.simpleMessage("No internet connection"),
-        "apiDefaultException": MessageLookupByLibrary.simpleMessage("Unknown error occurred"),
-        "apiUnauthorizedException":
-            MessageLookupByLibrary.simpleMessage("Authorization error occurred"),
+        "apiInvalidUrlException": MessageLookupByLibrary.simpleMessage("Resource not found"),
+        "apiServerException": MessageLookupByLibrary.simpleMessage("Internal server error"),
+        "apiUnauthorizedException": MessageLookupByLibrary.simpleMessage("Authorization error"),
+        "apiUnknownException": MessageLookupByLibrary.simpleMessage("Unknown error"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark mode"),
         "emailed": MessageLookupByLibrary.simpleMessage("E-mailed"),
         "mostViewed": MessageLookupByLibrary.simpleMessage("Most Viewed"),

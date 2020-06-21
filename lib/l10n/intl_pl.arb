@@ -10,8 +10,9 @@
   "settings": "Ustawienia",
   "version": "Wersja",
   "viewed": "Wyświetlane",
-  "apiExceptionNoInternet": "Brak internetów",
-  "apiConnectionException": "Błąd komunikacji, spróbuj ponownie później",
-  "apiDefaultException": "Nieznany błąd",
-  "apiUnauthorizedException": "Błąd autoryzacyjny"
+  "apiConnectionException": "Brak połączenia sieciowego",
+  "apiUnknownException": "Nieznany błąd",
+  "apiUnauthorizedException": "Błąd autoryzacyjny",
+  "apiServerException": "Błąd na serwerze",
+  "apiInvalidUrlException": "Nie znaleziono danych"
 }

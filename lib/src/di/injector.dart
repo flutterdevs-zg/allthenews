@@ -1,6 +1,7 @@
 import 'package:allthenews/src/data/appinfo/app_info_local_repository.dart';
 import 'package:allthenews/src/data/communication/api/api_exception_mapper.dart';
 import 'package:allthenews/src/data/communication/api/api_key_local_repository.dart';
+import 'package:allthenews/src/data/communication/api/http_client.dart';
 import 'package:allthenews/src/data/communication/api/ny_times_rest_repository.dart';
 import 'package:allthenews/src/data/persistence/shared_preferences_persistence_repository.dart';
 import 'package:allthenews/src/data/settings/settings_local_repository.dart';
@@ -16,6 +17,10 @@ import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
 
+abstract class _Constants {
+  static const nyTimesBaseUrl = "https://api.nytimes.com/svc/";
+}
+
 void injectDependencies() {
   locator.registerSingleton<AppInfoRepository>(AppInfoLocalRepository());
   locator.registerSingleton<PersistenceRepository>(SharedPreferencesPersistenceRepository());
@@ -29,9 +34,11 @@ void injectDependencies() {
 
 void _injectApiDependencies() {
   locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
-  locator.registerSingleton<NYTimesRepository>(NYTimesRESTRepository());
+  locator.registerSingleton<HttpClient>(
+      HttpClient(_Constants.nyTimesBaseUrl, locator<ApiKeyRepository>()));
+  locator.registerSingleton<NYTimesRepository>(NYTimesRestRepository(locator<HttpClient>()));
   locator.registerSingleton<ExceptionMapper>(ApiExceptionMapper());
 }
 
-T inject<T>({String name, dynamic param1}) =>
-    GetIt.instance.get<T>(instanceName: name, param1: param1);
+T inject<T>({String name, dynamic param}) =>
+    GetIt.instance.get<T>(instanceName: name, param1: param);

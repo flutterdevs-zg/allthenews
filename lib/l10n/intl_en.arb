@@ -11,6 +11,8 @@
   "version": "Version",
   "viewed": "Viewed",
   "apiConnectionException": "No internet connection",
-  "apiDefaultException": "Unknown error occurred",
-  "apiUnauthorizedException": "Authorization error occurred"
+  "apiUnknownException": "Unknown error",
+  "apiUnauthorizedException": "Authorization error",
+  "apiServerException": "Internal server error",
+  "apiInvalidUrlException": "Resource not found"
 }
