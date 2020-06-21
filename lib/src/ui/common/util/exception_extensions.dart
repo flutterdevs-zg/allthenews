@@ -18,17 +18,11 @@ extension ExceptionExtension on Exception {
     } else if (this is ConnectionException) {
       return Strings.of(context).apiConnectionException;
     } else if (this is InvalidUrlException) {
-      return Strings
-          .of(context)
-          .apiInvalidUrlException;
+      return Strings.of(context).apiInvalidUrlException;
     } else if (this is ServerErrorException) {
-      return Strings
-          .of(context)
-          .apiServerException;
+      return Strings.of(context).apiServerException;
     } else {
-      return Strings
-          .of(context)
-          .apiUnknownException;
+      return Strings.of(context).apiUnknownException;
     }
   }
 }
