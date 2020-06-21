@@ -9,5 +9,10 @@
   "showAll": "Pokaż wszystkie",
   "settings": "Ustawienia",
   "version": "Wersja",
-  "viewed": "Wyświetlane"
+  "viewed": "Wyświetlane",
+  "apiConnectionException": "Brak połączenia sieciowego",
+  "apiUnknownException": "Nieznany błąd",
+  "apiUnauthorizedException": "Błąd autoryzacyjny",
+  "apiServerException": "Błąd na serwerze",
+  "apiInvalidUrlException": "Nie znaleziono danych"
 }

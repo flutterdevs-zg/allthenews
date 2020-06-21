@@ -9,5 +9,10 @@
   "settings": "Settings",
   "showAll": "Show All",
   "version": "Version",
-  "viewed": "Viewed"
+  "viewed": "Viewed",
+  "apiConnectionException": "No internet connection",
+  "apiUnknownException": "Unknown error",
+  "apiUnauthorizedException": "Authorization error",
+  "apiServerException": "Internal server error",
+  "apiInvalidUrlException": "Resource not found"
 }

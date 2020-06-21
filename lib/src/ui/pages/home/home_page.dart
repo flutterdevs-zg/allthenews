@@ -1,6 +1,10 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
+import 'package:allthenews/src/domain/communication/exception_mapper.dart';
+import 'package:allthenews/src/domain/model/article.dart';
+import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/util/exception_extensions.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
@@ -29,6 +33,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final NYTimesRepository _nyTimesRepository = inject<NYTimesRepository>();
+  final ExceptionMapper _exceptionMapper = inject<ExceptionMapper>();
+  Future<Article> _articleFuture;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,12 +88,8 @@ class _HomePageState extends State<HomePage> {
       iconTheme: IconThemeData(color: Colors.black),
       title: Padding(
         padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
-        child: Text(
-          UntranslatableStrings.newYorkTimes,
-          style: Theme.of(context).textTheme.headline2.copyWith(
-                fontFamily: _Constants.appBarTitleFontFamily,
-              ),
-        ),
+        //FIXME kliknięcie wykonuje request sieciowy, do testowania blędow
+        child: _buildClickableTitle(context),
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       actions: [
@@ -121,6 +125,39 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildClickableTitle(BuildContext context) {
+    return DefaultTextStyle.merge(
+      style: Theme.of(context).textTheme.headline2.copyWith(
+            fontFamily: _Constants.appBarTitleFontFamily,
+          ),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _articleFuture = _nyTimesRepository.getFirstMostPopularArticle();
+          });
+        },
+        child: _articleFuture == null
+            ? Text(UntranslatableStrings.newYorkTimes)
+            : FutureBuilder<Article>(
+                future: _articleFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    var exception = _exceptionMapper.toExceptionType(snapshot.error);
+                    return Text(exception.toErrorMessage(context));
+                  } else if (snapshot.hasData) {
+                    final article = snapshot.data;
+                    return Text(article.toString());
+                  } else {
+                    return Text(UntranslatableStrings.newYorkTimes);
+                  }
+                },
+              ),
+      ),
     );
   }
 
