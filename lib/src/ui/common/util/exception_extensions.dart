@@ -14,9 +14,7 @@ extension ExceptionExtension on Exception {
 
   String _getCommunicationExceptionMessage(BuildContext context) {
     if (this is UnauthorizedException) {
-      return Strings
-          .of(context)
-          .apiUnauthorizedException;
+      return Strings.of(context).apiUnauthorizedException;
     } else if (this is ConnectionException) {
       return Strings
           .of(context)
