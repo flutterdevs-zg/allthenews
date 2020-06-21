@@ -25,15 +25,14 @@ class ApiExceptionMapper extends ExceptionMapper {
   }
 
   ApiException _fromStatusCode(int code) {
-    switch (code) {
-      case 401:
-        return UnauthorizedException();
-      case 404:
-        return ServerErrorException();
-      case 500:
-        return InvalidUrlException();
-      default:
-        return UnknownException();
+    if (code == 401) {
+      return UnauthorizedException();
+    } else if (code == 404) {
+      return InvalidUrlException();
+    } else if (code >= 500 && code < 600) {
+      return ServerErrorException();
+    } else {
+      return UnknownException();
     }
   }
 }

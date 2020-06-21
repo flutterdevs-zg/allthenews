@@ -1,8 +1,4 @@
-class ApiException implements Exception {
-  final int code;
-
-  ApiException([this.code]);
-}
+class ApiException implements Exception {}
 
 class UnauthorizedException extends ApiException {}
 
