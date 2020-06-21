@@ -16,9 +16,7 @@ extension ExceptionExtension on Exception {
     if (this is UnauthorizedException) {
       return Strings.of(context).apiUnauthorizedException;
     } else if (this is ConnectionException) {
-      return Strings
-          .of(context)
-          .apiConnectionException;
+      return Strings.of(context).apiConnectionException;
     } else if (this is InvalidUrlException) {
       return Strings
           .of(context)
