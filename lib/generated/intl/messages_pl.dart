@@ -20,24 +20,22 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'pl';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-
-  static _notInlinedMessages(_) => <String, Function>{
-        "aboutApp": MessageLookupByLibrary.simpleMessage("O aplikacji"),
-        "apiConnectionException":
-            MessageLookupByLibrary.simpleMessage("Brak połączenia sieciowego"),
-        "apiInvalidUrlException": MessageLookupByLibrary.simpleMessage("Nie znaleziono danych"),
-        "apiServerException": MessageLookupByLibrary.simpleMessage("Błąd na serwerze"),
-        "apiUnauthorizedException": MessageLookupByLibrary.simpleMessage("Błąd autoryzacyjny"),
-        "apiUnknownException": MessageLookupByLibrary.simpleMessage("Nieznany błąd"),
-        "darkMode": MessageLookupByLibrary.simpleMessage("Tryb ciemny"),
-        "emailed": MessageLookupByLibrary.simpleMessage("Wysyłane e-mailem"),
-        "mostViewed": MessageLookupByLibrary.simpleMessage("Najczęściej oglądane"),
-        "newest": MessageLookupByLibrary.simpleMessage("Najnowsze"),
-        "popular": MessageLookupByLibrary.simpleMessage("Popularne"),
-        "settings": MessageLookupByLibrary.simpleMessage("Ustawienia"),
-        "shared": MessageLookupByLibrary.simpleMessage("Udostępniane"),
-        "showAll": MessageLookupByLibrary.simpleMessage("Pokaż wszystkie"),
-        "version": MessageLookupByLibrary.simpleMessage("Wersja"),
-        "viewed": MessageLookupByLibrary.simpleMessage("Wyświetlane")
-      };
+  static _notInlinedMessages(_) => <String, Function> {
+    "aboutApp" : MessageLookupByLibrary.simpleMessage("O aplikacji"),
+    "apiConnectionException" : MessageLookupByLibrary.simpleMessage("Brak połączenia sieciowego"),
+    "apiInvalidUrlException" : MessageLookupByLibrary.simpleMessage("Nie znaleziono danych"),
+    "apiServerException" : MessageLookupByLibrary.simpleMessage("Błąd na serwerze"),
+    "apiUnauthorizedException" : MessageLookupByLibrary.simpleMessage("Błąd autoryzacyjny"),
+    "apiUnknownException" : MessageLookupByLibrary.simpleMessage("Nieznany błąd"),
+    "darkMode" : MessageLookupByLibrary.simpleMessage("Tryb ciemny"),
+    "emailed" : MessageLookupByLibrary.simpleMessage("Wysyłane e-mailem"),
+    "mostViewed" : MessageLookupByLibrary.simpleMessage("Najczęściej oglądane"),
+    "newest" : MessageLookupByLibrary.simpleMessage("Najnowsze"),
+    "popular" : MessageLookupByLibrary.simpleMessage("Popularne"),
+    "settings" : MessageLookupByLibrary.simpleMessage("Ustawienia"),
+    "shared" : MessageLookupByLibrary.simpleMessage("Udostępniane"),
+    "showAll" : MessageLookupByLibrary.simpleMessage("Pokaż wszystkie"),
+    "version" : MessageLookupByLibrary.simpleMessage("Wersja"),
+    "viewed" : MessageLookupByLibrary.simpleMessage("Wyświetlane")
+  };
 }

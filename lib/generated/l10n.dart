@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -9,12 +8,8 @@ import 'intl/messages_all.dart';
 // Made by Localizely
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
-
 class Strings {
   Strings();
-  
-  static Strings current;
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
@@ -24,9 +19,7 @@ class Strings {
     final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      Strings.current = Strings();
-      
-      return Strings.current;
+      return Strings();
     });
   } 
 
@@ -34,7 +27,6 @@ class Strings {
     return Localizations.of<Strings>(context, Strings);
   }
 
-  /// `About`
   String get aboutApp {
     return Intl.message(
       'About',
@@ -44,7 +36,6 @@ class Strings {
     );
   }
 
-  /// `E-mailed`
   String get emailed {
     return Intl.message(
       'E-mailed',
@@ -54,7 +45,6 @@ class Strings {
     );
   }
 
-  /// `Dark mode`
   String get darkMode {
     return Intl.message(
       'Dark mode',
@@ -64,7 +54,6 @@ class Strings {
     );
   }
 
-  /// `Newest`
   String get newest {
     return Intl.message(
       'Newest',
@@ -74,7 +63,6 @@ class Strings {
     );
   }
 
-  /// `Most Viewed`
   String get mostViewed {
     return Intl.message(
       'Most Viewed',
@@ -84,7 +72,6 @@ class Strings {
     );
   }
 
-  /// `Popular`
   String get popular {
     return Intl.message(
       'Popular',
@@ -94,7 +81,6 @@ class Strings {
     );
   }
 
-  /// `Shared`
   String get shared {
     return Intl.message(
       'Shared',
@@ -104,7 +90,6 @@ class Strings {
     );
   }
 
-  /// `Settings`
   String get settings {
     return Intl.message(
       'Settings',
@@ -114,7 +99,6 @@ class Strings {
     );
   }
 
-  /// `Show All`
   String get showAll {
     return Intl.message(
       'Show All',
@@ -124,7 +108,6 @@ class Strings {
     );
   }
 
-  /// `Version`
   String get version {
     return Intl.message(
       'Version',
@@ -134,7 +117,6 @@ class Strings {
     );
   }
 
-  /// `Viewed`
   String get viewed {
     return Intl.message(
       'Viewed',
@@ -144,7 +126,6 @@ class Strings {
     );
   }
 
-  /// `No internet connection`
   String get apiConnectionException {
     return Intl.message(
       'No internet connection',
@@ -154,7 +135,6 @@ class Strings {
     );
   }
 
-  /// `Unknown error`
   String get apiUnknownException {
     return Intl.message(
       'Unknown error',
@@ -164,7 +144,6 @@ class Strings {
     );
   }
 
-  /// `Authorization error`
   String get apiUnauthorizedException {
     return Intl.message(
       'Authorization error',
@@ -174,7 +153,6 @@ class Strings {
     );
   }
 
-  /// `Internal server error`
   String get apiServerException {
     return Intl.message(
       'Internal server error',
@@ -184,7 +162,6 @@ class Strings {
     );
   }
 
-  /// `Resource not found`
   String get apiInvalidUrlException {
     return Intl.message(
       'Resource not found',
