@@ -20,23 +20,22 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-
-  static _notInlinedMessages(_) => <String, Function>{
-        "aboutApp": MessageLookupByLibrary.simpleMessage("About"),
-        "apiConnectionException": MessageLookupByLibrary.simpleMessage("No internet connection"),
-        "apiInvalidUrlException": MessageLookupByLibrary.simpleMessage("Resource not found"),
-        "apiServerException": MessageLookupByLibrary.simpleMessage("Internal server error"),
-        "apiUnauthorizedException": MessageLookupByLibrary.simpleMessage("Authorization error"),
-        "apiUnknownException": MessageLookupByLibrary.simpleMessage("Unknown error"),
-        "darkMode": MessageLookupByLibrary.simpleMessage("Dark mode"),
-        "emailed": MessageLookupByLibrary.simpleMessage("E-mailed"),
-        "mostViewed": MessageLookupByLibrary.simpleMessage("Most Viewed"),
-        "newest": MessageLookupByLibrary.simpleMessage("Newest"),
-        "popular": MessageLookupByLibrary.simpleMessage("Popular"),
-        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
-        "shared": MessageLookupByLibrary.simpleMessage("Shared"),
-        "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
-        "version": MessageLookupByLibrary.simpleMessage("Version"),
-        "viewed": MessageLookupByLibrary.simpleMessage("Viewed")
-      };
+  static _notInlinedMessages(_) => <String, Function> {
+    "aboutApp" : MessageLookupByLibrary.simpleMessage("About"),
+    "apiConnectionException" : MessageLookupByLibrary.simpleMessage("No internet connection"),
+    "apiInvalidUrlException" : MessageLookupByLibrary.simpleMessage("Resource not found"),
+    "apiServerException" : MessageLookupByLibrary.simpleMessage("Internal server error"),
+    "apiUnauthorizedException" : MessageLookupByLibrary.simpleMessage("Authorization error"),
+    "apiUnknownException" : MessageLookupByLibrary.simpleMessage("Unknown error"),
+    "darkMode" : MessageLookupByLibrary.simpleMessage("Dark mode"),
+    "emailed" : MessageLookupByLibrary.simpleMessage("E-mailed"),
+    "mostViewed" : MessageLookupByLibrary.simpleMessage("Most Viewed"),
+    "newest" : MessageLookupByLibrary.simpleMessage("Newest"),
+    "popular" : MessageLookupByLibrary.simpleMessage("Popular"),
+    "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
+    "shared" : MessageLookupByLibrary.simpleMessage("Shared"),
+    "showAll" : MessageLookupByLibrary.simpleMessage("Show All"),
+    "version" : MessageLookupByLibrary.simpleMessage("Version"),
+    "viewed" : MessageLookupByLibrary.simpleMessage("Viewed")
+  };
 }
