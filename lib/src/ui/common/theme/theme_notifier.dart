@@ -14,7 +14,7 @@ class ThemeNotifier extends ChangeNotifier {
   ThemeData get themeData => _themeData;
   bool get isLoading => _themeData == null;
 
-  void initTheme() async {
+  Future<void> initTheme() async {
     final AppTheme appTheme = await _settingsRepository.getTheme();
     updateAppTheme(appTheme);
   }

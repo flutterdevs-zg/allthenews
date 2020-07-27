@@ -4,9 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class WebViewPage extends StatelessWidget {
   final String url;
 
-  WebViewPage({Key key, this.url})
-      : assert(url != null),
-        super(key: key);
+  const WebViewPage(this.url) : assert(url != null);
 
   @override
   Widget build(BuildContext context) {

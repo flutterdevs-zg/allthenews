@@ -18,7 +18,7 @@ class PrimaryNewsListEntity {
   });
 }
 
-final primaryNewsListEntities = <PrimaryNewsListEntity>[
+final List<PrimaryNewsListEntity> primaryNewsListEntities = <PrimaryNewsListEntity>[
   PrimaryNewsListEntity(
     imageUrl: 'https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg',
     title: "Something wrong is happening with ",

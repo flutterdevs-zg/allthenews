@@ -11,7 +11,7 @@ abstract class _Constants {
 class NewsListPage extends StatelessWidget {
   final List<SecondaryNewsListEntity> listEntities;
   final String headerTitle;
-
+  
   const NewsListPage({@required this.listEntities, @required this.headerTitle});
 
   @override
@@ -23,7 +23,7 @@ class NewsListPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeader(context),
-            SizedBox(height: _Constants.sectionHeaderPadding),
+            const SizedBox(height: _Constants.sectionHeaderPadding),
             SecondaryNewsListView(
               secondaryNewsListEntities: listEntities,
             ),
@@ -34,7 +34,7 @@ class NewsListPage extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) => Padding(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           top: Dimens.pagePadding,
           left: Dimens.pagePadding,
           right: Dimens.pagePadding,

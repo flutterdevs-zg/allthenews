@@ -7,7 +7,7 @@ abstract class _Constants {
 
 class PrimaryButton extends StatelessWidget {
   final Widget child;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   const PrimaryButton({
     @required this.child,
@@ -19,8 +19,7 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: onPressed,
-      constraints: BoxConstraints(),
-      child: child,
+      constraints: const BoxConstraints(),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       fillColor: Theme.of(context).buttonColor,
       highlightElevation: _Constants.elevation,
@@ -31,6 +30,7 @@ class PrimaryButton extends StatelessWidget {
           _Constants.radius,
         ),
       ),
+      child: child,
     );
   }
 }

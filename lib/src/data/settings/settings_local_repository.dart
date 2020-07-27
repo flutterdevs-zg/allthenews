@@ -27,12 +27,10 @@ class SettingsLocalRepository extends SettingsRepository {
   }
 
   @override
-  Future<void> savePopularNewsCriterion(PopularNewsCriterion popularNewsCriterion) async {
-    return await _persistenceRepository.saveString(_Constants.selectedPopularNewsCriterionKey, popularNewsCriterion.toString());
-  }
+  Future<void> savePopularNewsCriterion(PopularNewsCriterion popularNewsCriterion) =>
+      _persistenceRepository.saveString(_Constants.selectedPopularNewsCriterionKey, popularNewsCriterion.toString());
 
   @override
-  Future<void> saveTheme(AppTheme theme) async {
-    return await _persistenceRepository.saveString(_Constants.selectedThemeKey, theme.toString());
-  }
+  Future<void> saveTheme(AppTheme theme) =>
+      _persistenceRepository.saveString(_Constants.selectedThemeKey, theme.toString());
 }

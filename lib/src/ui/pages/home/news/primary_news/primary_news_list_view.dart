@@ -19,7 +19,7 @@ class PrimaryNewsListView extends StatelessWidget {
     return Container(
       height: _Constants.listHeight,
       child: ListView.builder(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: _Constants.listHorizontalPadding,
         ),
         scrollDirection: Axis.horizontal,

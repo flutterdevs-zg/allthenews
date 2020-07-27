@@ -14,7 +14,7 @@ class SecondaryNewsListEntity {
   });
 }
 
-final secondaryNewsListEntities = <SecondaryNewsListEntity>[
+final List<SecondaryNewsListEntity> secondaryNewsListEntities = <SecondaryNewsListEntity>[
   SecondaryNewsListEntity(
     title: 'Egypt Is on Edge as Security Tightens Over Protests',
     date: 'Sept. 26, 2019',

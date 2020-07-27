@@ -5,12 +5,12 @@ class SharedPreferencesPersistenceRepository extends PersistenceRepository {
   final _SharedPreferences _sharedPreferences = _SharedPreferences();
 
   @override
-  Future<bool> saveString(String key, String value) async => await _sharedPreferences
+  Future<bool> saveString(String key, String value) => _sharedPreferences
       .getInstance()
       .then((preferences) => preferences.setString(key, value));
 
   @override
-  Future<String> getString(String key) async => await _sharedPreferences
+  Future<String> getString(String key) => _sharedPreferences
       .getInstance()
       .then((preferences) => preferences.getString(key));
 }
@@ -18,10 +18,6 @@ class SharedPreferencesPersistenceRepository extends PersistenceRepository {
 class _SharedPreferences {
   SharedPreferences _sharedPreferences;
 
-  Future<SharedPreferences> getInstance() async {
-    if (_sharedPreferences == null) {
-      _sharedPreferences = await SharedPreferences.getInstance();
-    }
-    return _sharedPreferences;
-  }
+  Future<SharedPreferences> getInstance() async =>
+      _sharedPreferences ??= await SharedPreferences.getInstance();
 }

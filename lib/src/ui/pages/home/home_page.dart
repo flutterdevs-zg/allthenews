@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: _Constants.sectionHeaderPadding),
+                    const SizedBox(height: _Constants.sectionHeaderPadding),
                     _buildNewsSectionHeader(
                       title: Strings.of(context).mostViewed,
                       routeBuilder: (context) => NewsListPage(
@@ -58,11 +58,11 @@ class _HomePageState extends State<HomePage> {
                         listEntities: primaryNewsListEntities.toSecondaryNewsListEntities(),
                       ),
                     ),
-                    SizedBox(height: _Constants.sectionHeaderPadding),
+                    const SizedBox(height: _Constants.sectionHeaderPadding),
                     PrimaryNewsListView(
                       primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
                     ),
-                    SizedBox(height: _Constants.sectionSpacing),
+                    const SizedBox(height: _Constants.sectionSpacing),
                     _buildNewsSectionHeader(
                       title: Strings.of(context).newest,
                       routeBuilder: (context) => NewsListPage(
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                         listEntities: secondaryNewsListEntities,
                       ),
                     ),
-                    SizedBox(height: _Constants.sectionHeaderPadding),
+                    const SizedBox(height: _Constants.sectionHeaderPadding),
                     _buildSecondaryNewsItems(),
                   ],
                 ),
@@ -82,10 +82,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildAppBar(BuildContext context) {
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
       elevation: Dimens.appBarElevation,
-      iconTheme: IconThemeData(color: Colors.black),
+      iconTheme: const IconThemeData(color: Colors.black),
       title: Padding(
         padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
         //FIXME kliknięcie wykonuje request sieciowy, do testowania blędow
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).backgroundColor,
       actions: [
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: _Constants.appBarActionsVerticalPadding,
           ),
           child: PrimaryIconButton(
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: _Constants.appBarActionsVerticalPadding,
             bottom: _Constants.appBarActionsVerticalPadding,
             right: Dimens.pagePadding,
@@ -140,20 +140,20 @@ class _HomePageState extends State<HomePage> {
           });
         },
         child: _articleFuture == null
-            ? Text(UntranslatableStrings.newYorkTimes)
+            ? const Text(UntranslatableStrings.newYorkTimes)
             : FutureBuilder<Article>(
                 future: _articleFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
-                    var exception = _exceptionMapper.toExceptionType(snapshot.error);
+                    final exception = _exceptionMapper.toExceptionType(snapshot.error);
                     return Text(exception.toErrorMessage(context));
                   } else if (snapshot.hasData) {
                     final article = snapshot.data;
                     return Text(article.toString());
                   } else {
-                    return Text(UntranslatableStrings.newYorkTimes);
+                    return const Text(UntranslatableStrings.newYorkTimes);
                   }
                 },
               ),
