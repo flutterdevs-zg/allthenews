@@ -21,12 +21,11 @@ class SettingsNotifier extends ChangeNotifier {
 
   SettingsViewState get viewState => _viewState;
 
-  void loadSettings() async {
+  Future<void> loadSettings() async {
     final appTheme = _settingsRepository.getTheme();
     final appVersion = _appInfoRepository.getAppVersion();
     final selectedCriterion = _settingsRepository.getPopularNewsCriterion();
     _viewState = SettingsViewState(
-      isLoading: false,
       appVersion: await appVersion,
       isDarkModeEnabled: await appTheme == AppTheme.dark,
       selectedPopularNewsCriterion: await selectedCriterion,
@@ -34,9 +33,9 @@ class SettingsNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectDarkMode(bool isSelected, Read read) async {
+  Future<void> selectDarkMode({bool isSelected, Read read}) async {
     await _settingsRepository.saveTheme(isSelected ? AppTheme.dark : AppTheme.light);
-    var selectedTheme = await _settingsRepository.getTheme();
+    final selectedTheme = await _settingsRepository.getTheme();
     _viewState = SettingsViewState(
       appVersion: _viewState.appVersion,
       isDarkModeEnabled: selectedTheme == AppTheme.dark,
@@ -46,7 +45,7 @@ class SettingsNotifier extends ChangeNotifier {
     read<ThemeNotifier>().updateAppTheme(selectedTheme);
   }
 
-  void selectPopularNewsCriterion(PopularNewsCriterion criterion) async {
+  Future<void> selectPopularNewsCriterion(PopularNewsCriterion criterion) async {
     await _settingsRepository.savePopularNewsCriterion(criterion);
     _viewState = SettingsViewState(
       appVersion: _viewState.appVersion,

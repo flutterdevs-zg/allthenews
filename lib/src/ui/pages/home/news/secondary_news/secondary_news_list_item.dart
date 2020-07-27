@@ -18,7 +18,7 @@ abstract class _Constants {
 class SecondaryNewsListItem extends StatelessWidget {
   final SecondaryNewsListEntity news;
 
-  SecondaryNewsListItem({Key key, @required this.news})
+  const SecondaryNewsListItem({Key key, @required this.news})
       : assert(news != null),
         super(key: key);
 
@@ -30,11 +30,11 @@ class SecondaryNewsListItem extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WebViewPage(url: news.articleUrl),
+            builder: (context) => WebViewPage(news.articleUrl),
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: Dimens.pagePadding,
             vertical: _Constants.verticalListItemPadding,
           ),
@@ -42,13 +42,13 @@ class SecondaryNewsListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildImage(),
-              SizedBox(width: _Constants.imageHorizontalSpacing),
+              const SizedBox(width: _Constants.imageHorizontalSpacing),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildTitle(context),
-                    SizedBox(height: _Constants.titleVerticalSpacing),
+                    const SizedBox(height: _Constants.titleVerticalSpacing),
                     _buildSubtitle(context),
                   ],
                 ),

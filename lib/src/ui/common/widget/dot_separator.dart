@@ -4,7 +4,7 @@ class DotSeparator extends StatelessWidget {
   final double size;
   final Color color;
 
-  DotSeparator({this.size, this.color});
+  const DotSeparator({this.size, this.color});
 
   @override
   Widget build(BuildContext context) => Text(

@@ -8,7 +8,7 @@ abstract class _Constants {
 
 class PrimaryIconButton extends StatelessWidget {
   final IconData iconData;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   const PrimaryIconButton({
     @required this.iconData,
@@ -20,7 +20,7 @@ class PrimaryIconButton extends StatelessWidget {
   Widget build(BuildContext context) => PrimaryButton(
         onPressed: onPressed,
         child: Padding(
-          padding: EdgeInsets.all(_Constants.iconPadding),
+          padding: const EdgeInsets.all(_Constants.iconPadding),
           child: Icon(
             iconData,
             size: _Constants.iconSize,

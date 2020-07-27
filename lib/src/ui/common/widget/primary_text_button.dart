@@ -8,7 +8,7 @@ abstract class _Constants {
 
 class PrimaryTextButton extends StatelessWidget {
   final String text;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   const PrimaryTextButton({
     @required this.text,

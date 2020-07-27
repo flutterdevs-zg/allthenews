@@ -17,17 +17,12 @@ class ApiKeyLocalRepository extends ApiKeyRepository {
   ApiKey _cachedKey;
 
   @override
-  Future<ApiKey> getKey() async {
-    if (_cachedKey == null) {
-      _cachedKey = await _apiKeyRepository.getKey();
-    }
-    return _cachedKey;
-  }
+  Future<ApiKey> getKey() async => _cachedKey ??= await _apiKeyRepository.getKey();
 }
 
 class _ApiKeySecureRepository extends ApiKeyRepository {
   final ApiKeyRepository _rawStorage = _ApiKeyRawRepository();
-  final _secureStorage = new FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
 
   @override
   Future<ApiKey> getKey() async {
@@ -54,7 +49,7 @@ class _ApiKeyRawRepository extends ApiKeyRepository {
     return rootBundle.loadStructuredData<ApiKey>(
       _Constants.newYorkTimesApiKeyRawLocation,
       (jsonStr) async {
-        final Map<String, dynamic> credentialsMap = json.decode(jsonStr);
+        final credentialsMap = json.decode(jsonStr) as Map<String, String>;
         return ApiKey(
           credentialsMap[_Constants.newYorkTimesApiKeyRawStorageKey],
         );

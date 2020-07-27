@@ -18,14 +18,14 @@ abstract class _Constants {
 class PrimaryNewsListItem extends StatelessWidget {
   final PrimaryNewsListEntity news;
 
-  PrimaryNewsListItem({Key key, @required this.news})
+  const PrimaryNewsListItem({Key key, @required this.news})
       : assert(news != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: _Constants.horizontalListItemPadding,
       ),
       child: Stack(
@@ -54,7 +54,7 @@ class PrimaryNewsListItem extends StatelessWidget {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => WebViewPage(url: news.articleUrl),
+                        builder: (context) => WebViewPage(news.articleUrl),
                       ),
                     ),
                   ),
@@ -87,7 +87,7 @@ class PrimaryNewsListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildNewsTitle(context),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             _buildNewsAuthor(context),
@@ -106,7 +106,7 @@ class PrimaryNewsListItem extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: _Constants.authorDataSpacing,
           ),
           Text(
@@ -119,7 +119,7 @@ class PrimaryNewsListItem extends StatelessWidget {
       );
 
   Widget _buildNewsTitle(BuildContext context) {
-    var wrappingThreshold = MediaQuery.of(context).size.width * _Constants.wrappingThresholdPercent;
+    final wrappingThreshold = MediaQuery.of(context).size.width * _Constants.wrappingThresholdPercent;
 
     return Container(
       width: wrappingThreshold,
@@ -138,8 +138,8 @@ class PrimaryNewsListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildBookmarkIcon() => Padding(
-        padding: const EdgeInsets.all(_Constants.stackItemPadding),
+  Widget _buildBookmarkIcon() => const Padding(
+        padding: EdgeInsets.all(_Constants.stackItemPadding),
         child: Icon(
           Icons.bookmark,
           color: Colors.white,

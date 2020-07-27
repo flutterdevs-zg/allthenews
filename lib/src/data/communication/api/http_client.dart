@@ -35,12 +35,11 @@ class HttpClient {
       );
   }
 
-  void _onRequest(RequestOptions options) async {
-    var apiKey = await _apiKeyRepository.getKey();
+  Future<void> _onRequest(RequestOptions options) async {
+    final apiKey = await _apiKeyRepository.getKey();
     options.queryParameters = {_Constants.apiKeyParam: apiKey.value};
   }
 
-  Future<dynamic> get(Request request) async {
-    return await _dio.get<dynamic>(request.path, queryParameters: request.queryParameters);
-  }
+  Future<dynamic> get(Request request) =>
+      _dio.get<dynamic>(request.path, queryParameters: request.queryParameters);
 }

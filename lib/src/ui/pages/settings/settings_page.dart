@@ -41,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  Widget _buildProgressIndicator() => Center(child: CircularProgressIndicator());
+  Widget _buildProgressIndicator() => const Center(child: CircularProgressIndicator());
 
   Widget _buildSettingsScreen(BuildContext context) {
     return Scaffold(
@@ -55,15 +55,15 @@ class _SettingsPageState extends State<SettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildHeader(context),
-                SizedBox(height: _Constants.headerVerticalSpacing),
+                const SizedBox(height: _Constants.headerVerticalSpacing),
                 _buildDarkModeSection(context),
-                SizedBox(height: _Constants.sectionVerticalSpacing),
-                Divider(),
-                SizedBox(height: _Constants.sectionVerticalSpacing),
+                const SizedBox(height: _Constants.sectionVerticalSpacing),
+                const Divider(),
+                const SizedBox(height: _Constants.sectionVerticalSpacing),
                 _buildPopularSection(context),
-                SizedBox(height: _Constants.sectionVerticalSpacing),
-                Divider(),
-                SizedBox(height: _Constants.sectionVerticalSpacing),
+                const SizedBox(height: _Constants.sectionVerticalSpacing),
+                const Divider(),
+                const SizedBox(height: _Constants.sectionVerticalSpacing),
                 _buildAboutSection(context),
               ],
             ),
@@ -73,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildAppBar(BuildContext context) => AppBar(
+  PreferredSizeWidget _buildAppBar(BuildContext context) => AppBar(
         elevation: Dimens.appBarElevation,
         iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
         backgroundColor: Theme.of(context).backgroundColor,
@@ -86,7 +86,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildDarkModeSection(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: _Constants.sectionLeftSpacing,
         right: _Constants.sectionRightSpacing,
       ),
@@ -98,7 +98,10 @@ class _SettingsPageState extends State<SettingsPage> {
             value: context.select((SettingsNotifier notifier) => notifier.viewState.isDarkModeEnabled),
             onChanged: (isSelected) {
               setState(() {
-                context.read<SettingsNotifier>().selectDarkMode(isSelected, context.read);
+                context.read<SettingsNotifier>().selectDarkMode(
+                    isSelected: isSelected,
+                    read: context.read,
+                );
               });
             },
             activeColor: Theme.of(context).accentColor,
@@ -110,7 +113,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildPopularSection(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: _Constants.sectionLeftSpacing,
         right: _Constants.sectionRightSpacing,
       ),
@@ -139,7 +142,7 @@ class _SettingsPageState extends State<SettingsPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildPopularSettingText(context, popularNewsCriterion),
-          SizedBox(width: _Constants.switchLeftSpacing),
+          const SizedBox(width: _Constants.switchLeftSpacing),
           _buildSwitch(context, popularNewsCriterion == context.select((SettingsNotifier notifier) => notifier.viewState.selectedPopularNewsCriterion), (isSelected) {
             if (isSelected) {
               setState(() {
@@ -154,7 +157,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildAboutSection(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: _Constants.sectionLeftSpacing,
         right: _Constants.sectionRightSpacing,
       ),
@@ -172,9 +175,9 @@ class _SettingsPageState extends State<SettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildAboutAppText(context, '${UntranslatableStrings.email}: ${UntranslatableStrings.flutterDevsZgEmail}'),
-                SizedBox(height: _Constants.aboutSectionItemSpacing),
+                const SizedBox(height: _Constants.aboutSectionItemSpacing),
                 _buildAboutAppText(context, '${Strings.of(context).version}: ${context.select((SettingsNotifier notifier) => notifier.viewState.appVersion)}'),
-                SizedBox(height: _Constants.aboutSectionItemSpacing),
+                const SizedBox(height: _Constants.aboutSectionItemSpacing),
               ],
             ),
           )

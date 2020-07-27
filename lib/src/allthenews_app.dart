@@ -30,7 +30,7 @@ class _AllTheNewsAppState extends State<AllTheNewsApp> {
     return MaterialApp(
       theme: context.watch<ThemeNotifier>().themeData,
       home: HomePage(),
-      localizationsDelegates: [
+      localizationsDelegates: const [
         Strings.delegate,
         GlobalMaterialLocalizations.delegate,
       ],
@@ -38,5 +38,5 @@ class _AllTheNewsAppState extends State<AllTheNewsApp> {
     );
   }
 
-  Widget _buildProgressIndicator() => Center(child: CircularProgressIndicator());
+  Widget _buildProgressIndicator() => const Center(child: CircularProgressIndicator());
 }

@@ -12,6 +12,7 @@ class NYTimesRestRepository extends NYTimesRepository {
 
   NYTimesRestRepository(this._httpClient);
 
+  @override
   Future<Article> getFirstMostPopularArticle() async {
     final response = await _httpClient.get(
       Request(
@@ -19,6 +20,6 @@ class NYTimesRestRepository extends NYTimesRepository {
       ),
     );
 
-    return Article.fromJson(response.data['results'][0]);
+    return Article.fromJson(response.data['results'][0] as Map<String, dynamic>);
   }
 }
