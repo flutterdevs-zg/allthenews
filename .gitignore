@@ -115,3 +115,5 @@ app.*.symbols
 
 # secrets storage
 auth/secrets.json
+google-services.json
+GoogleService-Info.plist
