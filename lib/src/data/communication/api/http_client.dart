@@ -1,3 +1,4 @@
+import 'package:allthenews/src/app/app_config.dart';
 import 'package:allthenews/src/data/communication/api/request.dart';
 import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:dio/dio.dart';
@@ -11,14 +12,14 @@ abstract class _Constants {
 
 class HttpClient {
   final Dio _dio = Dio();
-  final String _baseUrl;
+  final AppConfig _appConfig;
   final ApiKeyRepository _apiKeyRepository;
 
   HttpClient(
-    this._baseUrl,
-    this._apiKeyRepository,
-  ) {
-    _dio.options.baseUrl = _baseUrl;
+      this._appConfig,
+      this._apiKeyRepository,
+      ) {
+    _dio.options.baseUrl = _appConfig.baseUrl;
 
     _dio.interceptors
       ..add(

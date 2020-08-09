@@ -1,3 +1,5 @@
+import 'package:allthenews/src/app/app_config.dart';
+import 'package:allthenews/src/app/app_flavors.dart';
 import 'package:allthenews/src/data/appinfo/app_info_local_repository.dart';
 import 'package:allthenews/src/data/communication/api/api_exception_mapper.dart';
 import 'package:allthenews/src/data/communication/api/api_key_local_repository.dart';
@@ -17,25 +19,32 @@ import 'package:get_it/get_it.dart';
 
 final _locator = GetIt.instance;
 
-abstract class _Constants {
-  static const nyTimesBaseUrl = "https://api.nytimes.com/svc/";
-}
-
-void injectDependencies() {
+void injectDependencies(Flavor flavor) {
+  _locator.registerSingleton<AppConfig>(_createAppConfig(flavor));
   _locator.registerSingleton<AppInfoRepository>(AppInfoLocalRepository());
   _locator.registerSingleton<PersistenceRepository>(SharedPreferencesPersistenceRepository());
   _locator.registerSingleton<SettingsRepository>(
       SettingsLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
   _locator.registerFactory(
-      () => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
+          () => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
   _injectApiDependencies();
+}
+
+AppConfig _createAppConfig(Flavor flavor) {
+  switch (flavor) {
+    case Flavor.dev:
+      return DevAppConfig();
+    case Flavor.prod:
+      return ProdAppConfig();
+  }
+  return ProdAppConfig();
 }
 
 void _injectApiDependencies() {
   _locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
   _locator.registerSingleton<HttpClient>(
-      HttpClient(_Constants.nyTimesBaseUrl, _locator<ApiKeyRepository>()));
+      HttpClient(_locator<AppConfig>(), _locator<ApiKeyRepository>()));
   _locator.registerSingleton<NYTimesRepository>(NYTimesRestRepository(_locator<HttpClient>()));
   _locator.registerSingleton<ExceptionMapper>(ApiExceptionMapper());
 }
