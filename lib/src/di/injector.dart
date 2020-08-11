@@ -19,26 +19,16 @@ import 'package:get_it/get_it.dart';
 
 final _locator = GetIt.instance;
 
-void injectDependencies(Flavor flavor) {
-  _locator.registerSingleton<AppConfig>(_createAppConfig(flavor));
+void injectDependencies(Environment flavor) {
+  _locator.registerSingleton<AppConfig>(AppConfig());
   _locator.registerSingleton<AppInfoRepository>(AppInfoLocalRepository());
   _locator.registerSingleton<PersistenceRepository>(SharedPreferencesPersistenceRepository());
   _locator.registerSingleton<SettingsRepository>(
       SettingsLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
   _locator.registerFactory(
-          () => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
+      () => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
   _injectApiDependencies();
-}
-
-AppConfig _createAppConfig(Flavor flavor) {
-  switch (flavor) {
-    case Flavor.dev:
-      return DevAppConfig();
-    case Flavor.prod:
-      return ProdAppConfig();
-  }
-  return ProdAppConfig();
 }
 
 void _injectApiDependencies() {

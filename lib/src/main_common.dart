@@ -6,7 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void mainCommon(Flavor flavor) {
+void mainCommon(Environment flavor) {
   injectDependencies(flavor);
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runApp(
