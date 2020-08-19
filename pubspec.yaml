@@ -21,6 +21,7 @@ dependencies:
   dio: ^3.0.9
   pretty_dio_logger: ^1.1.1
   firebase_crashlytics: ^0.1.3+3
+  flutter_svg: ^0.18.0
 
   flutter_localizations:
     sdk: flutter
@@ -41,6 +42,7 @@ flutter:
     - family: Chomsky
       fonts:
         - asset: assets/fonts/Chomsky.otf
+        - asset: assets/images/news.svg
 flutter_intl:
   enabled: true
   class_name: Strings

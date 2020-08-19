@@ -13,6 +13,16 @@ class SharedPreferencesPersistenceRepository extends PersistenceRepository {
   Future<String> getString(String key) => _sharedPreferences
       .getInstance()
       .then((preferences) => preferences.getString(key));
+
+  @override
+  Future<bool> getBool(String key) => _sharedPreferences
+      .getInstance()
+      .then((preferences) => preferences.getBool(key));
+
+  @override
+  Future<bool> saveBool(String key, bool value) => _sharedPreferences
+      .getInstance()
+      .then((preferences) => preferences.setBool(key, value));
 }
 
 class _SharedPreferences {
