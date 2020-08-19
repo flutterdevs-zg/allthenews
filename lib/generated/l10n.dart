@@ -43,6 +43,26 @@ class Strings {
     );
   }
 
+  /// `Application fully written in Flutter`
+  String get appInfoTechnicalDescription {
+    return Intl.message(
+      'Application fully written in Flutter',
+      name: 'appInfoTechnicalDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The latest news from the world`
+  String get appInfoFeatureDescription {
+    return Intl.message(
+      'The latest news from the world',
+      name: 'appInfoFeatureDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `E-mailed`
   String get emailed {
     return Intl.message(
@@ -68,6 +88,16 @@ class Strings {
     return Intl.message(
       'Newest',
       name: 'newest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next`
+  String get next {
+    return Intl.message(
+      'Next',
+      name: 'next',
       desc: '',
       args: [],
     );
@@ -118,6 +148,16 @@ class Strings {
     return Intl.message(
       'Show All',
       name: 'showAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Skip`
+  String get skip {
+    return Intl.message(
+      'Skip',
+      name: 'skip',
       desc: '',
       args: [],
     );

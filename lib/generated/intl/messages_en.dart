@@ -27,14 +27,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "apiServerException" : MessageLookupByLibrary.simpleMessage("Internal server error"),
     "apiUnauthorizedException" : MessageLookupByLibrary.simpleMessage("Authorization error"),
     "apiUnknownException" : MessageLookupByLibrary.simpleMessage("Unknown error"),
+    "appInfoFeatureDescription" : MessageLookupByLibrary.simpleMessage("The latest news from the world"),
+    "appInfoTechnicalDescription" : MessageLookupByLibrary.simpleMessage("Application fully written in Flutter"),
     "darkMode" : MessageLookupByLibrary.simpleMessage("Dark mode"),
     "emailed" : MessageLookupByLibrary.simpleMessage("E-mailed"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Most Viewed"),
     "newest" : MessageLookupByLibrary.simpleMessage("Newest"),
+    "next" : MessageLookupByLibrary.simpleMessage("Next"),
     "popular" : MessageLookupByLibrary.simpleMessage("Popular"),
     "settings" : MessageLookupByLibrary.simpleMessage("Settings"),
     "shared" : MessageLookupByLibrary.simpleMessage("Shared"),
     "showAll" : MessageLookupByLibrary.simpleMessage("Show All"),
+    "skip" : MessageLookupByLibrary.simpleMessage("Skip"),
     "version" : MessageLookupByLibrary.simpleMessage("Version"),
     "viewed" : MessageLookupByLibrary.simpleMessage("Viewed")
   };

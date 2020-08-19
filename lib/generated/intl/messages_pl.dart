@@ -27,14 +27,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "apiServerException" : MessageLookupByLibrary.simpleMessage("Błąd na serwerze"),
     "apiUnauthorizedException" : MessageLookupByLibrary.simpleMessage("Błąd autoryzacyjny"),
     "apiUnknownException" : MessageLookupByLibrary.simpleMessage("Nieznany błąd"),
+    "appInfoFeatureDescription" : MessageLookupByLibrary.simpleMessage("Najnowsze informacje z całego świata"),
+    "appInfoTechnicalDescription" : MessageLookupByLibrary.simpleMessage("Aplikacja w całości napisana we Flutterze"),
     "darkMode" : MessageLookupByLibrary.simpleMessage("Tryb ciemny"),
     "emailed" : MessageLookupByLibrary.simpleMessage("Wysyłane e-mailem"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Najczęściej oglądane"),
     "newest" : MessageLookupByLibrary.simpleMessage("Najnowsze"),
+    "next" : MessageLookupByLibrary.simpleMessage("Dalej"),
     "popular" : MessageLookupByLibrary.simpleMessage("Popularne"),
     "settings" : MessageLookupByLibrary.simpleMessage("Ustawienia"),
     "shared" : MessageLookupByLibrary.simpleMessage("Udostępniane"),
     "showAll" : MessageLookupByLibrary.simpleMessage("Pokaż wszystkie"),
+    "skip" : MessageLookupByLibrary.simpleMessage("Pomiń"),
     "version" : MessageLookupByLibrary.simpleMessage("Wersja"),
     "viewed" : MessageLookupByLibrary.simpleMessage("Wyświetlane")
   };
