@@ -8,6 +8,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 abstract class _Constants {
   static const logPrintWidthSize = 300;
   static const apiKeyParam = "api-key";
+  static const timeoutDuration = Duration(seconds: 5);
 }
 
 class HttpClient {
@@ -16,9 +17,9 @@ class HttpClient {
   final ApiKeyRepository _apiKeyRepository;
 
   HttpClient(
-      this._appConfig,
-      this._apiKeyRepository,
-      ) {
+    this._appConfig,
+    this._apiKeyRepository,
+  ) {
     _dio.options.baseUrl = _appConfig.baseUrl;
 
     _dio.interceptors
@@ -41,6 +42,11 @@ class HttpClient {
     options.queryParameters = {_Constants.apiKeyParam: apiKey.value};
   }
 
-  Future<dynamic> get(Request request) =>
-      _dio.get<dynamic>(request.path, queryParameters: request.queryParameters);
+  Future<dynamic> get(Request request) async {
+    final Future<Response> futureResponse =
+        _dio.get<dynamic>(request.path, queryParameters: request.queryParameters);
+    final response = await futureResponse.timeout(_Constants.timeoutDuration);
+
+    return response.data;
+  }
 }

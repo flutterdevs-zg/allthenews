@@ -35,7 +35,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final NYTimesRepository _nyTimesRepository = inject<NYTimesRepository>();
   final ExceptionMapper _exceptionMapper = inject<ExceptionMapper>();
-  Future<Article> _articleFuture;
+  Future<List<Article>> _articleFuture;
 
   @override
   Widget build(BuildContext context) {
@@ -136,12 +136,12 @@ class _HomePageState extends State<HomePage> {
       child: GestureDetector(
         onTap: () {
           setState(() {
-            _articleFuture = _nyTimesRepository.getFirstMostPopularArticle();
+            _articleFuture = _nyTimesRepository.getArticles();
           });
         },
         child: _articleFuture == null
             ? const Text(UntranslatableStrings.newYorkTimes)
-            : FutureBuilder<Article>(
+            : FutureBuilder<List<Article>>(
                 future: _articleFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -150,8 +150,11 @@ class _HomePageState extends State<HomePage> {
                     final exception = _exceptionMapper.toExceptionType(snapshot.error);
                     return Text(exception.toErrorMessage(context));
                   } else if (snapshot.hasData) {
-                    final article = snapshot.data;
-                    return Text(article.toString());
+                    final articles = snapshot.data;
+                    articles.forEach((element) {
+                      print(element);
+                    });
+                    return const Text("dupa");
                   } else {
                     return const Text(UntranslatableStrings.newYorkTimes);
                   }
@@ -169,7 +172,6 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.symmetric(horizontal: Dimens.pagePadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
             child: Hero(
@@ -195,7 +197,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildSecondaryNewsItems() => Column(
-        children: secondaryNewsListEntities.take(3).toList().map((news) => SecondaryNewsListItem(news: news)).toList(),
+        children: secondaryNewsListEntities
+            .take(3)
+            .toList()
+            .map((news) => SecondaryNewsListItem(news: news))
+            .toList(),
       );
 }
 
