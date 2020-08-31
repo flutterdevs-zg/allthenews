@@ -5,13 +5,10 @@ part 'media_response.g.dart';
 
 @JsonSerializable()
 class MediaResponse {
-  @JsonKey(name: 'type')
   final String type;
 
-  @JsonKey(name: 'subtype')
   final String subtype;
 
-  @JsonKey(name: 'caption')
   final String caption;
 
   @JsonKey(name: 'media-metadata')

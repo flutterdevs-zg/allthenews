@@ -1,4 +1,4 @@
-import 'package:allthenews/src/data/response/article_response.dart';
+import 'package:meta/meta.dart';
 
 class Article {
   final int id;
@@ -16,24 +16,14 @@ class Article {
   final String thumbnail;
 
   Article({
-    this.id,
-    this.url,
-    this.updated,
-    this.authorName,
-    this.title,
-    this.abstract,
-    this.thumbnail,
+    @required this.id,
+    @required this.url,
+    @required this.updated,
+    @required this.authorName,
+    @required this.title,
+    @required this.abstract,
+    @required this.thumbnail,
   });
-
-  factory Article.fromResponse(ArticleResponse response) => Article(
-        id: response.id,
-        authorName: response.author,
-        title: response.title,
-        abstract: response.abstract,
-        updated: response.updated,
-        url: response.url,
-        thumbnail: response.media.mediaMetadata.last.url,
-      );
 
   @override
   String toString() {

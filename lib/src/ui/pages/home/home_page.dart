@@ -151,10 +151,7 @@ class _HomePageState extends State<HomePage> {
                     return Text(exception.toErrorMessage(context));
                   } else if (snapshot.hasData) {
                     final articles = snapshot.data;
-                    articles.forEach((element) {
-                      print(element);
-                    });
-                    return const Text("dupa");
+                    return Text(articles.first.toString());
                   } else {
                     return const Text(UntranslatableStrings.newYorkTimes);
                   }

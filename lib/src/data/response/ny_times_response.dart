@@ -5,7 +5,6 @@ part 'ny_times_response.g.dart';
 
 @JsonSerializable()
 class NyTimesResponse {
-  @JsonKey(name: 'copyright')
   final String copyright;
   @JsonKey(name: 'num_results')
   final int numResults;

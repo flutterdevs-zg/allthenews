@@ -1,5 +1,6 @@
 import 'package:allthenews/src/data/communication/api/http_client.dart';
 import 'package:allthenews/src/data/communication/api/request.dart';
+import 'package:allthenews/src/data/response/article_response.dart';
 import 'package:allthenews/src/data/response/ny_times_response.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
@@ -34,7 +35,7 @@ class NYTimesRestRepository extends NYTimesRepository {
 
     return NyTimesResponse.fromJson(response)
         .articles
-        .map((articleResponse) => Article.fromResponse(articleResponse))
+        .map((articleResponse) => ArticleResponse.toArticle(articleResponse))
         .toList();
   }
 }

@@ -1,32 +1,27 @@
 import 'package:allthenews/src/data/response/media_response.dart';
+import 'package:allthenews/src/domain/model/article.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'article_response.g.dart';
 
 @JsonSerializable()
 class ArticleResponse {
-  @JsonKey(name: 'id')
   final int id;
 
-  @JsonKey(name: 'url')
   final String url;
 
-  @JsonKey(name: 'updated')
   final String updated;
 
   @JsonKey(name: 'byline')
   final String author;
 
-  @JsonKey(name: 'title')
   final String title;
 
-  @JsonKey(name: 'abstract')
   final String abstract;
 
-  @JsonKey(name: 'media')
   final MediaResponse media;
 
-  ArticleResponse(
+  const ArticleResponse(
     this.id,
     this.url,
     this.updated,
@@ -37,6 +32,16 @@ class ArticleResponse {
   );
 
   static ArticleResponse fromJson(Map<String, dynamic> json) => _$ArticleResponseFromJson(json);
+
+  static Article toArticle(ArticleResponse response) => Article(
+        id: response.id,
+        authorName: response.author,
+        title: response.title,
+        abstract: response.abstract,
+        updated: response.updated,
+        url: response.url,
+        thumbnail: response.media.mediaMetadata.last.url,
+      );
 
   @override
   String toString() {
