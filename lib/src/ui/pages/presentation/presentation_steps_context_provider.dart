@@ -32,7 +32,7 @@ extension PresentationImageTypeExtenstions on PresentationImageType {
   Widget getImage() {
     switch (this) {
       case PresentationImageType.flutterLogo:
-        return const FlutterLogo(colors: Colors.grey);
+        return const FlutterLogo();
       case PresentationImageType.newsIcon:
         return SvgPicture.asset('assets/images/news.svg', color: Colors.grey);
     }

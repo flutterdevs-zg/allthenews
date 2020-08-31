@@ -28,10 +28,13 @@ void injectDependencies(Environment flavor) {
   _locator.registerSingleton<AppConfig>(AppConfig());
   _locator.registerSingleton<AppInfoRepository>(AppInfoLocalRepository());
   _locator.registerSingleton<PersistenceRepository>(SharedPreferencesPersistenceRepository());
-  _locator.registerSingleton<SettingsRepository>(SettingsLocalRepository(_locator<PersistenceRepository>()));
-  _locator.registerSingleton<PresentationShowingRepository>(PresentationShowingLocalRepository(_locator<PersistenceRepository>()));
+  _locator.registerSingleton<SettingsRepository>(
+      SettingsLocalRepository(_locator<PersistenceRepository>()));
+  _locator.registerSingleton<PresentationShowingRepository>(
+      PresentationShowingLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
-  _locator.registerFactory(() => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
+  _locator.registerFactory(
+      () => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
   _locator.registerFactory<PresentationStepsProvider>(() => PresentationStepsContextProvider());
   _locator.registerFactory(() => PresentationNotifier(_locator<PresentationShowingRepository>()));
   _injectApiDependencies();
@@ -41,7 +44,8 @@ void _injectApiDependencies() {
   _locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
   _locator.registerSingleton<HttpClient>(
       HttpClient(_locator<AppConfig>(), _locator<ApiKeyRepository>()));
-  _locator.registerSingleton<NYTimesRepository>(NYTimesRestRepository(_locator<HttpClient>()));
+  _locator.registerSingleton<NYTimesRepository>(
+      NYTimesRestRepository(_locator<HttpClient>(), _locator<SettingsRepository>()));
   _locator.registerSingleton<ExceptionMapper>(ApiExceptionMapper());
 }
 
