@@ -113,6 +113,26 @@ class Strings {
     );
   }
 
+  /// `Most Shared`
+  String get mostShared {
+    return Intl.message(
+      'Most Shared',
+      name: 'mostShared',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Most Emailed`
+  String get mostEmailed {
+    return Intl.message(
+      'Most Emailed',
+      name: 'mostEmailed',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Popular`
   String get popular {
     return Intl.message(

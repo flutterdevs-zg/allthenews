@@ -2,12 +2,11 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
-import 'package:allthenews/src/ui/common/util/exception_extensions.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
+import 'package:allthenews/src/ui/pages/home/home_notifier.dart';
 import 'package:allthenews/src/ui/pages/home/news/news_list_page.dart';
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_view.dart';
@@ -25,6 +24,7 @@ abstract class _Constants {
   static const appBarTitleLeftPadding = 10.0;
   static const sectionHeaderPadding = 10.0;
   static const sectionSpacing = 20.0;
+  static const primaryNewsListSize = 5;
 }
 
 class HomePage extends StatefulWidget {
@@ -33,9 +33,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final NYTimesRepository _nyTimesRepository = inject<NYTimesRepository>();
   final ExceptionMapper _exceptionMapper = inject<ExceptionMapper>();
-  Future<List<Article>> _articleFuture;
+  final HomeNotifier _homeNotifier = inject<HomeNotifier>();
+
+  @override
+  void initState() {
+    super.initState();
+    _homeNotifier.fetchHomeArticles(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,41 +48,53 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: _buildAppBar(context),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: _Constants.sectionHeaderPadding),
-                    _buildNewsSectionHeader(
-                      title: Strings.of(context).mostViewed,
-                      routeBuilder: (context) => NewsListPage(
-                        headerTitle: Strings.of(context).mostViewed,
-                        listEntities: primaryNewsListEntities.toSecondaryNewsListEntities(),
-                      ),
-                    ),
-                    const SizedBox(height: _Constants.sectionHeaderPadding),
-                    PrimaryNewsListView(
-                      primaryNewsListEntities: primaryNewsListEntities.take(5).toList(),
-                    ),
-                    const SizedBox(height: _Constants.sectionSpacing),
-                    _buildNewsSectionHeader(
-                      title: Strings.of(context).newest,
-                      routeBuilder: (context) => NewsListPage(
-                        headerTitle: Strings.of(context).newest,
-                        listEntities: secondaryNewsListEntities,
-                      ),
-                    ),
-                    const SizedBox(height: _Constants.sectionHeaderPadding),
-                    _buildSecondaryNewsItems(),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: ChangeNotifierProvider.value(
+            value: _homeNotifier,
+            builder: (context, child) {
+              final List<Article> articles =
+                  context.select((HomeNotifier notifier) => notifier.articles);
+
+              return articles == null
+                  ? const CircularProgressIndicator()
+                  : Column(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: _Constants.sectionHeaderPadding),
+                                _buildNewsSectionHeader(
+                                  title: _homeNotifier.primaryListTitle,
+                                  routeBuilder: (context) => NewsListPage(
+                                    headerTitle: Strings.of(context).mostViewed,
+                                    listEntities: articles.toSecondaryNewsListEntities(),
+                                  ),
+                                ),
+                                const SizedBox(height: _Constants.sectionHeaderPadding),
+                                PrimaryNewsListView(
+                                  primaryNewsListEntities: articles
+                                      .toPrimaryNewsListEntity()
+                                      .take(_Constants.primaryNewsListSize)
+                                      .toList(),
+                                ),
+                                const SizedBox(height: _Constants.sectionSpacing),
+                                _buildNewsSectionHeader(
+                                  title: Strings.of(context).newest,
+                                  routeBuilder: (context) => NewsListPage(
+                                    headerTitle: Strings.of(context).newest,
+                                    listEntities: articles.toSecondaryNewsListEntities(),
+                                  ),
+                                ),
+                                const SizedBox(height: _Constants.sectionHeaderPadding),
+                                _buildSecondaryNewsItems(articles),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+            }),
       ),
     );
   }
@@ -88,8 +105,13 @@ class _HomePageState extends State<HomePage> {
       iconTheme: const IconThemeData(color: Colors.black),
       title: Padding(
         padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
-        //FIXME kliknięcie wykonuje request sieciowy, do testowania blędow
-        child: _buildClickableTitle(context),
+        child: Text(
+          UntranslatableStrings.newYorkTimes,
+          style: Theme.of(context)
+              .textTheme
+              .headline2
+              .copyWith(fontFamily: _Constants.appBarTitleFontFamily),
+        ),
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       actions: [
@@ -128,39 +150,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildClickableTitle(BuildContext context) {
-    return DefaultTextStyle.merge(
-      style: Theme.of(context).textTheme.headline2.copyWith(
-            fontFamily: _Constants.appBarTitleFontFamily,
-          ),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _articleFuture = _nyTimesRepository.getArticles();
-          });
-        },
-        child: _articleFuture == null
-            ? const Text(UntranslatableStrings.newYorkTimes)
-            : FutureBuilder<List<Article>>(
-                future: _articleFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    final exception = _exceptionMapper.toExceptionType(snapshot.error);
-                    return Text(exception.toErrorMessage(context));
-                  } else if (snapshot.hasData) {
-                    final articles = snapshot.data;
-                    return Text(articles.first.toString());
-                  } else {
-                    return const Text(UntranslatableStrings.newYorkTimes);
-                  }
-                },
-              ),
-      ),
-    );
-  }
-
   Widget _buildNewsSectionHeader({
     @required String title,
     @required WidgetBuilder routeBuilder,
@@ -193,8 +182,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildSecondaryNewsItems() => Column(
-        children: secondaryNewsListEntities
+  Widget _buildSecondaryNewsItems(List<Article> articles) => Column(
+        children: articles
+            .toSecondaryNewsListEntities()
             .take(3)
             .toList()
             .map((news) => SecondaryNewsListItem(news: news))
@@ -202,14 +192,25 @@ class _HomePageState extends State<HomePage> {
       );
 }
 
-extension on List<PrimaryNewsListEntity> {
+extension on List<Article> {
+  List<PrimaryNewsListEntity> toPrimaryNewsListEntity() => map(
+        (article) => PrimaryNewsListEntity(
+          title: article.title,
+          articleUrl: article.url,
+          authorName: article.authorName,
+          date: article.date,
+          imageUrl: article.thumbnail,
+          time: article.time,
+        ),
+      ).toList();
+
   List<SecondaryNewsListEntity> toSecondaryNewsListEntities() => map(
-        (primaryEntity) => SecondaryNewsListEntity(
-          title: primaryEntity.title,
-          date: primaryEntity.date,
-          imageUrl: primaryEntity.imageUrl,
-          time: primaryEntity.time,
-          articleUrl: primaryEntity.articleUrl,
+        (article) => SecondaryNewsListEntity(
+          title: article.title,
+          date: article.date,
+          imageUrl: article.thumbnail,
+          time: article.time,
+          articleUrl: article.url,
         ),
       ).toList();
 }

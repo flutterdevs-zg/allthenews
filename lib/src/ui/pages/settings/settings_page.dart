@@ -2,6 +2,7 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
+import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ abstract class _Constants {
   static const sectionItemLeftSpacing = 30.0;
   static const sectionItemTopSpacing = 12.0;
   static const switchLeftSpacing = 10.0;
+  static const backButtonPadding = 8.0;
 }
 
 class SettingsPage extends StatefulWidget {
@@ -25,7 +27,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   @override
   void initState() {
     super.initState();
@@ -77,6 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
         elevation: Dimens.appBarElevation,
         iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
         backgroundColor: Theme.of(context).backgroundColor,
+        leading: _buildBackButton(),
       );
 
   Widget _buildHeader(BuildContext context) => Text(
@@ -95,13 +97,14 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           _buildSettingsHeader(context, Strings.of(context).darkMode),
           CupertinoSwitch(
-            value: context.select((SettingsNotifier notifier) => notifier.viewState.isDarkModeEnabled),
+            value:
+                context.select((SettingsNotifier notifier) => notifier.viewState.isDarkModeEnabled),
             onChanged: (isSelected) {
               setState(() {
                 context.read<SettingsNotifier>().selectDarkMode(
-                    isSelected: isSelected,
-                    read: context.read,
-                );
+                      isSelected: isSelected,
+                      read: context.read,
+                    );
               });
             },
             activeColor: Theme.of(context).accentColor,
@@ -131,7 +134,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Padding _buildPopularSectionItem(BuildContext context, PopularNewsCriterion popularNewsCriterion) {
+  Padding _buildPopularSectionItem(
+      BuildContext context, PopularNewsCriterion popularNewsCriterion) {
     return Padding(
       padding: const EdgeInsets.only(
         left: _Constants.sectionItemLeftSpacing,
@@ -143,7 +147,11 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           _buildPopularSettingText(context, popularNewsCriterion),
           const SizedBox(width: _Constants.switchLeftSpacing),
-          _buildSwitch(context, popularNewsCriterion == context.select((SettingsNotifier notifier) => notifier.viewState.selectedPopularNewsCriterion), (isSelected) {
+          _buildSwitch(
+              context,
+              popularNewsCriterion ==
+                  context.select((SettingsNotifier notifier) =>
+                      notifier.viewState.selectedPopularNewsCriterion), (isSelected) {
             if (isSelected) {
               setState(() {
                 context.read<SettingsNotifier>().selectPopularNewsCriterion(popularNewsCriterion);
@@ -174,9 +182,11 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildAboutAppText(context, '${UntranslatableStrings.email}: ${UntranslatableStrings.flutterDevsZgEmail}'),
+                _buildAboutAppText(context,
+                    '${UntranslatableStrings.email}: ${UntranslatableStrings.flutterDevsZgEmail}'),
                 const SizedBox(height: _Constants.aboutSectionItemSpacing),
-                _buildAboutAppText(context, '${Strings.of(context).version}: ${context.select((SettingsNotifier notifier) => notifier.viewState.appVersion)}'),
+                _buildAboutAppText(context,
+                    '${Strings.of(context).version}: ${context.select((SettingsNotifier notifier) => notifier.viewState.appVersion)}'),
                 const SizedBox(height: _Constants.aboutSectionItemSpacing),
               ],
             ),
@@ -187,17 +197,19 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildSettingsHeader(BuildContext context, String text) => Text(
-      text,
-      style: Theme.of(context).textTheme.headline4,
-  );
+        text,
+        style: Theme.of(context).textTheme.headline4,
+      );
 
   Widget _buildAboutAppText(BuildContext context, String text) => Text(
-      text,
-      style: Theme.of(context).textTheme.bodyText2.copyWith(color: Theme.of(context).textTheme.caption.color),
-  );
+        text,
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2
+            .copyWith(color: Theme.of(context).textTheme.caption.color),
+      );
 
-  Widget _buildPopularSettingText(BuildContext context, PopularNewsCriterion criterion) =>
-      Flexible(
+  Widget _buildPopularSettingText(BuildContext context, PopularNewsCriterion criterion) => Flexible(
         child: Text(
           criterion.toCriterionName(context),
           style: Theme.of(context).textTheme.headline6,
@@ -209,6 +221,23 @@ class _SettingsPageState extends State<SettingsPage> {
         value: value,
         onChanged: onChanged,
         activeColor: Theme.of(context).accentColor,
+      );
+
+  Widget _buildBackButton() => Padding(
+        padding: const EdgeInsets.all(_Constants.backButtonPadding),
+        child: Material(
+          color: Colors.transparent,
+          shape: const CircleBorder(),
+          clipBehavior: Clip.hardEdge,
+          child: InkWell(
+            onTap: () => Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => HomePage())),
+            child: Icon(
+              Icons.arrow_back,
+              color: Theme.of(context).indicatorColor,
+            ),
+          ),
+        ),
       );
 }
 

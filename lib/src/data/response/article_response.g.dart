@@ -14,9 +14,11 @@ ArticleResponse _$ArticleResponseFromJson(Map<String, dynamic> json) {
     json['byline'] as String,
     json['title'] as String,
     json['abstract'] as String,
-    json['media'] == null
-        ? null
-        : MediaResponse.fromJson(json['media'] as Map<String, dynamic>),
+    (json['media'] as List)
+        ?.map((e) => e == null
+            ? null
+            : MediaResponse.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 

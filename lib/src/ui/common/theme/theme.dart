@@ -13,6 +13,7 @@ ThemeData _buildLightNewsTheme() {
 
   return base.copyWith(
     backgroundColor: Colors.white,
+    indicatorColor: Colors.black,
     colorScheme: const ColorScheme.light(),
     buttonColor: _Constants.buttonColor,
     accentColor: Colors.black54,
@@ -25,6 +26,7 @@ ThemeData _buildDarkNewsTheme() {
 
   return base.copyWith(
     backgroundColor: Colors.black,
+    indicatorColor: Colors.white,
     colorScheme: const ColorScheme.dark(),
     buttonColor: _Constants.buttonColor,
     accentColor: Colors.grey[800],

@@ -31,6 +31,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "appInfoTechnicalDescription" : MessageLookupByLibrary.simpleMessage("Aplikacja w całości napisana we Flutterze"),
     "darkMode" : MessageLookupByLibrary.simpleMessage("Tryb ciemny"),
     "emailed" : MessageLookupByLibrary.simpleMessage("Wysyłane e-mailem"),
+    "mostEmailed" : MessageLookupByLibrary.simpleMessage("Najczęściej mailowane"),
+    "mostShared" : MessageLookupByLibrary.simpleMessage("Najczęściej udostępniane"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Najczęściej oglądane"),
     "newest" : MessageLookupByLibrary.simpleMessage("Najnowsze"),
     "next" : MessageLookupByLibrary.simpleMessage("Dalej"),

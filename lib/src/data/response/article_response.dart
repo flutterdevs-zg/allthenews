@@ -19,7 +19,7 @@ class ArticleResponse {
 
   final String abstract;
 
-  final MediaResponse media;
+  final List<MediaResponse> media;
 
   const ArticleResponse(
     this.id,
@@ -34,14 +34,20 @@ class ArticleResponse {
   static ArticleResponse fromJson(Map<String, dynamic> json) => _$ArticleResponseFromJson(json);
 
   static Article toArticle(ArticleResponse response) => Article(
-        id: response.id,
-        authorName: response.author,
-        title: response.title,
-        abstract: response.abstract,
-        updated: response.updated,
-        url: response.url,
-        thumbnail: response.media.mediaMetadata.last.url,
-      );
+      id: response.id,
+      authorName: response.author,
+      title: response.title,
+      abstract: response.abstract,
+      date: response.updated.split(" ").first,
+      time: response.updated.split(" ").last,
+      url: response.url,
+      thumbnail: response.media.isNotEmpty
+          ? response.media
+              .firstWhere((element) => element.type == "image")
+              .mediaMetadata
+              .firstWhere((element) => element.format == "mediumThreeByTwo440")
+              .url
+          : null);
 
   @override
   String toString() {
