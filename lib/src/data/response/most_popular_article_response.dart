@@ -1,11 +1,11 @@
-import 'package:allthenews/src/data/response/media_response.dart';
+import 'package:allthenews/src/data/response/most_popular_media_response.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'article_response.g.dart';
+part 'most_popular_article_response.g.dart';
 
 @JsonSerializable()
-class ArticleResponse {
+class MostPopularArticleResponse {
   final int id;
 
   final String url;
@@ -19,9 +19,9 @@ class ArticleResponse {
 
   final String abstract;
 
-  final List<MediaResponse> media;
+  final List<MostPopularMediaResponse> media;
 
-  const ArticleResponse(
+  const MostPopularArticleResponse(
     this.id,
     this.url,
     this.updated,
@@ -31,9 +31,10 @@ class ArticleResponse {
     this.media,
   );
 
-  static ArticleResponse fromJson(Map<String, dynamic> json) => _$ArticleResponseFromJson(json);
+  static MostPopularArticleResponse fromJson(Map<String, dynamic> json) =>
+      _$MostPopularArticleResponseFromJson(json);
 
-  static Article toArticle(ArticleResponse response) => Article(
+  static Article toArticle(MostPopularArticleResponse response) => Article(
       id: response.id,
       authorName: response.author,
       title: response.title,
@@ -48,9 +49,4 @@ class ArticleResponse {
               .firstWhere((element) => element.format == "mediumThreeByTwo440")
               .url
           : null);
-
-  @override
-  String toString() {
-    return 'ArticleResponse{id: $id, url: $url, updated: $updated, author: $author, title: $title, abstract: $abstract}';
-  }
 }

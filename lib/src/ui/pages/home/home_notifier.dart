@@ -1,5 +1,3 @@
-import 'package:allthenews/generated/l10n.dart';
-import 'package:allthenews/src/domain/common/notifier_state.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
@@ -12,47 +10,26 @@ class HomeNotifier extends ChangeNotifier {
 
   HomeNotifier(this._nyTimesRepository, this._settingsRepository);
 
-  NotifierState _notifierState = NotifierState.initial;
+  List<Article> _mostPopularArticles;
 
-  NotifierState get notifierState => _notifierState;
+  List<Article> get mostPopularArticles => _mostPopularArticles;
 
-  List<Article> _articles;
+  List<Article> _newestArticles;
 
-  List<Article> get articles => _articles;
+  List<Article> get newestArticles => _newestArticles;
 
-  String _primaryListTitle;
+  PopularNewsCriterion _popularNewsCriterion;
 
-  String get primaryListTitle => _primaryListTitle;
-
-  void setNotifierState(NotifierState notifierState) {
-    _notifierState = notifierState;
-    notifyListeners();
-  }
+  PopularNewsCriterion get popularNewsCriterion => _popularNewsCriterion;
 
   void fetchHomeArticles(BuildContext context) {
-    setNotifierState(NotifierState.loading);
-    _nyTimesRepository.getArticles().then((articles) {
-      _articles = articles;
-      _getTitleForType(context);
-      setNotifierState(NotifierState.loaded);
-    }).catchError((error) {
-      setNotifierState(NotifierState.error);
-    });
-  }
-
-  void _getTitleForType(BuildContext context) async {
-    _settingsRepository.getPopularNewsCriterion().then((criterion) {
-      switch (criterion) {
-        case PopularNewsCriterion.viewed:
-          _primaryListTitle = Strings.of(context).mostViewed;
-          break;
-        case PopularNewsCriterion.shared:
-          _primaryListTitle = Strings.of(context).mostShared;
-          break;
-        case PopularNewsCriterion.emailed:
-          _primaryListTitle = Strings.of(context).mostEmailed;
-          break;
-      }
+    Future.wait(
+            [_nyTimesRepository.getMostPopularArticles(), _nyTimesRepository.getNewestArticles()])
+        .then((articles) async {
+      _mostPopularArticles = articles[0];
+      _newestArticles = articles[1];
+      _popularNewsCriterion = await _settingsRepository.getPopularNewsCriterion();
+      notifyListeners();
     });
   }
 }

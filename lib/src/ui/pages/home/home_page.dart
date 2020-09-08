@@ -1,7 +1,7 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
-import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:allthenews/src/domain/model/article.dart';
+import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
@@ -33,7 +33,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ExceptionMapper _exceptionMapper = inject<ExceptionMapper>();
   final HomeNotifier _homeNotifier = inject<HomeNotifier>();
 
   @override
@@ -50,12 +49,17 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: ChangeNotifierProvider.value(
             value: _homeNotifier,
-            builder: (context, child) {
-              final List<Article> articles =
-                  context.select((HomeNotifier notifier) => notifier.articles);
+            builder: (providerContext, child) {
+              final List<Article> mostPopularArticles =
+                  providerContext.select((HomeNotifier notifier) => notifier.mostPopularArticles);
 
-              return articles == null
-                  ? const CircularProgressIndicator()
+              final List<Article> newestArticles =
+                  providerContext.select((HomeNotifier notifier) => notifier.newestArticles);
+
+              final String headerTitle = getTitleForCriterion(providerContext);
+
+              return mostPopularArticles == null
+                  ? const Center(child: CircularProgressIndicator())
                   : Column(
                       children: [
                         Expanded(
@@ -65,15 +69,15 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 const SizedBox(height: _Constants.sectionHeaderPadding),
                                 _buildNewsSectionHeader(
-                                  title: _homeNotifier.primaryListTitle,
+                                  title: headerTitle,
                                   routeBuilder: (context) => NewsListPage(
-                                    headerTitle: Strings.of(context).mostViewed,
-                                    listEntities: articles.toSecondaryNewsListEntities(),
+                                    headerTitle: headerTitle,
+                                    listEntities: mostPopularArticles.toSecondaryNewsListEntities(),
                                   ),
                                 ),
                                 const SizedBox(height: _Constants.sectionHeaderPadding),
                                 PrimaryNewsListView(
-                                  primaryNewsListEntities: articles
+                                  primaryNewsListEntities: mostPopularArticles
                                       .toPrimaryNewsListEntity()
                                       .take(_Constants.primaryNewsListSize)
                                       .toList(),
@@ -83,11 +87,11 @@ class _HomePageState extends State<HomePage> {
                                   title: Strings.of(context).newest,
                                   routeBuilder: (context) => NewsListPage(
                                     headerTitle: Strings.of(context).newest,
-                                    listEntities: articles.toSecondaryNewsListEntities(),
+                                    listEntities: newestArticles.toSecondaryNewsListEntities(),
                                   ),
                                 ),
                                 const SizedBox(height: _Constants.sectionHeaderPadding),
-                                _buildSecondaryNewsItems(articles),
+                                _buildSecondaryNewsItems(newestArticles),
                               ],
                             ),
                           ),
@@ -190,6 +194,21 @@ class _HomePageState extends State<HomePage> {
             .map((news) => SecondaryNewsListItem(news: news))
             .toList(),
       );
+
+  String getTitleForCriterion(BuildContext context) {
+    final PopularNewsCriterion criterion =
+        context.select((HomeNotifier notifier) => notifier.popularNewsCriterion);
+
+    switch (criterion) {
+      case PopularNewsCriterion.viewed:
+        return Strings.of(context).mostViewed;
+      case PopularNewsCriterion.shared:
+        return Strings.of(context).mostShared;
+      case PopularNewsCriterion.emailed:
+        return Strings.of(context).mostEmailed;
+    }
+    return '';
+  }
 }
 
 extension on List<Article> {

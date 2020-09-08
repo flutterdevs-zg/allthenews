@@ -1,16 +1,7 @@
-import 'package:allthenews/src/data/response/article_response.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-part 'ny_times_response.g.dart';
-
-@JsonSerializable()
-class NyTimesResponse {
+class NyTimesResponse<T> {
   final String copyright;
-  @JsonKey(name: 'num_results')
   final int numResults;
-
-  @JsonKey(name: 'results')
-  final List<ArticleResponse> articles;
+  final List<T> articles;
 
   NyTimesResponse({
     this.copyright,
@@ -18,5 +9,13 @@ class NyTimesResponse {
     this.articles,
   });
 
-  static NyTimesResponse fromJson(Map<String, dynamic> json) => _$NyTimesResponseFromJson(json);
+  factory NyTimesResponse.fromJson(Map<String, dynamic> json, Function fromJson) {
+    final List<Map<String, dynamic>> items = (json['results'] as List).cast<Map<String, dynamic>>();
+
+    return NyTimesResponse<T>(
+      copyright: json['copyright'] as String,
+      numResults: json['numResults'] as int,
+      articles: List<T>.from(items.map((itemJson) => fromJson(itemJson))),
+    );
+  }
 }
