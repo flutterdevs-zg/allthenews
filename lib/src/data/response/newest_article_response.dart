@@ -1,6 +1,5 @@
 import 'package:allthenews/src/data/response/multimedia.dart';
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/ui/common/util/date_time_parser.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'newest_article_response.g.dart';
@@ -11,7 +10,7 @@ class NewestArticleResponse {
 
   final String url;
 
-  @JsonKey(name: 'updated_date', fromJson: parseStringToDateTime)
+  @JsonKey(name: 'updated_date', fromJson: DateTime.parse)
   final DateTime updated;
 
   @JsonKey(name: 'byline')
