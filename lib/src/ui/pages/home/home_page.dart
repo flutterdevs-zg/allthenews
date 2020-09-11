@@ -2,13 +2,14 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
-import 'package:allthenews/src/ui/common/util/date_time_formatter.dart';
+import 'package:allthenews/src/ui/common/util/date_time_extensions.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/notifier_state.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/pages/home/home_notifier.dart';
+import 'package:allthenews/src/ui/pages/home/home_notifier_state.dart';
 import 'package:allthenews/src/ui/pages/home/news/news_list_page.dart';
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_view.dart';
@@ -55,25 +56,25 @@ class _HomePageState extends State<HomePage> {
           value: _homeNotifier,
           builder: (providerContext, child) {
             final notifier = providerContext.watch<HomeNotifier>();
-            final String headerTitle = getTitleForCriterion(context, notifier.popularNewsCriterion);
 
-            switch (notifier.state) {
+            switch (notifier.state.notifierState) {
               case NotifierState.initial:
               case NotifierState.loading:
                 return const Center(child: CircularProgressIndicator());
               case NotifierState.loaded:
-                return _buildLoadedContent(headerTitle, notifier, context);
+                return _buildLoadedContent(notifier.state as HomeNotifierLoadedState);
               case NotifierState.error:
-                return _errorContent(providerContext);
+                return _errorContent(providerContext, notifier.state as HomeNotifierErrorState);
             }
-            return _errorContent(providerContext);
+            return _errorContent(providerContext, notifier.state as HomeNotifierErrorState);
           },
         ),
       ),
     );
   }
 
-  Column _buildLoadedContent(String headerTitle, HomeNotifier notifier, BuildContext context) {
+  Column _buildLoadedContent(HomeNotifierLoadedState state) {
+    final headerTitle = getTitleForCriterion(context, state.popularNewsCriterion);
     return Column(
       children: [
         Expanded(
@@ -86,12 +87,12 @@ class _HomePageState extends State<HomePage> {
                   title: headerTitle,
                   routeBuilder: (context) => NewsListPage(
                     headerTitle: headerTitle,
-                    listEntities: notifier.mostPopularArticles.toSecondaryNewsListEntities(),
+                    listEntities: state.mostPopularArticles.toSecondaryNewsListEntities(),
                   ),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 PrimaryNewsListView(
-                  primaryNewsListEntities: notifier.mostPopularArticles
+                  primaryNewsListEntities: state.mostPopularArticles
                       .toPrimaryNewsListEntity()
                       .take(_Constants.primaryNewsListSize)
                       .toList(),
@@ -101,11 +102,11 @@ class _HomePageState extends State<HomePage> {
                   title: Strings.of(context).newest,
                   routeBuilder: (context) => NewsListPage(
                     headerTitle: Strings.of(context).newest,
-                    listEntities: notifier.newestArticles.toSecondaryNewsListEntities(),
+                    listEntities: state.newestArticles.toSecondaryNewsListEntities(),
                   ),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
-                _buildSecondaryNewsItems(notifier.newestArticles),
+                _buildSecondaryNewsItems(state.newestArticles),
               ],
             ),
           ),
@@ -218,7 +219,8 @@ class _HomePageState extends State<HomePage> {
     return '';
   }
 
-  Widget _errorContent(BuildContext providerContext) => Center(
+  Widget _errorContent(BuildContext providerContext, HomeNotifierErrorState state) => Center(
+    //TODO use state to display error returned from the notifier
         child: Container(
           height: _Constants.retryButtonHeight,
           width: _Constants.retryButtonWidth,
@@ -236,18 +238,18 @@ extension on List<Article> {
           title: article.title,
           articleUrl: article.url,
           authorName: article.authorName,
-          date: formatDateTimeToDateString(article.updateDateTime),
+          date: article.updateDateTime.formatDate(),
           imageUrl: article.thumbnail,
-          time: formatDateTimeToTimeString(article.updateDateTime),
+          time: article.updateDateTime.formatTime(),
         ),
       ).toList();
 
   List<SecondaryNewsListEntity> toSecondaryNewsListEntities() => map(
         (article) => SecondaryNewsListEntity(
           title: article.title,
-          date: formatDateTimeToDateString(article.updateDateTime),
+          date: article.updateDateTime.formatDate(),
           imageUrl: article.thumbnail,
-          time: formatDateTimeToTimeString(article.updateDateTime),
+          time: article.updateDateTime.formatTime(),
           articleUrl: article.url,
         ),
       ).toList();

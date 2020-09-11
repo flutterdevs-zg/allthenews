@@ -14,7 +14,12 @@ class MostPopularMediaResponse {
   @JsonKey(name: 'media-metadata')
   final List<MediaMetadata> mediaMetadata;
 
-  MostPopularMediaResponse(this.type, this.subtype, this.caption, this.mediaMetadata);
+  const MostPopularMediaResponse(
+    this.type,
+    this.subtype,
+    this.caption,
+    this.mediaMetadata,
+  );
 
   static MostPopularMediaResponse fromJson(Map<String, dynamic> json) =>
       _$MostPopularMediaResponseFromJson(json);

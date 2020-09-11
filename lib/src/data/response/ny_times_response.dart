@@ -3,7 +3,7 @@ class NyTimesResponse<T> {
   final int numResults;
   final List<T> articles;
 
-  NyTimesResponse({
+  const NyTimesResponse({
     this.copyright,
     this.numResults,
     this.articles,

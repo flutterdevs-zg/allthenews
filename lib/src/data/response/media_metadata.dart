@@ -13,7 +13,12 @@ class MediaMetadata {
 
   final int width;
 
-  MediaMetadata(this.url, this.format, this.height, this.width);
+  const MediaMetadata(
+    this.url,
+    this.format,
+    this.height,
+    this.width,
+  );
 
   static MediaMetadata fromJson(Map<String, dynamic> json) => _$MediaMetadataFromJson(json);
 }
