@@ -16,6 +16,7 @@
   "settings": "Ustawienia",
   "version": "Wersja",
   "viewed": "Wyświetlane",
+  "retry": "Ponów",
   "apiConnectionException": "Brak połączenia sieciowego",
   "apiUnknownException": "Nieznany błąd",
   "apiUnauthorizedException": "Błąd autoryzacyjny",

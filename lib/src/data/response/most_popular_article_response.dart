@@ -1,8 +1,13 @@
+import 'package:allthenews/src/data/response/image_format.dart';
 import 'package:allthenews/src/data/response/most_popular_media_response.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'most_popular_article_response.g.dart';
+
+abstract class _Constants {
+  static const imageMediaType = "image";
+}
 
 @JsonSerializable()
 class MostPopularArticleResponse {
@@ -10,7 +15,8 @@ class MostPopularArticleResponse {
 
   final String url;
 
-  final String updated;
+  @JsonKey(fromJson: DateTime.parse)
+  final DateTime updated;
 
   @JsonKey(name: 'byline')
   final String author;
@@ -39,14 +45,13 @@ class MostPopularArticleResponse {
       authorName: response.author,
       title: response.title,
       abstract: response.abstract,
-      date: response.updated.split(" ").first,
-      time: response.updated.split(" ").last,
+      updateDateTime: response.updated,
       url: response.url,
       thumbnail: response.media.isNotEmpty
           ? response.media
-              .firstWhere((element) => element.type == "image")
+              .firstWhere((element) => element.type == _Constants.imageMediaType)
               .mediaMetadata
-              .firstWhere((element) => element.format == "mediumThreeByTwo440")
+              .firstWhere((element) => element.format == ImageFormat.large)
               .url
           : null);
 }

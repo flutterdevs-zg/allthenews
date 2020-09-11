@@ -1,3 +1,4 @@
+import 'package:allthenews/src/data/response/image_format.dart';
 import 'package:allthenews/src/data/response/multimedia.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -40,11 +41,10 @@ class NewestArticleResponse {
         authorName: response.author,
         title: response.title,
         abstract: response.abstract,
-        date: "${response.updated.year}-${response.updated.month}-${response.updated.day}",
-        time: "${response.updated.hour}:${response.updated.minute}:${response.updated.second}",
+        updateDateTime: response.updated,
         url: response.url,
         thumbnail: response.multimedia
-            ?.firstWhere((element) => element.format == "mediumThreeByTwo210")
+            ?.firstWhere((element) => element.format == ImageFormat.medium)
             ?.thumbnail,
       );
 }

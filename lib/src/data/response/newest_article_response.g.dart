@@ -11,7 +11,7 @@ NewestArticleResponse _$NewestArticleResponseFromJson(
   return NewestArticleResponse(
     json['id'] as int,
     json['url'] as String,
-    parseStringToDateTime(json['updated_date'] as String),
+    DateTime.parse(json['updated_date'] as String),
     json['byline'] as String,
     json['title'] as String,
     json['abstract'] as String,

@@ -203,6 +203,16 @@ class Strings {
     );
   }
 
+  /// `Retry`
+  String get retry {
+    return Intl.message(
+      'Retry',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No internet connection`
   String get apiConnectionException {
     return Intl.message(

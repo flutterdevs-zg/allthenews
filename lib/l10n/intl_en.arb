@@ -16,6 +16,7 @@
   "skip": "Skip",
   "version": "Version",
   "viewed": "Viewed",
+  "retry": "Retry",
   "apiConnectionException": "No internet connection",
   "apiUnknownException": "Unknown error",
   "apiUnauthorizedException": "Authorization error",

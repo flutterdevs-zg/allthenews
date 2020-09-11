@@ -1,3 +1,4 @@
+import 'package:allthenews/src/data/response/image_format.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'multimedia.g.dart';
@@ -10,7 +11,7 @@ class Multimedia {
 
   final String caption;
 
-  final String format;
+  final ImageFormat format;
 
   @JsonKey(name: 'url')
   final String thumbnail;

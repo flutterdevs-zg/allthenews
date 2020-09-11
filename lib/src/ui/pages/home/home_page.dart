@@ -2,7 +2,9 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
+import 'package:allthenews/src/ui/common/util/date_time_formatter.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/util/notifier_state.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
@@ -25,6 +27,8 @@ abstract class _Constants {
   static const sectionHeaderPadding = 10.0;
   static const sectionSpacing = 20.0;
   static const primaryNewsListSize = 5;
+  static const retryButtonWidth = 120.0;
+  static const retryButtonHeight = 40.0;
 }
 
 class HomePage extends StatefulWidget {
@@ -38,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _homeNotifier.fetchHomeArticles(context);
+    _homeNotifier.fetchHomeArticles();
   }
 
   @override
@@ -48,58 +52,65 @@ class _HomePageState extends State<HomePage> {
       appBar: _buildAppBar(context),
       body: SafeArea(
         child: ChangeNotifierProvider.value(
-            value: _homeNotifier,
-            builder: (providerContext, child) {
-              final List<Article> mostPopularArticles =
-                  providerContext.select((HomeNotifier notifier) => notifier.mostPopularArticles);
+          value: _homeNotifier,
+          builder: (providerContext, child) {
+            final notifier = providerContext.watch<HomeNotifier>();
+            final String headerTitle = getTitleForCriterion(context, notifier.popularNewsCriterion);
 
-              final List<Article> newestArticles =
-                  providerContext.select((HomeNotifier notifier) => notifier.newestArticles);
-
-              final String headerTitle = getTitleForCriterion(providerContext);
-
-              return mostPopularArticles == null
-                  ? const Center(child: CircularProgressIndicator())
-                  : Column(
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: _Constants.sectionHeaderPadding),
-                                _buildNewsSectionHeader(
-                                  title: headerTitle,
-                                  routeBuilder: (context) => NewsListPage(
-                                    headerTitle: headerTitle,
-                                    listEntities: mostPopularArticles.toSecondaryNewsListEntities(),
-                                  ),
-                                ),
-                                const SizedBox(height: _Constants.sectionHeaderPadding),
-                                PrimaryNewsListView(
-                                  primaryNewsListEntities: mostPopularArticles
-                                      .toPrimaryNewsListEntity()
-                                      .take(_Constants.primaryNewsListSize)
-                                      .toList(),
-                                ),
-                                const SizedBox(height: _Constants.sectionSpacing),
-                                _buildNewsSectionHeader(
-                                  title: Strings.of(context).newest,
-                                  routeBuilder: (context) => NewsListPage(
-                                    headerTitle: Strings.of(context).newest,
-                                    listEntities: newestArticles.toSecondaryNewsListEntities(),
-                                  ),
-                                ),
-                                const SizedBox(height: _Constants.sectionHeaderPadding),
-                                _buildSecondaryNewsItems(newestArticles),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-            }),
+            switch (notifier.state) {
+              case NotifierState.initial:
+              case NotifierState.loading:
+                return const Center(child: CircularProgressIndicator());
+              case NotifierState.loaded:
+                return _buildLoadedContent(headerTitle, notifier, context);
+              case NotifierState.error:
+                return _errorContent(providerContext);
+            }
+            return _errorContent(providerContext);
+          },
+        ),
       ),
+    );
+  }
+
+  Column _buildLoadedContent(String headerTitle, HomeNotifier notifier, BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: _Constants.sectionHeaderPadding),
+                _buildNewsSectionHeader(
+                  title: headerTitle,
+                  routeBuilder: (context) => NewsListPage(
+                    headerTitle: headerTitle,
+                    listEntities: notifier.mostPopularArticles.toSecondaryNewsListEntities(),
+                  ),
+                ),
+                const SizedBox(height: _Constants.sectionHeaderPadding),
+                PrimaryNewsListView(
+                  primaryNewsListEntities: notifier.mostPopularArticles
+                      .toPrimaryNewsListEntity()
+                      .take(_Constants.primaryNewsListSize)
+                      .toList(),
+                ),
+                const SizedBox(height: _Constants.sectionSpacing),
+                _buildNewsSectionHeader(
+                  title: Strings.of(context).newest,
+                  routeBuilder: (context) => NewsListPage(
+                    headerTitle: Strings.of(context).newest,
+                    listEntities: notifier.newestArticles.toSecondaryNewsListEntities(),
+                  ),
+                ),
+                const SizedBox(height: _Constants.sectionHeaderPadding),
+                _buildSecondaryNewsItems(notifier.newestArticles),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -195,10 +206,7 @@ class _HomePageState extends State<HomePage> {
             .toList(),
       );
 
-  String getTitleForCriterion(BuildContext context) {
-    final PopularNewsCriterion criterion =
-        context.select((HomeNotifier notifier) => notifier.popularNewsCriterion);
-
+  String getTitleForCriterion(BuildContext context, PopularNewsCriterion criterion) {
     switch (criterion) {
       case PopularNewsCriterion.viewed:
         return Strings.of(context).mostViewed;
@@ -209,6 +217,17 @@ class _HomePageState extends State<HomePage> {
     }
     return '';
   }
+
+  Widget _errorContent(BuildContext providerContext) => Center(
+        child: Container(
+          height: _Constants.retryButtonHeight,
+          width: _Constants.retryButtonWidth,
+          child: PrimaryTextButton(
+            onPressed: () => providerContext.read<HomeNotifier>().fetchHomeArticles(),
+            text: Strings.of(context).retry,
+          ),
+        ),
+      );
 }
 
 extension on List<Article> {
@@ -217,18 +236,18 @@ extension on List<Article> {
           title: article.title,
           articleUrl: article.url,
           authorName: article.authorName,
-          date: article.date,
+          date: formatDateTimeToDateString(article.updateDateTime),
           imageUrl: article.thumbnail,
-          time: article.time,
+          time: formatDateTimeToTimeString(article.updateDateTime),
         ),
       ).toList();
 
   List<SecondaryNewsListEntity> toSecondaryNewsListEntities() => map(
         (article) => SecondaryNewsListEntity(
           title: article.title,
-          date: article.date,
+          date: formatDateTimeToDateString(article.updateDateTime),
           imageUrl: article.thumbnail,
-          time: article.time,
+          time: formatDateTimeToTimeString(article.updateDateTime),
           articleUrl: article.url,
         ),
       ).toList();

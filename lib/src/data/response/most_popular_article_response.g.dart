@@ -11,7 +11,7 @@ MostPopularArticleResponse _$MostPopularArticleResponseFromJson(
   return MostPopularArticleResponse(
     json['id'] as int,
     json['url'] as String,
-    json['updated'] as String,
+    DateTime.parse(json['updated'] as String),
     json['byline'] as String,
     json['title'] as String,
     json['abstract'] as String,
@@ -28,7 +28,7 @@ Map<String, dynamic> _$MostPopularArticleResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'url': instance.url,
-      'updated': instance.updated,
+      'updated': instance.updated?.toIso8601String(),
       'byline': instance.author,
       'title': instance.title,
       'abstract': instance.abstract,
