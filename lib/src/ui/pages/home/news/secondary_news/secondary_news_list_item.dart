@@ -13,6 +13,8 @@ abstract class _Constants {
   static const titleMaxLines = 2;
   static const titleVerticalSpacing = 8.0;
   static const verticalListItemPadding = 13.0;
+  static const imagePlaceholder =
+      "https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg";
 }
 
 class SecondaryNewsListItem extends StatelessWidget {
@@ -70,7 +72,7 @@ class SecondaryNewsListItem extends StatelessWidget {
   Widget _buildImage() => ClipRRect(
         borderRadius: BorderRadius.circular(_Constants.imageBorderRadius),
         child: Image.network(
-          news.imageUrl,
+          news.imageUrl ?? _Constants.imagePlaceholder,
           width: _Constants.imageWidth,
           height: _Constants.imageHeight,
           fit: BoxFit.cover,

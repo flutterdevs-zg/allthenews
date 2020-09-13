@@ -5,7 +5,7 @@ class Article {
 
   final String url;
 
-  final String updated;
+  final DateTime updateDateTime;
 
   final String authorName;
 
@@ -18,15 +18,10 @@ class Article {
   Article({
     @required this.id,
     @required this.url,
-    @required this.updated,
+    @required this.updateDateTime,
     @required this.authorName,
     @required this.title,
     @required this.abstract,
     @required this.thumbnail,
   });
-
-  @override
-  String toString() {
-    return 'Article{id: $id, url: $url, updated: $updated, author: $authorName, title: $title, abstract: $abstract}';
-  }
 }

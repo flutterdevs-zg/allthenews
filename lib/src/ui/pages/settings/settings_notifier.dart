@@ -1,8 +1,8 @@
 import 'package:allthenews/src/domain/appinfo/app_info_repository.dart';
 import 'package:allthenews/src/domain/common/function.dart';
+import 'package:allthenews/src/domain/settings/app_theme.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
-import 'package:allthenews/src/domain/settings/app_theme.dart';
 import 'package:allthenews/src/ui/common/theme/theme_notifier.dart';
 import 'package:flutter/material.dart';
 

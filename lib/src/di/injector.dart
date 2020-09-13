@@ -17,6 +17,7 @@ import 'package:allthenews/src/domain/presentation/presentation_showing_reposito
 import 'package:allthenews/src/domain/presentation/presentation_steps_provider.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/theme/theme_notifier.dart';
+import 'package:allthenews/src/ui/pages/home/home_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_steps_context_provider.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
@@ -32,12 +33,9 @@ void injectDependencies(Environment flavor) {
       SettingsLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerSingleton<PresentationShowingRepository>(
       PresentationShowingLocalRepository(_locator<PersistenceRepository>()));
-  _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
-  _locator.registerFactory(
-      () => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
   _locator.registerFactory<PresentationStepsProvider>(() => PresentationStepsContextProvider());
-  _locator.registerFactory(() => PresentationNotifier(_locator<PresentationShowingRepository>()));
   _injectApiDependencies();
+  _injectNotifiers();
 }
 
 void _injectApiDependencies() {
@@ -47,6 +45,17 @@ void _injectApiDependencies() {
   _locator.registerSingleton<NYTimesRepository>(
       NYTimesRestRepository(_locator<HttpClient>(), _locator<SettingsRepository>()));
   _locator.registerSingleton<ExceptionMapper>(ApiExceptionMapper());
+}
+
+void _injectNotifiers() {
+  _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
+  _locator.registerFactory(
+      () => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
+  _locator.registerFactory(() => PresentationNotifier(_locator<PresentationShowingRepository>()));
+  _locator.registerFactory(() => HomeNotifier(
+        _locator<NYTimesRepository>(),
+        _locator<SettingsRepository>(),
+      ));
 }
 
 T inject<T>({String name, dynamic param}) =>

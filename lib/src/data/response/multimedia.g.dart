@@ -1,26 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'media_metadata.dart';
+part of 'multimedia.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MediaMetadata _$MediaMetadataFromJson(Map<String, dynamic> json) {
-  return MediaMetadata(
-    json['url'] as String,
+Multimedia _$MultimediaFromJson(Map<String, dynamic> json) {
+  return Multimedia(
+    json['type'] as String,
+    json['subtype'] as String,
+    json['caption'] as String,
     _$enumDecodeNullable(_$ImageFormatEnumMap, json['format']),
-    json['height'] as int,
-    json['width'] as int,
+    json['url'] as String,
   );
 }
 
-Map<String, dynamic> _$MediaMetadataToJson(MediaMetadata instance) =>
+Map<String, dynamic> _$MultimediaToJson(Multimedia instance) =>
     <String, dynamic>{
-      'url': instance.url,
+      'type': instance.type,
+      'subtype': instance.subtype,
+      'caption': instance.caption,
       'format': _$ImageFormatEnumMap[instance.format],
-      'height': instance.height,
-      'width': instance.width,
+      'url': instance.thumbnail,
     };
 
 T _$enumDecode<T>(

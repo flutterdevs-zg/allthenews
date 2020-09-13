@@ -1,30 +1,34 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'article_response.dart';
+part of 'most_popular_article_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ArticleResponse _$ArticleResponseFromJson(Map<String, dynamic> json) {
-  return ArticleResponse(
+MostPopularArticleResponse _$MostPopularArticleResponseFromJson(
+    Map<String, dynamic> json) {
+  return MostPopularArticleResponse(
     json['id'] as int,
     json['url'] as String,
-    json['updated'] as String,
+    DateTime.parse(json['updated'] as String),
     json['byline'] as String,
     json['title'] as String,
     json['abstract'] as String,
-    json['media'] == null
-        ? null
-        : MediaResponse.fromJson(json['media'] as Map<String, dynamic>),
+    (json['media'] as List)
+        ?.map((e) => e == null
+            ? null
+            : MostPopularMediaResponse.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
-Map<String, dynamic> _$ArticleResponseToJson(ArticleResponse instance) =>
+Map<String, dynamic> _$MostPopularArticleResponseToJson(
+        MostPopularArticleResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'url': instance.url,
-      'updated': instance.updated,
+      'updated': instance.updated?.toIso8601String(),
       'byline': instance.author,
       'title': instance.title,
       'abstract': instance.abstract,

@@ -11,7 +11,7 @@ abstract class _Constants {
 class NewsListPage extends StatelessWidget {
   final List<SecondaryNewsListEntity> listEntities;
   final String headerTitle;
-  
+
   const NewsListPage({@required this.listEntities, @required this.headerTitle});
 
   @override
@@ -41,7 +41,6 @@ class NewsListPage extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Hero(
               tag: headerTitle,

@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'media_response.dart';
+part of 'most_popular_media_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MediaResponse _$MediaResponseFromJson(Map<String, dynamic> json) {
-  return MediaResponse(
+MostPopularMediaResponse _$MostPopularMediaResponseFromJson(
+    Map<String, dynamic> json) {
+  return MostPopularMediaResponse(
     json['type'] as String,
     json['subtype'] as String,
     json['caption'] as String,
@@ -19,7 +20,8 @@ MediaResponse _$MediaResponseFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$MediaResponseToJson(MediaResponse instance) =>
+Map<String, dynamic> _$MostPopularMediaResponseToJson(
+        MostPopularMediaResponse instance) =>
     <String, dynamic>{
       'type': instance.type,
       'subtype': instance.subtype,

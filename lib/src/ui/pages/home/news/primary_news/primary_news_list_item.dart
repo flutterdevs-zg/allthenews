@@ -13,6 +13,8 @@ abstract class _Constants {
   static const horizontalListItemPadding = 13.0;
   static const itemSplashColor = Color(0x1FD5D5D5);
   static const itemHighlightColor = Color(0x2DD5D5D5);
+  static const imagePlaceholder =
+      "https://as1.ftcdn.net/jpg/02/12/43/28/500_F_212432820_Zf6CaVMwOXFIylDOEDqNqzURaYa7CHHc.jpg";
 }
 
 class PrimaryNewsListItem extends StatelessWidget {
@@ -74,7 +76,7 @@ class PrimaryNewsListItem extends StatelessWidget {
           child: Opacity(
             opacity: _Constants.newsImageLayerOpacity,
             child: Image.network(
-              news.imageUrl,
+              news.imageUrl ?? _Constants.imagePlaceholder,
               fit: BoxFit.fill,
             ),
           ),
@@ -97,15 +99,6 @@ class PrimaryNewsListItem extends StatelessWidget {
 
   Widget _buildNewsAuthor(BuildContext context) => Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(_Constants.imageRadius),
-            child: Image.network(
-              news.authorImageUrl,
-              width: _Constants.authorImageSize,
-              height: _Constants.authorImageSize,
-              fit: BoxFit.fill,
-            ),
-          ),
           const SizedBox(
             width: _Constants.authorDataSpacing,
           ),
@@ -119,7 +112,8 @@ class PrimaryNewsListItem extends StatelessWidget {
       );
 
   Widget _buildNewsTitle(BuildContext context) {
-    final wrappingThreshold = MediaQuery.of(context).size.width * _Constants.wrappingThresholdPercent;
+    final wrappingThreshold =
+        MediaQuery.of(context).size.width * _Constants.wrappingThresholdPercent;
 
     return Container(
       width: wrappingThreshold,
