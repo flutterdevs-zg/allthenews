@@ -19,12 +19,12 @@ class HomeNotifierLoadingState extends HomeNotifierState {
 class HomeNotifierLoadedState extends HomeNotifierState {
   final List<Article> mostPopularArticles;
   final List<Article> newestArticles;
-  final PopularNewsCriterion popularNewsCriterion;
+  final String popularNewsTitle;
 
   HomeNotifierLoadedState({
     this.mostPopularArticles,
     this.newestArticles,
-    this.popularNewsCriterion,
+    this.popularNewsTitle,
   }) : super(NotifierState.loaded);
 }
 

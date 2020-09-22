@@ -1,7 +1,6 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/date_time_extensions.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/notifier_state.dart';
@@ -74,7 +73,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Column _buildLoadedContent(HomeNotifierLoadedState state) {
-    final headerTitle = getTitleForCriterion(context, state.popularNewsCriterion);
     return Column(
       children: [
         Expanded(
@@ -84,9 +82,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 _buildNewsSectionHeader(
-                  title: headerTitle,
+                  title: state.popularNewsTitle,
                   routeBuilder: (context) => NewsListPage(
-                    headerTitle: headerTitle,
+                    headerTitle: state.popularNewsTitle,
                     listEntities: state.mostPopularArticles.toSecondaryNewsListEntities(),
                   ),
                 ),
@@ -206,18 +204,6 @@ class _HomePageState extends State<HomePage> {
             .map((news) => SecondaryNewsListItem(news: news))
             .toList(),
       );
-
-  String getTitleForCriterion(BuildContext context, PopularNewsCriterion criterion) {
-    switch (criterion) {
-      case PopularNewsCriterion.viewed:
-        return Strings.of(context).mostViewed;
-      case PopularNewsCriterion.shared:
-        return Strings.of(context).mostShared;
-      case PopularNewsCriterion.emailed:
-        return Strings.of(context).mostEmailed;
-    }
-    return '';
-  }
 
   Widget _errorContent(BuildContext providerContext, HomeNotifierErrorState state) => Center(
     //TODO use state to display error returned from the notifier

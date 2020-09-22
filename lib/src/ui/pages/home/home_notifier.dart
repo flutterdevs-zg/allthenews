@@ -1,3 +1,4 @@
+import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
@@ -21,17 +22,32 @@ class HomeNotifier extends ChangeNotifier {
       _nyTimesRepository.getMostPopularArticles(),
       _nyTimesRepository.getNewestArticles(),
       _settingsRepository.getPopularNewsCriterion(),
-    ]).then((values) => _onFetchSuccess(values)).catchError((error) => _onFetchError(error));
+    ])
+        .then((values) => _onFetchSuccess(values))
+        .catchError((error) => _onFetchError(error));
   }
 
-  void _onFetchError(error) => _setNotifierState(HomeNotifierErrorState(error: error));
+  void _onFetchError(error) =>
+      _setNotifierState(HomeNotifierErrorState(error: error));
 
   void _onFetchSuccess(List<Object> values) {
     _setNotifierState(HomeNotifierLoadedState(
       mostPopularArticles: values[0] as List<Article>,
       newestArticles: values[1] as List<Article>,
-      popularNewsCriterion: values[2] as PopularNewsCriterion,
+      popularNewsTitle: getTitleForCriterion(values[2] as PopularNewsCriterion),
     ));
+  }
+
+  String getTitleForCriterion(PopularNewsCriterion criterion) {
+    switch (criterion) {
+      case PopularNewsCriterion.viewed:
+        return Strings.current.mostViewed;
+      case PopularNewsCriterion.shared:
+        return Strings.current.mostShared;
+      case PopularNewsCriterion.emailed:
+        return Strings.current.mostEmailed;
+    }
+    return '';
   }
 
   void _setNotifierState(HomeNotifierState notifierState) {
