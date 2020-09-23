@@ -14,12 +14,10 @@ import 'package:allthenews/src/domain/common/persistence/persistence_repository.
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/domain/presentation/presentation_showing_repository.dart';
-import 'package:allthenews/src/domain/presentation/presentation_steps_provider.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/theme/theme_notifier.dart';
 import 'package:allthenews/src/ui/pages/home/home_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
-import 'package:allthenews/src/ui/pages/presentation/presentation_steps_context_provider.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:get_it/get_it.dart';
 
@@ -33,7 +31,6 @@ void injectDependencies(Environment flavor) {
       SettingsLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerSingleton<PresentationShowingRepository>(
       PresentationShowingLocalRepository(_locator<PersistenceRepository>()));
-  _locator.registerFactory<PresentationStepsProvider>(() => PresentationStepsContextProvider());
   _injectApiDependencies();
   _injectNotifiers();
 }

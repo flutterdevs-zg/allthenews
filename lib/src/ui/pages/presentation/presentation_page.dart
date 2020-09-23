@@ -1,12 +1,11 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/presentation/presentation_step.dart';
-import 'package:allthenews/src/domain/presentation/presentation_steps_provider.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:allthenews/src/ui/pages/presentation/indicator_container.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
-import 'package:allthenews/src/ui/pages/presentation/presentation_steps_context_provider.dart';
+import 'package:allthenews/src/ui/pages/presentation/presentation_steps_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +24,7 @@ class PresentationPage extends StatefulWidget {
 
 class _PresentationPageState extends State<PresentationPage> {
   final _controller = PageController();
-  final _presentationStepsProvider = inject<PresentationStepsProvider>();
+  final _presentationStepsProvider = PresentationStepsProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,7 @@ class _PresentationPageState extends State<PresentationPage> {
         child: PrimaryTextButton(
           text: Strings.of(context).next,
           onPressed: () {
-            if (_controller.page.toInt() == _presentationStepsProvider.provide(context).length - 1) {
+            if (_controller.page.toInt() == _presentationStepsProvider.provide().length - 1) {
               _navigateToHomePage(context);
             } else {
               _goNextPage();
@@ -72,7 +71,7 @@ class _PresentationPageState extends State<PresentationPage> {
           const Spacer(flex: 2),
           IndicatorContainer(
             controller: _controller,
-            itemCount: _presentationStepsProvider.provide(context).length,
+            itemCount: _presentationStepsProvider.provide().length,
             onPageSelected: (int page) => _goToPage(page),
           ),
           const Spacer(),
@@ -90,7 +89,7 @@ class _PresentationPageState extends State<PresentationPage> {
           physics: const PageScrollPhysics(),
           controller: _controller,
           itemBuilder: (BuildContext context, int index) {
-            final presentationSteps = _presentationStepsProvider.provide(context);
+            final presentationSteps = _presentationStepsProvider.provide();
             return (index < presentationSteps.length) ? _buildPresentationStep(context, presentationSteps[index]) : null;
           },
         ),
