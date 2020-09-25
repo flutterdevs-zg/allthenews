@@ -7,7 +7,6 @@ part 'newest_article_response.g.dart';
 
 @JsonSerializable()
 class NewestArticleResponse {
-  final int id;
 
   final String url;
 
@@ -24,7 +23,6 @@ class NewestArticleResponse {
   final List<Multimedia> multimedia;
 
   const NewestArticleResponse(
-    this.id,
     this.url,
     this.updated,
     this.author,
@@ -37,7 +35,6 @@ class NewestArticleResponse {
       _$NewestArticleResponseFromJson(json);
 
   static Article toArticle(NewestArticleResponse response) => Article(
-        id: response.id,
         authorName: response.author,
         title: response.title,
         abstract: response.abstract,

@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 class Article {
-  final int id;
 
   final String url;
 
@@ -16,7 +15,6 @@ class Article {
   final String thumbnail;
 
   Article({
-    @required this.id,
     @required this.url,
     @required this.updateDateTime,
     @required this.authorName,

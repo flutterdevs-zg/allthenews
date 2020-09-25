@@ -50,6 +50,7 @@ class NYTimesRestRepository extends NYTimesRepository {
     return NyTimesResponse<NewestArticleResponse>.fromJson(response, NewestArticleResponse.fromJson)
         .articles
         .map((articleResponse) => NewestArticleResponse.toArticle(articleResponse))
+        .where((article) => article?.title?.isNotEmpty ?? false)
         .toList();
   }
 }

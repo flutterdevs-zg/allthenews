@@ -1,44 +1,50 @@
+import 'dart:async';
+
+import 'package:allthenews/src/domain/nytimes/ny_times_reactive_repository.dart';
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/pages/home/home_notifier_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rxdart/rxdart.dart';
 
 class HomeNotifier extends ChangeNotifier {
-  final NYTimesRepository _nyTimesRepository;
+  final NYTimesReactiveRepository _nyTimesReactiveRepository;
   final SettingsRepository _settingsRepository;
+  StreamSubscription _streamSubscription;
 
   HomeNotifierState _state = HomeNotifierInitialState();
 
   HomeNotifierState get state => _state;
 
-  HomeNotifier(this._nyTimesRepository, this._settingsRepository);
+  HomeNotifier(this._nyTimesReactiveRepository, this._settingsRepository);
 
   void fetchHomeArticles() {
-    _setNotifierState(HomeNotifierLoadingState());
-    Future.wait([
-      _nyTimesRepository.getMostPopularArticles(),
-      _nyTimesRepository.getNewestArticles(),
-      _settingsRepository.getPopularNewsCriterion(),
-    ])
-        .then((values) => _onFetchSuccess(values))
-        .catchError((error) => _onFetchError(error));
+    _streamSubscription = Rx.combineLatest([
+          _nyTimesReactiveRepository.getMostPopularArticlesStream(),
+          _nyTimesReactiveRepository.getNewestArticlesStream(),
+          Stream.fromFuture(_settingsRepository.getPopularNewsCriterion()),
+        ], (data) => HomeNotifierLoadedState(
+                mostPopularArticles: data[0] as List<Article>,
+                newestArticles: data[1] as List<Article>,
+                popularNewsTitle: _getTitleForCriterion(data[2] as PopularNewsCriterion),
+            ))
+        .handleError((error) => _onFetchError(error))
+        .listen((homeNotifierLoadedState) => _setNotifierState(homeNotifierLoadedState));
   }
 
-  void _onFetchError(error) =>
+  void dispose() {
+    _streamSubscription?.cancel();
+  }
+
+  void _onFetchError(error) {
+    if (_state is! HomeNotifierLoadedState) {
       _setNotifierState(HomeNotifierErrorState(error: error));
-
-  void _onFetchSuccess(List<Object> values) {
-    _setNotifierState(HomeNotifierLoadedState(
-      mostPopularArticles: values[0] as List<Article>,
-      newestArticles: values[1] as List<Article>,
-      popularNewsTitle: getTitleForCriterion(values[2] as PopularNewsCriterion),
-    ));
+    }
   }
 
-  String getTitleForCriterion(PopularNewsCriterion criterion) {
+  String _getTitleForCriterion(PopularNewsCriterion criterion) {
     switch (criterion) {
       case PopularNewsCriterion.viewed:
         return Strings.current.mostViewed;

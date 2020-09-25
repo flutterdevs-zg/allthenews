@@ -9,7 +9,6 @@ part of 'newest_article_response.dart';
 NewestArticleResponse _$NewestArticleResponseFromJson(
     Map<String, dynamic> json) {
   return NewestArticleResponse(
-    json['id'] as int,
     json['url'] as String,
     DateTime.parse(json['updated_date'] as String),
     json['byline'] as String,
@@ -25,7 +24,6 @@ NewestArticleResponse _$NewestArticleResponseFromJson(
 Map<String, dynamic> _$NewestArticleResponseToJson(
         NewestArticleResponse instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'url': instance.url,
       'updated_date': instance.updated?.toIso8601String(),
       'byline': instance.author,

@@ -41,7 +41,6 @@ class MostPopularArticleResponse {
       _$MostPopularArticleResponseFromJson(json);
 
   static Article toArticle(MostPopularArticleResponse response) => Article(
-      id: response.id,
       authorName: response.author,
       title: response.title,
       abstract: response.abstract,

@@ -8,7 +8,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 abstract class _Constants {
   static const logPrintWidthSize = 300;
   static const apiKeyParam = "api-key";
-  static const timeoutDuration = Duration(seconds: 5);
+  static const timeoutDuration = Duration(seconds: 15);
 }
 
 class HttpClient {
