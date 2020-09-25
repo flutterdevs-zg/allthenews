@@ -1,5 +1,4 @@
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/notifier_state.dart';
 
 class HomeNotifierState {
