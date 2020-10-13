@@ -48,9 +48,9 @@ class MostPopularArticleResponse {
       url: response.url,
       thumbnail: response.media.isNotEmpty
           ? response.media
-              .firstWhere((element) => element.type == _Constants.imageMediaType)
-              .mediaMetadata
-              .firstWhere((element) => element.format == ImageFormat.large)
-              .url
+              ?.firstWhere((element) => element.type == _Constants.imageMediaType, orElse: () => null)
+              ?.mediaMetadata
+              ?.firstWhere((element) => element.format == ImageFormat.large, orElse: () => null)
+              ?.url
           : null);
 }

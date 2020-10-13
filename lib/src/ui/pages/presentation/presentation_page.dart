@@ -1,5 +1,4 @@
 import 'package:allthenews/generated/l10n.dart';
-import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/presentation/presentation_step.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/pages/home/home_page.dart';

@@ -1,5 +1,6 @@
 import 'package:allthenews/src/data/persistence/database/article_dto.dart';
 import 'package:allthenews/src/data/persistence/database/article_dto_type_converter.dart';
+import 'package:allthenews/src/domain/common/page.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:moor/moor.dart';
 import 'app_database.dart';
@@ -18,6 +19,28 @@ class ArticleDao extends DatabaseAccessor<AppDatabase> with _$ArticleDaoMixin {
             (article) => OrderingTerm(expression: article.title),
           ]),
         ))
+      .get();
+
+  Future<List<ArticleDto>> getMostPopularArticlesPage(Page page, PopularNewsCriterion popularNewsCriterion) => (select(articles)
+        ..where((article) => article.type.equals(popularNewsCriterion.toDtoType().toString()))
+        ..orderBy(
+          ([
+            (article) => OrderingTerm(expression: article.updateDateTime, mode: OrderingMode.desc),
+            (article) => OrderingTerm(expression: article.title),
+          ]),
+        )
+        ..limit(page.size, offset: (page.number - 1) * page.size))
+      .get();
+
+  Future<List<ArticleDto>> getNewestArticlesPage(Page page) => (select(articles)
+        ..where((article) => article.type.equals(ArticleDtoType.newest.toString()))
+        ..orderBy(
+          ([
+            (article) => OrderingTerm(expression: article.updateDateTime, mode: OrderingMode.desc),
+            (article) => OrderingTerm(expression: article.title),
+          ]),
+        )
+        ..limit(page.size, offset: (page.number - 1) * page.size))
       .get();
 
   Future<List<ArticleDto>> getNewestArticles() => (select(articles)
