@@ -40,8 +40,8 @@ class NewestArticleResponse {
         abstract: response.abstract,
         updateDateTime: response.updated,
         url: response.url,
-        thumbnail: response.multimedia
-            ?.firstWhere((element) => element.format == ImageFormat.medium)
+        thumbnail: response?.multimedia
+            ?.firstWhere((element) => element.format == ImageFormat.medium, orElse: () => null)
             ?.thumbnail,
       );
 }

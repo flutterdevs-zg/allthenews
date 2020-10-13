@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 abstract class _Constants {
   static const imageRadius = 15.0;
-  static const authorImageSize = 40.0;
   static const newsImageLayerOpacity = 0.7;
   static const authorDataSpacing = 10.0;
   static const stackItemPadding = 20.0;
@@ -115,7 +114,7 @@ class PrimaryNewsListItem extends StatelessWidget {
     final wrappingThreshold =
         MediaQuery.of(context).size.width * _Constants.wrappingThresholdPercent;
 
-    return Container(
+    return SizedBox(
       width: wrappingThreshold,
       child: Column(
         children: [

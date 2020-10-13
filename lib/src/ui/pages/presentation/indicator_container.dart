@@ -30,13 +30,13 @@ class IndicatorContainer extends AnimatedWidget {
   Widget _buildIndicator(int index) {
     final double animationValue = max(0, 1.0 - ((controller.hasClients ? controller.page : controller.initialPage) - index).abs());
     final double zoom = 1.0 + (_Constants.indicatorMaxZoom - 1.0) * animationValue;
-    return Container(
+    return SizedBox(
       width: _Constants.indicatorSpacing,
       child: Center(
         child: Material(
           color: Colors.grey,
           type: MaterialType.circle,
-          child: Container(
+          child: SizedBox(
             width: _Constants.indicatorSize * zoom,
             height: _Constants.indicatorSize * zoom,
             child: InkWell(

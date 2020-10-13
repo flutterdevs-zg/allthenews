@@ -16,7 +16,7 @@ class PrimaryNewsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: _Constants.listHeight,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(
