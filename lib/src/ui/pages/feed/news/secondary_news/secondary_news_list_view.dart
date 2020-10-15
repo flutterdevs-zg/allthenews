@@ -1,5 +1,5 @@
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_item.dart';
+import 'package:allthenews/src/ui/pages/feed/news/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/feed/news/secondary_news/secondary_news_list_item.dart';
 import 'package:flutter/material.dart';
 
 class SecondaryNewsListView extends StatelessWidget {

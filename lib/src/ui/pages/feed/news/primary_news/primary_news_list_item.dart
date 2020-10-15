@@ -1,4 +1,4 @@
-import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/feed/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/web_view/web_view_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
