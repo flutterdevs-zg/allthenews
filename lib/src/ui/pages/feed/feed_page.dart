@@ -1,19 +1,21 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/ui/common/util/date_time_extensions.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
-import 'package:allthenews/src/ui/common/util/notifier_state.dart';
+import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
+import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/pages/feed/feed_notifier.dart';
-import 'package:allthenews/src/ui/pages/feed/feed_notifier_state.dart';
-import 'package:allthenews/src/ui/pages/feed/news/news_list_page.dart';
-import 'package:allthenews/src/ui/pages/feed/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/feed/news/primary_news/primary_news_list_view.dart';
-import 'package:allthenews/src/ui/pages/feed/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/feed/news/secondary_news/secondary_news_list_item.dart';
+import 'package:allthenews/src/ui/pages/home/home_page_view_entity.dart';
+import 'package:allthenews/src/ui/pages/home/news/articles_mapper.dart';
+import 'package:allthenews/src/ui/pages/home/news/latest/latest_news_notifier.dart';
+import 'package:allthenews/src/ui/pages/home/news/latest/latest_news_page.dart';
+import 'package:allthenews/src/ui/pages/home/news/most_popular/most_popular_news_notifier.dart';
+import 'package:allthenews/src/ui/pages/home/news/most_popular/most_popular_news_page.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
@@ -60,25 +62,24 @@ class _FeedPageState extends State<FeedPage> {
         child: ChangeNotifierProvider.value(
           value: _feedNotifier,
           builder: (providerContext, child) {
-            final notifier = providerContext.watch<FeedNotifier>();
-
-            switch (notifier.state.notifierState) {
-              case NotifierState.initial:
-              case NotifierState.loading:
-                return const Center(child: CircularProgressIndicator());
-              case NotifierState.loaded:
-                return _buildLoadedContent(notifier.state as FeedNotifierLoadedState);
-              case NotifierState.error:
-                return _errorContent(providerContext, notifier.state as FeedNotifierErrorState);
+            final state = providerContext.select((FeedNotifier notifier) => notifier.state);
+            if (state is NotifierInitialViewState || state is NotifierLoadingViewState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is NotifierErrorViewState) {
+              return _errorContent(providerContext);
+            } else if (state is NotifierLoadedViewState) {
+              return _buildLoadedContent(
+                  (state as NotifierLoadedViewState<HomePageViewEntity>).data);
+            } else {
+              return Container();
             }
-            return _errorContent(providerContext, notifier.state as FeedNotifierErrorState);
           },
         ),
       ),
     );
   }
 
-  Column _buildLoadedContent(FeedNotifierLoadedState state) {
+  Column _buildLoadedContent(HomePageViewEntity homePageViewEntity) {
     return Column(
       children: [
         Expanded(
@@ -88,15 +89,15 @@ class _FeedPageState extends State<FeedPage> {
               children: [
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 _buildNewsSectionHeader(
-                  title: state.popularNewsTitle,
-                  routeBuilder: (context) => NewsListPage(
-                    headerTitle: state.popularNewsTitle,
-                    listEntities: state.mostPopularArticles.toSecondaryNewsListEntities(),
+                  title: homePageViewEntity.popularNewsTitle,
+                  routeBuilder: (context) => ChangeNotifierProvider(
+                    create: (_) => inject<MostPopularNewsNotifier>(),
+                    child: MostPopularNewsListPage(),
                   ),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 PrimaryNewsListView(
-                  primaryNewsListEntities: state.mostPopularArticles
+                  primaryNewsListEntities: homePageViewEntity.mostPopularArticles
                       .toPrimaryNewsListEntity()
                       .take(_Constants.primaryNewsListSize)
                       .toList(),
@@ -104,13 +105,13 @@ class _FeedPageState extends State<FeedPage> {
                 const SizedBox(height: _Constants.sectionSpacing),
                 _buildNewsSectionHeader(
                   title: Strings.of(context).newest,
-                  routeBuilder: (context) => NewsListPage(
-                    headerTitle: Strings.of(context).newest,
-                    listEntities: state.newestArticles.toSecondaryNewsListEntities(),
+                  routeBuilder: (context) => ChangeNotifierProvider(
+                    create: (_) => inject<LatestNewsNotifier>(),
+                    child: LatestNewsListPage(),
                   ),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
-                _buildSecondaryNewsItems(state.newestArticles),
+                _buildSecondaryNewsItems(homePageViewEntity.newestArticles),
               ],
             ),
           ),
@@ -211,38 +212,7 @@ class _FeedPageState extends State<FeedPage> {
             .toList(),
       );
 
-  Widget _errorContent(BuildContext providerContext, FeedNotifierErrorState state) => Center(
-    //TODO use state to display error returned from the notifier
-        child: Container(
-          height: _Constants.retryButtonHeight,
-          width: _Constants.retryButtonWidth,
-          child: PrimaryTextButton(
-            onPressed: () => providerContext.read<FeedNotifier>().fetchArticles(),
-            text: Strings.of(context).retry,
-          ),
-        ),
+  Widget _errorContent(BuildContext providerContext) => RetryActionContainer(
+        onRetryPressed: () => providerContext.read<FeedNotifier>().fetchArticles(),
       );
-}
-
-extension on List<Article> {
-  List<PrimaryNewsListEntity> toPrimaryNewsListEntity() => map(
-        (article) => PrimaryNewsListEntity(
-          title: article.title,
-          articleUrl: article.url,
-          authorName: article.authorName,
-          date: article.updateDateTime.formatDate(),
-          imageUrl: article.thumbnail,
-          time: article.updateDateTime.formatTime(),
-        ),
-      ).toList();
-
-  List<SecondaryNewsListEntity> toSecondaryNewsListEntities() => map(
-        (article) => SecondaryNewsListEntity(
-          title: article.title,
-          date: article.updateDateTime.formatDate(),
-          imageUrl: article.thumbnail,
-          time: article.updateDateTime.formatTime(),
-          articleUrl: article.url,
-        ),
-      ).toList();
 }

@@ -1,7 +1,7 @@
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/feed/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/common/util/date_time_extensions.dart';
+import 'package:allthenews/src/ui/pages/feed/news/secondary_news/secondary_news_list_entity.dart';
 
 extension ArticlesMapper on List<Article> {
   List<PrimaryNewsListEntity> toPrimaryNewsListEntity() => map(
