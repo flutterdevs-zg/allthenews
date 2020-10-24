@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
           child: PrimaryIconButton(
             iconData: Icons.settings,
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => ChangeNotifierProvider(

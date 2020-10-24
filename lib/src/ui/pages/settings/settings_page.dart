@@ -2,6 +2,7 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
+import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -230,7 +231,8 @@ class _SettingsPageState extends State<SettingsPage> {
           shape: const CircleBorder(),
           clipBehavior: Clip.hardEdge,
           child: InkWell(
-            onTap: () => Navigator.pop(context),
+            onTap: () => Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => HomePage())),
             child: Icon(
               Icons.arrow_back,
               color: Theme.of(context).indicatorColor,
