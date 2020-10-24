@@ -5,12 +5,12 @@ import 'package:allthenews/src/domain/nytimes/ny_times_reactive_repository.dart'
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
-import 'package:allthenews/src/ui/pages/home/home_page_view_entity.dart';
-import 'package:allthenews/src/ui/pages/home/news/popular_news_criterion_extensions.dart';
+import 'package:allthenews/src/ui/pages/dashboard/dashboard_view_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
-class FeedNotifier extends ChangeNotifier {
+class DashboardNotifier extends ChangeNotifier {
   final NYTimesReactiveRepository _nyTimesReactiveRepository;
   final SettingsRepository _settingsRepository;
   StreamSubscription _streamSubscription;
@@ -19,7 +19,7 @@ class FeedNotifier extends ChangeNotifier {
 
   NotifierViewState get state => _state;
 
-  FeedNotifier(this._nyTimesReactiveRepository, this._settingsRepository);
+  DashboardNotifier(this._nyTimesReactiveRepository, this._settingsRepository);
 
   void fetchArticles() {
     _streamSubscription = Rx.combineLatest(
@@ -28,8 +28,8 @@ class FeedNotifier extends ChangeNotifier {
           _nyTimesReactiveRepository.getNewestArticlesStream(),
           Stream.fromFuture(_settingsRepository.getPopularNewsCriterion()),
         ],
-            (data) => NotifierLoadedViewState<HomePageViewEntity>(
-                  data: HomePageViewEntity(
+            (data) => NotifierLoadedViewState<DashboardViewEntity>(
+                  data: DashboardViewEntity(
                     mostPopularArticles: data[0] as List<Article>,
                     newestArticles: data[1] as List<Article>,
                     popularNewsTitle: (data[2] as PopularNewsCriterion).getTitle(),

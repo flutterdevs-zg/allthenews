@@ -35,7 +35,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "mostShared" : MessageLookupByLibrary.simpleMessage("Najczęściej udostępniane"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Najczęściej oglądane"),
     "newest" : MessageLookupByLibrary.simpleMessage("Najnowsze"),
-    "news" : MessageLookupByLibrary.simpleMessage("News"),
     "next" : MessageLookupByLibrary.simpleMessage("Dalej"),
     "popular" : MessageLookupByLibrary.simpleMessage("Popularne"),
     "profile" : MessageLookupByLibrary.simpleMessage("Profil"),

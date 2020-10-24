@@ -12,6 +12,12 @@ ThemeData _buildLightNewsTheme() {
   final base = ThemeData.light();
 
   return base.copyWith(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Colors.white,
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.grey,
+    ),
+    brightness: Brightness.light,
     backgroundColor: Colors.white,
     indicatorColor: Colors.black,
     colorScheme: const ColorScheme.light(),
@@ -25,6 +31,12 @@ ThemeData _buildDarkNewsTheme() {
   final base = ThemeData.dark();
 
   return base.copyWith(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Colors.black,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.grey,
+    ),
+    brightness: Brightness.dark,
     backgroundColor: Colors.black,
     indicatorColor: Colors.white,
     colorScheme: const ColorScheme.dark(),

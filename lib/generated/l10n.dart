@@ -103,16 +103,6 @@ class Strings {
     );
   }
 
-  /// `News`
-  String get news {
-    return Intl.message(
-      'News',
-      name: 'news',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Profile`
   String get profile {
     return Intl.message(

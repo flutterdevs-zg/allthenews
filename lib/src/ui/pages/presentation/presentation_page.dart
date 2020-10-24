@@ -1,7 +1,7 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/domain/presentation/presentation_step.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
-import 'package:allthenews/src/ui/pages/feed/feed_page.dart';
+import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:allthenews/src/ui/pages/presentation/indicator_container.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_steps_provider.dart';
@@ -130,7 +130,7 @@ class _PresentationPageState extends State<PresentationPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => FeedPage(),
+        builder: (context) => HomePage(),
       ),
     );
   }

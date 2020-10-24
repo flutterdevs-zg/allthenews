@@ -1,4 +1,4 @@
-import 'package:allthenews/src/ui/pages/feed/news/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:flutter/foundation.dart';
 
 class NewsPaginatedViewEntities {

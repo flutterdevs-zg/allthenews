@@ -32,8 +32,10 @@ class _AllTheNewsAppState extends State<AllTheNewsApp> {
 
   Widget _buildMaterialApp(BuildContext context) {
     return MaterialApp(
-      theme: context.watch<ThemeNotifier>().themeData,
-      home: context.select((PresentationNotifier notifier) => notifier.shouldShowPresentation) ? PresentationPage() : HomePage(),
+      theme: context.select((ThemeNotifier notifier) => notifier.themeData),
+      home: context.select((PresentationNotifier notifier) => notifier.shouldShowPresentation)
+          ? PresentationPage()
+          : HomePage(),
       localizationsDelegates: const [
         Strings.delegate,
         GlobalMaterialLocalizations.delegate,

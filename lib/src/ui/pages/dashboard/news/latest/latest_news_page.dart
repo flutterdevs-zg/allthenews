@@ -1,31 +1,31 @@
+import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
-import 'package:allthenews/src/ui/pages/feed/news/secondary_news/secondary_news_list_item.dart';
-import 'package:allthenews/src/ui/pages/home/news/most_popular/most_popular_news_notifier.dart';
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/news_paginated_view_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_item.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/news_paginated_view_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'most_popular_news_view_entity.dart';
+import 'latest_news_notifier.dart';
 
 abstract class _Constants {
   static const sectionHeaderPadding = 16.0;
 }
 
-class MostPopularNewsListPage extends StatefulWidget {
+class LatestNewsListPage extends StatefulWidget {
   @override
-  _MostPopularNewsListPageState createState() => _MostPopularNewsListPageState();
+  _LatestNewsListPageState createState() => _LatestNewsListPageState();
 }
 
-class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
+class _LatestNewsListPageState extends State<LatestNewsListPage> {
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    context.read<MostPopularNewsNotifier>().loadFirstPage();
+    context.read<LatestNewsNotifier>().loadFirstPage();
   }
 
   @override
@@ -37,31 +37,31 @@ class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
   }
 
   Widget _buildContent(BuildContext context) {
-    final state = context.select((MostPopularNewsNotifier notifier) => notifier.state);
+    final state = context.select((LatestNewsNotifier notifier) => notifier.state);
     if (state is NotifierLoadingViewState || state is NotifierInitialViewState) {
       return const Center(child: CircularProgressIndicator());
     } else if (state is NotifierErrorViewState) {
       return _buildErrorContent(context);
     } else if (state is NotifierLoadedViewState) {
-      return _buildLoadedContent((state as NotifierLoadedViewState<MostPopularNewsViewEntity>).data);
+      return _buildLoadedContent((state as NotifierLoadedViewState<NewsPaginatedViewEntities>).data);
     } else {
       return Container();
     }
   }
 
-  Widget _buildLoadedContent(MostPopularNewsViewEntity mostPopularNewsViewEntity) => Column(
+  Widget _buildLoadedContent(NewsPaginatedViewEntities paginatedViewEntities) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(context, mostPopularNewsViewEntity.mostPopularNewsPageTitle),
+          _buildHeader(context),
           const SizedBox(height: _Constants.sectionHeaderPadding),
           Expanded(
             child: NotificationListener<ScrollNotification>(
               onNotification: _handleScrollNotification,
               child: ListView.builder(
-                itemCount: mostPopularNewsViewEntity.entities.length,
+                itemCount: paginatedViewEntities.entities.length,
                 controller: _scrollController,
                 itemBuilder: (context, index) {
-                  final paginatedViewEntity = mostPopularNewsViewEntity.entities[index];
+                  final paginatedViewEntity = paginatedViewEntities.entities[index];
                   if (paginatedViewEntity is ContentNewsPaginatedViewEntity) {
                     return SecondaryNewsListItem(news: paginatedViewEntity.value);
                   } else if (paginatedViewEntity is LoadingNewsPaginatedViewEntity) {
@@ -76,7 +76,7 @@ class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
         ],
       );
 
-  Widget _buildHeader(BuildContext context, String title) => Padding(
+  Widget _buildHeader(BuildContext context) => Padding(
         padding: const EdgeInsets.only(
           top: Dimens.pagePadding,
           left: Dimens.pagePadding,
@@ -86,9 +86,9 @@ class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Hero(
-              tag: title,
+              tag: Strings.current.newest,
               child: Text(
-                title,
+                Strings.current.newest,
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),
@@ -102,12 +102,12 @@ class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
 
   bool _handleScrollNotification(ScrollNotification notification) {
     if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
-      context.read<MostPopularNewsNotifier>().loadNextPage();
+      context.read<LatestNewsNotifier>().loadNextPage();
     }
     return false;
   }
 
   Widget _buildErrorContent(BuildContext context) => RetryActionContainer(
-        onRetryPressed: () => context.read<MostPopularNewsNotifier>().loadFirstPage(),
+        onRetryPressed: () => context.read<LatestNewsNotifier>().loadFirstPage(),
       );
 }

@@ -2,7 +2,6 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
-import 'package:allthenews/src/ui/pages/feed/feed_page.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) => AppBar(
+        brightness: Theme.of(context).brightness,
         elevation: Dimens.appBarElevation,
         iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
         backgroundColor: Theme.of(context).backgroundColor,
@@ -230,8 +230,7 @@ class _SettingsPageState extends State<SettingsPage> {
           shape: const CircleBorder(),
           clipBehavior: Clip.hardEdge,
           child: InkWell(
-            onTap: () => Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => FeedPage())),
+            onTap: () => Navigator.pop(context),
             child: Icon(
               Icons.arrow_back,
               color: Theme.of(context).indicatorColor,

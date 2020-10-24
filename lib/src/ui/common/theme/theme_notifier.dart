@@ -2,6 +2,7 @@ import 'package:allthenews/src/domain/settings/app_theme.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ThemeNotifier extends ChangeNotifier {
 
@@ -20,7 +21,23 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   void updateAppTheme(AppTheme theme) {
-    _themeData = theme == AppTheme.light ? lightNewsTheme : darkNewsTheme;
+    if (theme == AppTheme.light) {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.white,
+      ));
+
+      _themeData = lightNewsTheme;
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.black,
+        systemNavigationBarIconBrightness: Brightness.light,
+        statusBarColor: Colors.black,
+      ));
+
+      _themeData = darkNewsTheme;
+    }
     notifyListeners();
   }
 }

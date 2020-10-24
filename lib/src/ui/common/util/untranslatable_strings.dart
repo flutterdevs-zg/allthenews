@@ -5,4 +5,5 @@ class UntranslatableStrings {
   static const email = 'E-mail';
   static const flutterDevsZgEmail = 'flutterdevs.zg@gmail.com';
   static const newYorkTimes = 'New York Times';
+  static const news = 'News';
 }

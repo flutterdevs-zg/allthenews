@@ -2,8 +2,8 @@ import 'package:allthenews/src/domain/common/page.dart';
 import 'package:allthenews/src/domain/nytimes/ny_times_paginated_repository.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
-import 'package:allthenews/src/ui/pages/home/news/articles_mapper.dart';
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/news_paginated_view_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/news_paginated_view_entity.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class _Constants {
