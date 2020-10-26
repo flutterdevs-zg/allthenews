@@ -74,21 +74,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ];
 
-  PreferredSizeWidget _buildDashboardAppBar(BuildContext context) {
-    return AppBar(
+  PreferredSizeWidget _buildDashboardAppBar(BuildContext context) => AppBar(
       brightness: Theme.of(context).brightness,
       elevation: Dimens.appBarElevation,
       iconTheme: const IconThemeData(color: Colors.black),
-      title: Padding(
-        padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
-        child: Text(
-          UntranslatableStrings.newYorkTimes,
-          style: Theme.of(context)
-              .textTheme
-              .headline2
-              .copyWith(fontFamily: _Constants.appBarTitleFontFamily),
-        ),
-      ),
+      title: _getAppBarTitle(UntranslatableStrings.newYorkTimes),
       backgroundColor: Theme.of(context).backgroundColor,
       actions: [
         Padding(
@@ -100,72 +90,50 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {},
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: _Constants.appBarActionsVerticalPadding,
-            bottom: _Constants.appBarActionsVerticalPadding,
-            right: Dimens.pagePadding,
-            left: _Constants.appBarActionsIconsPadding,
-          ),
-          child: PrimaryIconButton(
-            iconData: Icons.settings,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChangeNotifierProvider(
-                    create: (_) => inject<SettingsNotifier>(),
-                    child: SettingsPage(),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+        _buildSettingsIcon(context),
       ],
     );
-  }
 
-  PreferredSizeWidget _buildProfileAppBar(BuildContext context) {
-    return AppBar(
+  PreferredSizeWidget _buildProfileAppBar(BuildContext context) => AppBar(
       brightness: Theme.of(context).brightness,
       elevation: Dimens.appBarElevation,
       iconTheme: const IconThemeData(color: Colors.black),
-      title: Padding(
-        padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
-        child: Text(
-          Strings.of(context).profile,
-          style: Theme.of(context)
-              .textTheme
-              .headline2
-              .copyWith(fontFamily: _Constants.appBarTitleFontFamily),
-        ),
-      ),
+      title: _getAppBarTitle(Strings.of(context).profile),
       backgroundColor: Theme.of(context).backgroundColor,
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(
-            top: _Constants.appBarActionsVerticalPadding,
-            bottom: _Constants.appBarActionsVerticalPadding,
-            right: Dimens.pagePadding,
-            left: _Constants.appBarActionsIconsPadding,
-          ),
-          child: PrimaryIconButton(
-            iconData: Icons.settings,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChangeNotifierProvider(
-                    create: (_) => inject<SettingsNotifier>(),
-                    child: SettingsPage(),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+      actions: [_buildSettingsIcon(context)],
     );
-  }
+
+  Padding _buildSettingsIcon(BuildContext context) => Padding(
+      padding: const EdgeInsets.only(
+        top: _Constants.appBarActionsVerticalPadding,
+        bottom: _Constants.appBarActionsVerticalPadding,
+        right: Dimens.pagePadding,
+        left: _Constants.appBarActionsIconsPadding,
+      ),
+      child: PrimaryIconButton(
+        iconData: Icons.settings,
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(
+                create: (_) => inject<SettingsNotifier>(),
+                child: SettingsPage(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+
+  Widget _getAppBarTitle(String title) => Padding(
+      padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
+      child: Text(
+        title,
+        style: Theme.of(context)
+            .textTheme
+            .headline2
+            .copyWith(fontFamily: _Constants.appBarTitleFontFamily),
+      ),
+    );
 }
