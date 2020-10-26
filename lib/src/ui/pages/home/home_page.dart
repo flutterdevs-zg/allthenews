@@ -4,6 +4,7 @@ import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_page.dart';
+import 'package:allthenews/src/ui/pages/home/home_tab.dart';
 import 'package:allthenews/src/ui/pages/profile/profile_page.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_page.dart';
@@ -24,14 +25,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _selectedPage = 0;
-  final _pages = [
-    DashboardPage(),
-    ProfilePage(),
-  ];
+  List<HomeTab> _tabs;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _tabs = [
+      HomeTab(page: DashboardPage(), appBar: _buildDashboardAppBar(context)),
+      HomeTab(page: ProfilePage(), appBar: _buildProfileAppBar(context)),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: _buildAppBar(context),
+        appBar: _tabs[_selectedPage].appBar,
         backgroundColor: Theme.of(context).backgroundColor,
         body: WillPopScope(
             onWillPop: () {
@@ -44,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                 return Future.value(false);
               }
             },
-            child: _pages[_selectedPage]),
+            child: _tabs[_selectedPage].page),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (index) {
             if (_selectedPage != index) {
@@ -67,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ];
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  PreferredSizeWidget _buildDashboardAppBar(BuildContext context) {
     return AppBar(
       brightness: Theme.of(context).brightness,
       elevation: Dimens.appBarElevation,
@@ -93,6 +100,49 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {},
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: _Constants.appBarActionsVerticalPadding,
+            bottom: _Constants.appBarActionsVerticalPadding,
+            right: Dimens.pagePadding,
+            left: _Constants.appBarActionsIconsPadding,
+          ),
+          child: PrimaryIconButton(
+            iconData: Icons.settings,
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChangeNotifierProvider(
+                    create: (_) => inject<SettingsNotifier>(),
+                    child: SettingsPage(),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  PreferredSizeWidget _buildProfileAppBar(BuildContext context) {
+    return AppBar(
+      brightness: Theme.of(context).brightness,
+      elevation: Dimens.appBarElevation,
+      iconTheme: const IconThemeData(color: Colors.black),
+      title: Padding(
+        padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
+        child: Text(
+          Strings.of(context).profile,
+          style: Theme.of(context)
+              .textTheme
+              .headline2
+              .copyWith(fontFamily: _Constants.appBarTitleFontFamily),
+        ),
+      ),
+      backgroundColor: Theme.of(context).backgroundColor,
+      actions: [
         Padding(
           padding: const EdgeInsets.only(
             top: _Constants.appBarActionsVerticalPadding,
