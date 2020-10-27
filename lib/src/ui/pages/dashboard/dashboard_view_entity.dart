@@ -1,11 +1,11 @@
 import 'package:allthenews/src/domain/model/article.dart';
 
-class HomePageViewEntity {
+class DashboardViewEntity {
   final List<Article> mostPopularArticles;
   final List<Article> newestArticles;
   final String popularNewsTitle;
 
-  HomePageViewEntity({
+  DashboardViewEntity({
     this.mostPopularArticles,
     this.newestArticles,
     this.popularNewsTitle,

@@ -5,9 +5,9 @@ import 'package:allthenews/src/domain/nytimes/ny_times_paginated_repository.dart
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
-import 'package:allthenews/src/ui/pages/home/news/articles_mapper.dart';
-import 'package:allthenews/src/ui/pages/home/news/popular_news_criterion_extensions.dart';
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/news_paginated_view_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_extensions.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/news_paginated_view_entity.dart';
 import 'package:flutter/foundation.dart';
 
 import 'most_popular_news_view_entity.dart';

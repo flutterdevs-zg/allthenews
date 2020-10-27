@@ -103,6 +103,16 @@ class Strings {
     );
   }
 
+  /// `Profile`
+  String get profile {
+    return Intl.message(
+      'Profile',
+      name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Most Viewed`
   String get mostViewed {
     return Intl.message(

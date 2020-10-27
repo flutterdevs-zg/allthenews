@@ -1,4 +1,4 @@
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/news_paginated_view_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/news_paginated_view_entity.dart';
 import 'package:flutter/cupertino.dart';
 
 class MostPopularNewsViewEntity {

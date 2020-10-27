@@ -27,9 +27,9 @@ import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/domain/presentation/presentation_showing_repository.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/theme/theme_notifier.dart';
-import 'package:allthenews/src/ui/pages/home/home_notifier.dart';
-import 'package:allthenews/src/ui/pages/home/news/latest/latest_news_notifier.dart';
-import 'package:allthenews/src/ui/pages/home/news/most_popular/most_popular_news_notifier.dart';
+import 'package:allthenews/src/ui/pages/dashboard/dashboard_notifier.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_notifier.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:get_it/get_it.dart';
@@ -72,7 +72,7 @@ void _injectNotifiers() {
   _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
   _locator.registerFactory(() => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
   _locator.registerFactory(() => PresentationNotifier(_locator<PresentationShowingRepository>()));
-  _locator.registerFactory(() => HomeNotifier(
+  _locator.registerFactory(() => DashboardNotifier(
         _locator<NYTimesReactiveRepository>(),
         _locator<SettingsRepository>(),
       ));

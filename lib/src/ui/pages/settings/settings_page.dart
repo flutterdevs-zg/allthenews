@@ -75,6 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) => AppBar(
+        brightness: Theme.of(context).brightness,
         elevation: Dimens.appBarElevation,
         iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
         backgroundColor: Theme.of(context).backgroundColor,

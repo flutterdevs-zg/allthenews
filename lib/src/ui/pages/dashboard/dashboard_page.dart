@@ -1,0 +1,154 @@
+import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/di/injector.dart';
+import 'package:allthenews/src/domain/model/article.dart';
+import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
+import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
+import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
+import 'package:allthenews/src/ui/pages/dashboard/dashboard_view_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_notifier.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_page.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_notifier.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_page.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'dashboard_notifier.dart';
+import 'news/primary_news/primary_news_list_view.dart';
+import 'news/secondary_news/secondary_news_list_item.dart';
+
+abstract class _Constants {
+  static const sectionHeaderPadding = 10.0;
+  static const sectionSpacing = 20.0;
+  static const primaryNewsListSize = 5;
+}
+
+class DashboardPage extends StatefulWidget {
+  @override
+  _DashboardPageState createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  final DashboardNotifier _dashboardNotifier = inject<DashboardNotifier>();
+
+  @override
+  void initState() {
+    super.initState();
+    _dashboardNotifier.fetchArticles();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _dashboardNotifier.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: ChangeNotifierProvider.value(
+        value: _dashboardNotifier,
+        builder: (providerContext, child) {
+          final state = providerContext.select((DashboardNotifier notifier) => notifier.state);
+          if (state is NotifierInitialViewState || state is NotifierLoadingViewState) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is NotifierErrorViewState) {
+            return _errorContent(providerContext);
+          } else if (state is NotifierLoadedViewState) {
+            return _buildLoadedContent(
+                (state as NotifierLoadedViewState<DashboardViewEntity>).data);
+          } else {
+            return Container();
+          }
+        },
+      ),
+    );
+  }
+
+  Column _buildLoadedContent(DashboardViewEntity homePageViewEntity) {
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: _Constants.sectionHeaderPadding),
+                _buildNewsSectionHeader(
+                  title: homePageViewEntity.popularNewsTitle,
+                  routeBuilder: (context) => ChangeNotifierProvider(
+                    create: (_) => inject<MostPopularNewsNotifier>(),
+                    child: MostPopularNewsListPage(),
+                  ),
+                ),
+                const SizedBox(height: _Constants.sectionHeaderPadding),
+                PrimaryNewsListView(
+                  primaryNewsListEntities: homePageViewEntity.mostPopularArticles
+                      .toPrimaryNewsListEntity()
+                      .take(_Constants.primaryNewsListSize)
+                      .toList(),
+                ),
+                const SizedBox(height: _Constants.sectionSpacing),
+                _buildNewsSectionHeader(
+                  title: Strings.of(context).newest,
+                  routeBuilder: (context) => ChangeNotifierProvider(
+                    create: (_) => inject<LatestNewsNotifier>(),
+                    child: LatestNewsListPage(),
+                  ),
+                ),
+                const SizedBox(height: _Constants.sectionHeaderPadding),
+                _buildSecondaryNewsItems(homePageViewEntity.newestArticles),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNewsSectionHeader({
+    @required String title,
+    @required WidgetBuilder routeBuilder,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.pagePadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Hero(
+              tag: title,
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+            ),
+          ),
+          PrimaryTextButton(
+            text: Strings.of(context).showAll,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: routeBuilder,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSecondaryNewsItems(List<Article> articles) => Column(
+        children: articles
+            .toSecondaryNewsListEntities()
+            .take(3)
+            .toList()
+            .map((news) => SecondaryNewsListItem(news: news))
+            .toList(),
+      );
+
+  Widget _errorContent(BuildContext providerContext) => RetryActionContainer(
+        onRetryPressed: () => providerContext.read<DashboardNotifier>().fetchArticles(),
+      );
+}

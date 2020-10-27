@@ -3,11 +3,12 @@ import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
-import 'package:allthenews/src/ui/pages/home/news/latest/latest_news_notifier.dart';
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/secondary_news_list_item.dart';
-import 'package:allthenews/src/ui/pages/home/news/secondary_news/news_paginated_view_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_item.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/news_paginated_view_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'latest_news_notifier.dart';
 
 abstract class _Constants {
   static const sectionHeaderPadding = 16.0;

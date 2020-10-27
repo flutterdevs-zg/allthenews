@@ -1,5 +1,5 @@
-import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/home/news/primary_news/primary_news_list_item.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_item.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
