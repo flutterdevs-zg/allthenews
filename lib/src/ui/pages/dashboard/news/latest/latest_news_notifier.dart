@@ -1,10 +1,11 @@
 import 'package:allthenews/src/domain/common/page.dart';
 import 'package:allthenews/src/domain/nytimes/ny_times_paginated_repository.dart';
 import 'package:allthenews/src/domain/model/article.dart';
-import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/news_paginated_view_entity.dart';
 import 'package:flutter/foundation.dart';
+
+import 'latest_news_view_state.dart';
 
 abstract class _Constants {
   static const pageSize = 10;
@@ -13,16 +14,16 @@ abstract class _Constants {
 class LatestNewsNotifier extends ChangeNotifier {
   final NYTimesPaginatedRepository _nyTimesPaginatedRepository;
 
-  NotifierViewState _state = NotifierInitialViewState();
+  LatestNewsViewState _state = const LatestNewsViewState();
 
-  NewsPaginatedViewEntities get _loadedNewsPaginatedViewEntities =>
-      (_state is NotifierLoadedViewState) ? (_state as NotifierLoadedViewState<NewsPaginatedViewEntities>).data : null;
+  NewsPaginatedViewEntities get _loadedNewsPaginatedViewEntities => _state.viewEntities;
 
   LatestNewsNotifier(this._nyTimesPaginatedRepository);
 
-  NotifierViewState get state => _state;
+  LatestNewsViewState get state => _state;
 
   void loadFirstPage() {
+    _setNotifierState(const LatestNewsViewState(isLoading: true));
     _nyTimesPaginatedRepository
         .getNewestArticlesPage(Page(1, _Constants.pageSize))
         .then((articles) => _setLoadedState(articles))
@@ -42,8 +43,8 @@ class LatestNewsNotifier extends ChangeNotifier {
 
   void _setPageLoadingState() {
     _setNotifierState(
-      NotifierLoadedViewState<NewsPaginatedViewEntities>(
-        data: NewsPaginatedViewEntities(
+      LatestNewsViewState(
+        viewEntities: NewsPaginatedViewEntities(
           entities: [
             ..._loadedNewsPaginatedViewEntities.newsPaginatedContentViewEntities,
             LoadingNewsPaginatedViewEntity(),
@@ -55,12 +56,11 @@ class LatestNewsNotifier extends ChangeNotifier {
   }
 
   void _setLoadedState(List<Article> articles) {
-    final List<ContentNewsPaginatedViewEntity> currentArticles =
-        (_state is NotifierLoadedViewState) ? _loadedNewsPaginatedViewEntities.newsPaginatedContentViewEntities : [];
+    final List<ContentNewsPaginatedViewEntity> currentArticles = _loadedNewsPaginatedViewEntities?.newsPaginatedContentViewEntities ?? [];
 
     _setNotifierState(
-      NotifierLoadedViewState<NewsPaginatedViewEntities>(
-        data: NewsPaginatedViewEntities(
+      LatestNewsViewState(
+        viewEntities: NewsPaginatedViewEntities(
           entities: [
             ...currentArticles,
             ...articles.toSecondaryNewsListEntities().map((e) => ContentNewsPaginatedViewEntity(e)),
@@ -72,11 +72,11 @@ class LatestNewsNotifier extends ChangeNotifier {
   }
 
   void _onFetchError(error) {
-    _setNotifierState(NotifierErrorViewState(error: error));
+    _setNotifierState(LatestNewsViewState(error: error));
   }
 
-  void _setNotifierState(NotifierViewState notifierViewState) {
-    _state = notifierViewState;
+  void _setNotifierState(LatestNewsViewState viewState) {
+    _state = viewState;
     notifyListeners();
   }
 }

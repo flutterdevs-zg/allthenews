@@ -2,14 +2,11 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
-import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_view_entity.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_notifier.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_page.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_notifier.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,14 +47,13 @@ class _DashboardPageState extends State<DashboardPage> {
       child: ChangeNotifierProvider.value(
         value: _dashboardNotifier,
         builder: (providerContext, child) {
-          final state = providerContext.select((DashboardNotifier notifier) => notifier.state);
-          if (state is NotifierInitialViewState || state is NotifierLoadingViewState) {
+          final viewState = providerContext.select((DashboardNotifier notifier) => notifier.state);
+          if (viewState.isLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is NotifierErrorViewState) {
-            return _errorContent(providerContext);
-          } else if (state is NotifierLoadedViewState) {
-            return _buildLoadedContent(
-                (state as NotifierLoadedViewState<DashboardViewEntity>).data);
+          } else if (viewState.viewEntity != null) {
+            return _buildLoadedContent(viewState.viewEntity);
+          } else if (viewState.error != null) {
+            return _buildErrorContent(providerContext);
           } else {
             return Container();
           }
@@ -77,10 +73,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 _buildNewsSectionHeader(
                   title: homePageViewEntity.popularNewsTitle,
-                  routeBuilder: (context) => ChangeNotifierProvider(
-                    create: (_) => inject<MostPopularNewsNotifier>(),
-                    child: MostPopularNewsListPage(),
-                  ),
+                  routeBuilder: (context) => MostPopularNewsListPage(),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 PrimaryNewsListView(
@@ -92,10 +85,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: _Constants.sectionSpacing),
                 _buildNewsSectionHeader(
                   title: Strings.of(context).newest,
-                  routeBuilder: (context) => ChangeNotifierProvider(
-                    create: (_) => inject<LatestNewsNotifier>(),
-                    child: LatestNewsListPage(),
-                  ),
+                  routeBuilder: (context) => LatestNewsListPage(),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 _buildSecondaryNewsItems(homePageViewEntity.newestArticles),
@@ -148,7 +138,7 @@ class _DashboardPageState extends State<DashboardPage> {
             .toList(),
       );
 
-  Widget _errorContent(BuildContext providerContext) => RetryActionContainer(
+  Widget _buildErrorContent(BuildContext providerContext) => RetryActionContainer(
         onRetryPressed: () => providerContext.read<DashboardNotifier>().fetchArticles(),
       );
 }
