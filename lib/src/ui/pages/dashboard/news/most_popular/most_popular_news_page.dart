@@ -1,5 +1,5 @@
+import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
-import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_notifier.dart';
@@ -20,12 +20,13 @@ class MostPopularNewsListPage extends StatefulWidget {
 }
 
 class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
+  final MostPopularNewsNotifier _mostPopularNewsNotifier = inject<MostPopularNewsNotifier>();
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    context.read<MostPopularNewsNotifier>().loadFirstPage();
+    _mostPopularNewsNotifier.loadFirstPage();
   }
 
   @override
@@ -37,16 +38,21 @@ class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
   }
 
   Widget _buildContent(BuildContext context) {
-    final state = context.select((MostPopularNewsNotifier notifier) => notifier.state);
-    if (state is NotifierLoadingViewState || state is NotifierInitialViewState) {
-      return const Center(child: CircularProgressIndicator());
-    } else if (state is NotifierErrorViewState) {
-      return _buildErrorContent(context);
-    } else if (state is NotifierLoadedViewState) {
-      return _buildLoadedContent((state as NotifierLoadedViewState<MostPopularNewsViewEntity>).data);
-    } else {
-      return Container();
-    }
+    return ChangeNotifierProvider.value(
+      value: _mostPopularNewsNotifier,
+      builder: (providerContext, child) {
+        final viewState = providerContext.select((MostPopularNewsNotifier notifier) => notifier.state);
+        if (viewState.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (viewState.viewEntity != null) {
+          return _buildLoadedContent(viewState.viewEntity);
+        } else if (viewState.error != null) {
+          return _buildErrorContent(providerContext);
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 
   Widget _buildLoadedContent(MostPopularNewsViewEntity mostPopularNewsViewEntity) => Column(

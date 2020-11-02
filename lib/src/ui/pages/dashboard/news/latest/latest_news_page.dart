@@ -1,6 +1,6 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
-import 'package:allthenews/src/ui/common/util/notifier_view_state.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_item.dart';
@@ -20,12 +20,13 @@ class LatestNewsListPage extends StatefulWidget {
 }
 
 class _LatestNewsListPageState extends State<LatestNewsListPage> {
+  final LatestNewsNotifier _latestNewsNotifier = inject<LatestNewsNotifier>();
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    context.read<LatestNewsNotifier>().loadFirstPage();
+    _latestNewsNotifier.loadFirstPage();
   }
 
   @override
@@ -37,16 +38,21 @@ class _LatestNewsListPageState extends State<LatestNewsListPage> {
   }
 
   Widget _buildContent(BuildContext context) {
-    final state = context.select((LatestNewsNotifier notifier) => notifier.state);
-    if (state is NotifierLoadingViewState || state is NotifierInitialViewState) {
-      return const Center(child: CircularProgressIndicator());
-    } else if (state is NotifierErrorViewState) {
-      return _buildErrorContent(context);
-    } else if (state is NotifierLoadedViewState) {
-      return _buildLoadedContent((state as NotifierLoadedViewState<NewsPaginatedViewEntities>).data);
-    } else {
-      return Container();
-    }
+    return ChangeNotifierProvider.value(
+      value: _latestNewsNotifier,
+      builder: (providerContext, child) {
+        final viewState = providerContext.select((LatestNewsNotifier notifier) => notifier.state);
+        if (viewState.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (viewState.viewEntities != null) {
+          return _buildLoadedContent(viewState.viewEntities);
+        } else if (viewState.error != null) {
+          return _buildErrorContent(providerContext);
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 
   Widget _buildLoadedContent(NewsPaginatedViewEntities paginatedViewEntities) => Column(
