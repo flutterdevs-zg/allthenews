@@ -1,10 +1,12 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
+import 'package:allthenews/src/ui/common/pagination/paginated_list_view.dart';
+import 'package:allthenews/src/ui/common/pagination/paginated_view_state.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_item.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/news_paginated_view_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +23,6 @@ class LatestNewsListPage extends StatefulWidget {
 
 class _LatestNewsListPageState extends State<LatestNewsListPage> {
   final LatestNewsNotifier _latestNewsNotifier = inject<LatestNewsNotifier>();
-  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -44,8 +45,8 @@ class _LatestNewsListPageState extends State<LatestNewsListPage> {
         final viewState = providerContext.select((LatestNewsNotifier notifier) => notifier.state);
         if (viewState.isLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (viewState.viewEntities != null) {
-          return _buildLoadedContent(viewState.viewEntities);
+        } else if (viewState.paginatedItems != null) {
+          return _buildLoadedContent(viewState.paginatedItems);
         } else if (viewState.error != null) {
           return _buildErrorContent(providerContext);
         } else {
@@ -55,29 +56,16 @@ class _LatestNewsListPageState extends State<LatestNewsListPage> {
     );
   }
 
-  Widget _buildLoadedContent(NewsPaginatedViewEntities paginatedViewEntities) => Column(
+  Widget _buildLoadedContent(PaginatedItems<SecondaryNewsListEntity> paginatedItems) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(context),
           const SizedBox(height: _Constants.sectionHeaderPadding),
-          Expanded(
-            child: NotificationListener<ScrollNotification>(
-              onNotification: _handleScrollNotification,
-              child: ListView.builder(
-                itemCount: paginatedViewEntities.entities.length,
-                controller: _scrollController,
-                itemBuilder: (context, index) {
-                  final paginatedViewEntity = paginatedViewEntities.entities[index];
-                  if (paginatedViewEntity is ContentNewsPaginatedViewEntity) {
-                    return SecondaryNewsListItem(news: paginatedViewEntity.value);
-                  } else if (paginatedViewEntity is LoadingNewsPaginatedViewEntity) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-            ),
+          PaginatedListView<SecondaryNewsListEntity>(
+            paginatedItems: paginatedItems,
+            nextPageLoadingAction: () => _latestNewsNotifier.loadNextPage(),
+            onRetryPressed: () => _latestNewsNotifier.retryPage(),
+            itemBuilder: (item) => SecondaryNewsListItem(news: item),
           ),
         ],
       );
@@ -106,14 +94,7 @@ class _LatestNewsListPageState extends State<LatestNewsListPage> {
         ),
       );
 
-  bool _handleScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
-      context.read<LatestNewsNotifier>().loadNextPage();
-    }
-    return false;
-  }
-
   Widget _buildErrorContent(BuildContext context) => RetryActionContainer(
-        onRetryPressed: () => context.read<LatestNewsNotifier>().loadFirstPage(),
+        onRetryPressed: () => _latestNewsNotifier.loadFirstPage(),
       );
 }

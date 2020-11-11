@@ -2,12 +2,14 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
+import 'package:allthenews/src/ui/common/util/mapper.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_view_entity.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_page.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_page.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +30,9 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   final DashboardNotifier _dashboardNotifier = inject<DashboardNotifier>();
+  final Mapper<Article, PrimaryNewsListEntity> primaryNewsViewEntityMapper = inject<Mapper<Article, PrimaryNewsListEntity>>();
+  final Mapper<Article, SecondaryNewsListEntity> secondaryNewsViewEntityMapper = inject<Mapper<Article, SecondaryNewsListEntity>>();
+
 
   @override
   void initState() {
@@ -78,7 +83,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 PrimaryNewsListView(
                   primaryNewsListEntities: homePageViewEntity.mostPopularArticles
-                      .toPrimaryNewsListEntity()
+                      .map((item) => primaryNewsViewEntityMapper.map(item))
                       .take(_Constants.primaryNewsListSize)
                       .toList(),
                 ),
@@ -131,7 +136,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _buildSecondaryNewsItems(List<Article> articles) => Column(
         children: articles
-            .toSecondaryNewsListEntities()
+            .map((item) => secondaryNewsViewEntityMapper.map(item))
             .take(3)
             .toList()
             .map((news) => SecondaryNewsListItem(news: news))
