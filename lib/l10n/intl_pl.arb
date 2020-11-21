@@ -18,9 +18,19 @@
   "version": "Wersja",
   "viewed": "Wyświetlane",
   "retry": "Ponów",
+  "logout": "Wyloguj",
+  "login": "Zaloguj",
+  "loginTitle": "Logowanie",
+  "register": "Zarejestruj",
+  "registrationTitle": "Rejestracja",
+  "name": "Imię",
+  "email": "Email",
+  "password": "Hasło",
+  "createAccount": "Utwórz konto",
   "apiConnectionException": "Brak połączenia sieciowego",
   "apiUnknownException": "Nieznany błąd",
   "apiUnauthorizedException": "Błąd autoryzacyjny",
   "apiServerException": "Błąd na serwerze",
-  "apiInvalidUrlException": "Nie znaleziono danych"
+  "apiInvalidUrlException": "Nie znaleziono danych",
+  "emptyFieldError": "To pole nie może być puste"
 }

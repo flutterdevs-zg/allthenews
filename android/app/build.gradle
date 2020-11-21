@@ -51,6 +51,13 @@ android {
     }
 
     signingConfigs {
+        debug {
+            storeFile = file("keystore/debug.keystore")
+            keyAlias = "androiddebugkey"
+            storePassword = "android"
+            keyPassword = "android"
+        }
+
         release {
             storeFile file(System.getenv("HOME") + "/keystores/allthenews.keystore")
             storePassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
@@ -60,6 +67,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+
         release {
             signingConfig signingConfigs.release.storeFile.exists() ? signingConfigs.release : signingConfigs.debug
         }

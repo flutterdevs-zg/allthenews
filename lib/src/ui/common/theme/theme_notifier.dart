@@ -25,6 +25,7 @@ class ThemeNotifier extends ChangeNotifier {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.white,
       ));
 
@@ -33,6 +34,7 @@ class ThemeNotifier extends ChangeNotifier {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.black,
         systemNavigationBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.black,
       ));
 

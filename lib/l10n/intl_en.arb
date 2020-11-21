@@ -18,9 +18,19 @@
   "version": "Version",
   "viewed": "Viewed",
   "retry": "Retry",
+  "logout": "Logout",
+  "login": "Login",
+  "loginTitle": "Login",
+  "register": "Register",
+  "registrationTitle": "Registration",
+  "name": "Name",
+  "email": "Email",
+  "password": "Password",
+  "createAccount": "Create account",
   "apiConnectionException": "No internet connection",
   "apiUnknownException": "Unknown error",
   "apiUnauthorizedException": "Authorization error",
   "apiServerException": "Internal server error",
-  "apiInvalidUrlException": "Resource not found"
+  "apiInvalidUrlException": "Resource not found",
+  "emptyFieldError": "This field cannot be empty"
 }

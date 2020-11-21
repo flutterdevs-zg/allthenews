@@ -38,7 +38,9 @@ import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular
 import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_message_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/home/home_page_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
+import 'package:allthenews/src/ui/pages/profile/auth/authorization_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -55,7 +57,8 @@ void injectDependencies(Environment flavor) {
   _locator.registerSingleton<AppInfoRepository>(AppInfoLocalRepository());
   _locator.registerSingleton<PersistenceRepository>(SharedPreferencesPersistenceRepository());
   _locator.registerSingleton<SettingsRepository>(SettingsLocalRepository(_locator<PersistenceRepository>()));
-  _locator.registerSingleton<PresentationShowingRepository>(PresentationShowingLocalRepository(_locator<PersistenceRepository>()));
+  _locator.registerSingleton<PresentationShowingRepository>(
+      PresentationShowingLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerFactory<CachePolicy<Article>>(() => ArticleCachePolicy());
   _injectApiDependencies();
   _injectNotifiers();
@@ -70,7 +73,8 @@ void _injectApiDependencies() {
     _locator<ApiKeyRepository>(),
     _locator<ExceptionMapper>(),
   ));
-  _locator.registerSingleton<NYTimesRepository>(NYTimesRestRepository(_locator<HttpClient>(), _locator<SettingsRepository>()));
+  _locator.registerSingleton<NYTimesRepository>(
+      NYTimesRestRepository(_locator<HttpClient>(), _locator<SettingsRepository>()));
   _locator.registerSingleton<AppDatabase>(AppDatabase());
   _locator.registerSingleton<ArticleDao>(ArticleDao(_locator<AppDatabase>()));
   _locator.registerSingleton<NyTimesCachedRepository>(NyTimesCachedInDbRepository(_locator<ArticleDao>()));
@@ -99,6 +103,7 @@ void _injectApiDependencies() {
 }
 
 void _injectNotifiers() {
+  _locator.registerSingleton<HomePageNotifier>(HomePageNotifier());
   _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
   _locator.registerFactory(() => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
   _locator.registerFactory(() => PresentationNotifier(_locator<PresentationShowingRepository>()));
@@ -107,11 +112,25 @@ void _injectNotifiers() {
         _locator<SettingsRepository>(),
         _locator<PopularNewsCriterionMessageMapper>(),
       ));
-  _locator.registerFactory(() => MostPopularNewsNotifier(_locator<GetPageUseCase<Article>>(instanceName: _Constants.mostPopularNews),
-      _locator<Mapper<Article, SecondaryNewsListEntity>>(), _locator<SettingsRepository>(), _locator<PopularNewsCriterionMessageMapper>()));
+  _locator.registerFactory(() => AuthorizationNotifier());
+  _locator.registerFactory(() => MostPopularNewsNotifier(
+        _locator<GetPageUseCase<Article>>(instanceName: _Constants.mostPopularNews),
+        _locator<Mapper<Article, SecondaryNewsListEntity>>(),
+        _locator<SettingsRepository>(),
+        _locator<PopularNewsCriterionMessageMapper>(),
+      ));
+  _locator.registerFactory(() => LatestNewsNotifier(
+      _locator<GetPageUseCase<Article>>(instanceName: _Constants.latestNews),
+      _locator<Mapper<Article, SecondaryNewsListEntity>>()));
+  _locator.registerFactory(() => MostPopularNewsNotifier(
+      _locator<GetPageUseCase<Article>>(instanceName: _Constants.mostPopularNews),
+      _locator<Mapper<Article, SecondaryNewsListEntity>>(),
+      _locator<SettingsRepository>(),
+      _locator<PopularNewsCriterionMessageMapper>()));
   _locator.registerFactory<PopularNewsCriterionMessageMapper>(() => PopularNewsCriterionMessageLocalMapper());
-  _locator.registerFactory(
-      () => LatestNewsNotifier(_locator<GetPageUseCase<Article>>(instanceName: _Constants.latestNews), _locator<Mapper<Article, SecondaryNewsListEntity>>()));
+  _locator.registerFactory(() => LatestNewsNotifier(
+      _locator<GetPageUseCase<Article>>(instanceName: _Constants.latestNews),
+      _locator<Mapper<Article, SecondaryNewsListEntity>>()));
 }
 
 T inject<T>({String name, dynamic param}) => GetIt.instance.get<T>(instanceName: name, param1: param);

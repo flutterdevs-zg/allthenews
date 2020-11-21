@@ -1,7 +1,9 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
+import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
 import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,36 +20,55 @@ abstract class _Constants {
   static const sectionItemLeftSpacing = 30.0;
   static const sectionItemTopSpacing = 12.0;
   static const switchLeftSpacing = 10.0;
-  static const backButtonPadding = 8.0;
 }
 
 class SettingsPage extends StatefulWidget {
+  final int selectedHomePage;
+
+  const SettingsPage({this.selectedHomePage});
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final SettingsNotifier _settingsNotifier = inject<SettingsNotifier>();
+
   @override
   void initState() {
     super.initState();
-    context.read<SettingsNotifier>().loadSettings();
+    _settingsNotifier.loadSettings();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (context.select((SettingsNotifier notifier) => notifier.viewState.isLoading)) {
-      return _buildProgressIndicator();
-    } else {
-      return _buildSettingsScreen(context);
-    }
+    return ChangeNotifierProvider.value(
+      value: _settingsNotifier,
+      builder: (providerContext, child) {
+        if (providerContext.select((SettingsNotifier notifier) => notifier.viewState.isLoading)) {
+          return _buildProgressIndicator();
+        } else {
+          return _buildSettingsScreen(providerContext);
+        }
+      },
+    );
   }
 
   Widget _buildProgressIndicator() => const Center(child: CircularProgressIndicator());
 
-  Widget _buildSettingsScreen(BuildContext context) {
+  Widget _buildSettingsScreen(BuildContext providerContext) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: _buildAppBar(context),
+      appBar: NyTimesAppBar(
+        title: Strings.of(context).settings,
+        hasBackButton: true,
+        backButtonAction: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomePage(
+                      initialPage: widget.selectedHomePage,
+                    ))),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -55,17 +76,16 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeader(context),
                 const SizedBox(height: _Constants.headerVerticalSpacing),
-                _buildDarkModeSection(context),
+                _buildDarkModeSection(providerContext),
                 const SizedBox(height: _Constants.sectionVerticalSpacing),
                 const Divider(),
                 const SizedBox(height: _Constants.sectionVerticalSpacing),
-                _buildPopularSection(context),
+                _buildPopularSection(providerContext),
                 const SizedBox(height: _Constants.sectionVerticalSpacing),
                 const Divider(),
                 const SizedBox(height: _Constants.sectionVerticalSpacing),
-                _buildAboutSection(context),
+                _buildAboutSection(providerContext),
               ],
             ),
           ),
@@ -74,20 +94,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) => AppBar(
-        brightness: Theme.of(context).brightness,
-        elevation: Dimens.appBarElevation,
-        iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
-        backgroundColor: Theme.of(context).backgroundColor,
-        leading: _buildBackButton(),
-      );
-
-  Widget _buildHeader(BuildContext context) => Text(
-        Strings.of(context).settings,
-        style: Theme.of(context).textTheme.headline3,
-      );
-
-  Widget _buildDarkModeSection(BuildContext context) {
+  Widget _buildDarkModeSection(BuildContext providerContext) {
     return Padding(
       padding: const EdgeInsets.only(
         left: _Constants.sectionLeftSpacing,
@@ -96,15 +103,15 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildSettingsHeader(context, Strings.of(context).darkMode),
+          _buildSettingsHeader(Strings.of(context).darkMode),
           CupertinoSwitch(
-            value:
-                context.select((SettingsNotifier notifier) => notifier.viewState.isDarkModeEnabled),
+            value: providerContext
+                .select((SettingsNotifier notifier) => notifier.viewState.isDarkModeEnabled),
             onChanged: (isSelected) {
               setState(() {
-                context.read<SettingsNotifier>().selectDarkMode(
+                providerContext.read<SettingsNotifier>().selectDarkMode(
                       isSelected: isSelected,
-                      read: context.read,
+                      read: providerContext.read,
                     );
               });
             },
@@ -115,7 +122,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildPopularSection(BuildContext context) {
+  Widget _buildPopularSection(BuildContext providerContext) {
     return Padding(
       padding: const EdgeInsets.only(
         left: _Constants.sectionLeftSpacing,
@@ -124,10 +131,10 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSettingsHeader(context, Strings.of(context).popular),
+          _buildSettingsHeader(Strings.of(context).popular),
           Column(
             children: PopularNewsCriterion.values.map((criterion) {
-              return _buildPopularSectionItem(context, criterion);
+              return _buildPopularSectionItem(providerContext, criterion);
             }).toList(),
           ),
         ],
@@ -136,7 +143,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Padding _buildPopularSectionItem(
-      BuildContext context, PopularNewsCriterion popularNewsCriterion) {
+      BuildContext providerContext, PopularNewsCriterion popularNewsCriterion) {
     return Padding(
       padding: const EdgeInsets.only(
         left: _Constants.sectionItemLeftSpacing,
@@ -146,16 +153,17 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildPopularSettingText(context, popularNewsCriterion),
+          _buildPopularSettingText(popularNewsCriterion),
           const SizedBox(width: _Constants.switchLeftSpacing),
           _buildSwitch(
-              context,
               popularNewsCriterion ==
-                  context.select((SettingsNotifier notifier) =>
+                  providerContext.select((SettingsNotifier notifier) =>
                       notifier.viewState.selectedPopularNewsCriterion), (isSelected) {
             if (isSelected) {
               setState(() {
-                context.read<SettingsNotifier>().selectPopularNewsCriterion(popularNewsCriterion);
+                providerContext
+                    .read<SettingsNotifier>()
+                    .selectPopularNewsCriterion(popularNewsCriterion);
               });
             }
           }),
@@ -164,7 +172,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildAboutSection(BuildContext context) {
+  Widget _buildAboutSection(BuildContext providerContext) {
     return Padding(
       padding: const EdgeInsets.only(
         left: _Constants.sectionLeftSpacing,
@@ -173,7 +181,7 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSettingsHeader(context, Strings.of(context).aboutApp),
+          _buildSettingsHeader(Strings.of(context).aboutApp),
           Padding(
             padding: const EdgeInsets.only(
               left: _Constants.sectionItemLeftSpacing,
@@ -183,11 +191,11 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildAboutAppText(context,
+                _buildAboutAppText(
                     '${UntranslatableStrings.email}: ${UntranslatableStrings.flutterDevsZgEmail}'),
                 const SizedBox(height: _Constants.aboutSectionItemSpacing),
-                _buildAboutAppText(context,
-                    '${Strings.of(context).version}: ${context.select((SettingsNotifier notifier) => notifier.viewState.appVersion)}'),
+                _buildAboutAppText(
+                    '${Strings.of(context).version}: ${providerContext.select((SettingsNotifier notifier) => notifier.viewState.appVersion)}'),
                 const SizedBox(height: _Constants.aboutSectionItemSpacing),
               ],
             ),
@@ -197,12 +205,12 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildSettingsHeader(BuildContext context, String text) => Text(
+  Widget _buildSettingsHeader(String text) => Text(
         text,
         style: Theme.of(context).textTheme.headline4,
       );
 
-  Widget _buildAboutAppText(BuildContext context, String text) => Text(
+  Widget _buildAboutAppText(String text) => Text(
         text,
         style: Theme.of(context)
             .textTheme
@@ -210,47 +218,29 @@ class _SettingsPageState extends State<SettingsPage> {
             .copyWith(color: Theme.of(context).textTheme.caption.color),
       );
 
-  Widget _buildPopularSettingText(BuildContext context, PopularNewsCriterion criterion) => Flexible(
+  Widget _buildPopularSettingText(PopularNewsCriterion criterion) => Flexible(
         child: Text(
-          criterion.toCriterionName(context),
+          criterion.toCriterionName(),
           style: Theme.of(context).textTheme.headline6,
         ),
       );
 
-  Widget _buildSwitch(BuildContext context, bool value, ValueChanged<bool> onChanged) =>
-      CupertinoSwitch(
+  Widget _buildSwitch(bool value, ValueChanged<bool> onChanged) => CupertinoSwitch(
         value: value,
         onChanged: onChanged,
         activeColor: Theme.of(context).accentColor,
       );
-
-  Widget _buildBackButton() => Padding(
-        padding: const EdgeInsets.all(_Constants.backButtonPadding),
-        child: Material(
-          color: Colors.transparent,
-          shape: const CircleBorder(),
-          clipBehavior: Clip.hardEdge,
-          child: InkWell(
-            onTap: () => Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => HomePage())),
-            child: Icon(
-              Icons.arrow_back,
-              color: Theme.of(context).indicatorColor,
-            ),
-          ),
-        ),
-      );
 }
 
 extension on PopularNewsCriterion {
-  String toCriterionName(BuildContext context) {
+  String toCriterionName() {
     switch (this) {
       case PopularNewsCriterion.viewed:
-        return Strings.of(context).viewed;
+        return Strings.current.viewed;
       case PopularNewsCriterion.shared:
-        return Strings.of(context).shared;
+        return Strings.current.shared;
       case PopularNewsCriterion.emailed:
-        return Strings.of(context).emailed;
+        return Strings.current.emailed;
     }
     return '';
   }
