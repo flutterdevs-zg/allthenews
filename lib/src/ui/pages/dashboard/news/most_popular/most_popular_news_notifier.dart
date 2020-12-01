@@ -6,11 +6,12 @@ import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/pagination/paginated_view_state.dart';
 import 'package:allthenews/src/ui/common/pagination/pagination_notifier.dart';
 import 'package:allthenews/src/ui/common/util/mapper.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_extensions.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_message_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
 
 class MostPopularNewsNotifier extends PaginationNotifier<Article, SecondaryNewsListEntity> {
   final SettingsRepository _settingsRepository;
+  final PopularNewsCriterionMessageMapper _popularNewsCriterionMessageMapper;
 
   String _mostPopularNewsPageTitle = '';
 
@@ -23,13 +24,14 @@ class MostPopularNewsNotifier extends PaginationNotifier<Article, SecondaryNewsL
     GetPageUseCase<Article> getPageUseCase,
     Mapper<Article, SecondaryNewsListEntity> mapper,
     this._settingsRepository,
+    this._popularNewsCriterionMessageMapper,
   ) : super(getPageUseCase, mapper);
 
   @override
   Future<void> loadFirstPage() async {
     super.setNotifierState(const PaginatedViewState(isLoading: true));
     await _settingsRepository.getPopularNewsCriterion().then((criterion) {
-      _mostPopularNewsPageTitle = criterion.getTitle();
+      _mostPopularNewsPageTitle = _popularNewsCriterionMessageMapper.map(criterion);
       super.loadFirstPage();
     }).catchError((error) => setNotifierState(PaginatedViewState(error: error)));
   }

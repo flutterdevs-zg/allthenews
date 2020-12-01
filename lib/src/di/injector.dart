@@ -35,16 +35,17 @@ import 'package:allthenews/src/ui/pages/dashboard/dashboard_notifier.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_notifier.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_notifier.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_message_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 abstract class _Constants {
   static const latestNews = 'latestNews';
   static const mostPopularNews = 'mostPopularNews';
-
 }
 
 final _locator = GetIt.instance;
@@ -62,7 +63,13 @@ void injectDependencies(Environment flavor) {
 
 void _injectApiDependencies() {
   _locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
-  _locator.registerSingleton<HttpClient>(HttpClient(_locator<AppConfig>(), _locator<ApiKeyRepository>()));
+  _locator.registerSingleton<Dio>(Dio());
+  _locator.registerSingleton<HttpClient>(HttpClient(
+    _locator<Dio>(),
+    _locator<AppConfig>(),
+    _locator<ApiKeyRepository>(),
+    _locator<ExceptionMapper>(),
+  ));
   _locator.registerSingleton<NYTimesRepository>(NYTimesRestRepository(_locator<HttpClient>(), _locator<SettingsRepository>()));
   _locator.registerSingleton<AppDatabase>(AppDatabase());
   _locator.registerSingleton<ArticleDao>(ArticleDao(_locator<AppDatabase>()));
@@ -82,12 +89,12 @@ void _injectApiDependencies() {
   _locator.registerFactory<Mapper<Article, SecondaryNewsListEntity>>(() => SecondaryNewsViewEntityMapper());
   _locator.registerFactory<Mapper<Article, PrimaryNewsListEntity>>(() => PrimaryNewsViewEntityMapper());
   _locator.registerSingleton<GetPageUseCase<Article>>(
-      GetLatestNewsPageUseCase(_locator<NYTimesPaginatedRepository>()),
-      instanceName: _Constants.latestNews,
+    GetLatestNewsPageUseCase(_locator<NYTimesPaginatedRepository>()),
+    instanceName: _Constants.latestNews,
   );
   _locator.registerSingleton<GetPageUseCase<Article>>(
-      GetMostPopularNewsPageUseCase(_locator<NYTimesPaginatedRepository>()),
-      instanceName: _Constants.mostPopularNews,
+    GetMostPopularNewsPageUseCase(_locator<NYTimesPaginatedRepository>()),
+    instanceName: _Constants.mostPopularNews,
   );
 }
 
@@ -98,16 +105,13 @@ void _injectNotifiers() {
   _locator.registerFactory(() => DashboardNotifier(
         _locator<NYTimesReactiveRepository>(),
         _locator<SettingsRepository>(),
+        _locator<PopularNewsCriterionMessageMapper>(),
       ));
-  _locator.registerFactory(() => MostPopularNewsNotifier(
-      _locator<GetPageUseCase<Article>>(instanceName: _Constants.mostPopularNews),
-      _locator<Mapper<Article, SecondaryNewsListEntity>>(),
-      _locator<SettingsRepository>())
-  );
-  _locator.registerFactory(() => LatestNewsNotifier(
-      _locator<GetPageUseCase<Article>>(instanceName: _Constants.latestNews),
-      _locator<Mapper<Article, SecondaryNewsListEntity>>())
-  );
+  _locator.registerFactory(() => MostPopularNewsNotifier(_locator<GetPageUseCase<Article>>(instanceName: _Constants.mostPopularNews),
+      _locator<Mapper<Article, SecondaryNewsListEntity>>(), _locator<SettingsRepository>(), _locator<PopularNewsCriterionMessageMapper>()));
+  _locator.registerFactory<PopularNewsCriterionMessageMapper>(() => PopularNewsCriterionMessageLocalMapper());
+  _locator.registerFactory(
+      () => LatestNewsNotifier(_locator<GetPageUseCase<Article>>(instanceName: _Constants.latestNews), _locator<Mapper<Article, SecondaryNewsListEntity>>()));
 }
 
 T inject<T>({String name, dynamic param}) => GetIt.instance.get<T>(instanceName: name, param1: param);

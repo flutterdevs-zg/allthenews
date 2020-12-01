@@ -1,9 +1,14 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 
-extension PopularNewsCriterionExtensions on PopularNewsCriterion {
-  String getTitle() {
-    switch (this) {
+abstract class PopularNewsCriterionMessageMapper {
+  String map(PopularNewsCriterion popularNewsCriterion);
+}
+
+class PopularNewsCriterionMessageLocalMapper extends PopularNewsCriterionMessageMapper {
+  @override
+  String map(PopularNewsCriterion popularNewsCriterion) {
+    switch (popularNewsCriterion) {
       case PopularNewsCriterion.viewed:
         return Strings.current.mostViewed;
       case PopularNewsCriterion.shared:
