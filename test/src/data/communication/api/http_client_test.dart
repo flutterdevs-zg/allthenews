@@ -36,7 +36,7 @@ void main() {
   MockApiExceptionMapper mockApiExceptionMapper;
   MockApiKeyRepository mockApiKeyRepository;
 
-  setUp(() {
+  setUpAll(() {
     mockDio = MockDio();
     mockAppConfig = MockAppConfig();
     mockApiExceptionMapper = MockApiExceptionMapper();

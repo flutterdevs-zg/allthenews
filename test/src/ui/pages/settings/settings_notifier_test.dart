@@ -17,7 +17,7 @@ void main() {
   MockAppInfoRepository mockAppInfoRepository;
   MockSettingsRepository mockSettingsRepository;
 
-  setUp(() {
+  setUpAll(() {
     mockAppInfoRepository = MockAppInfoRepository();
     mockSettingsRepository = MockSettingsRepository();
     settingsNotifier = SettingsNotifier(mockSettingsRepository, mockAppInfoRepository);
@@ -25,7 +25,7 @@ void main() {
 
   group('notifier tests', () {
     test(
-      'should emit loaded settings state when fetching succeed',
+      'should emit loaded settings state when fetching articles succeeded',
       () async {
         when(mockSettingsRepository.getTheme()).thenAnswer((_) async => AppTheme.light);
         when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);

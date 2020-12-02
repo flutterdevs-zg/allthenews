@@ -8,53 +8,21 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   ApiExceptionMapper apiExceptionMapper;
 
-  setUp(() {
+  setUpAll(() {
     apiExceptionMapper = ApiExceptionMapper();
   });
 
   group('api exception mappings tests', () {
-    test(
-      'should return a server error exception when status code is equal to 500',
-      () {
-        final communicationException = DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 500));
-
-        final domainException = apiExceptionMapper.toExceptionType(communicationException);
-
-        expect(domainException, isA<ServerErrorException>());
-      },
-    );
-
-    test(
-      'should throw a socket exception when there is no internet connection',
-      () {
-        final communicationException = DioError(error: const SocketException(''));
-
-        final domainException = apiExceptionMapper.toExceptionType(communicationException);
-
-        expect(domainException, isA<ConnectionException>());
-      },
-    );
-
-    test(
-      'should throw an unauthorized exception when status code is equal to 401',
-      () {
-        final communicationException = DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 401));
-
-        final domainException = apiExceptionMapper.toExceptionType(communicationException);
-
-        expect(domainException, isA<UnauthorizedException>());
-      },
-    );
-
-    test(
-      'should throw an invalid url exception when status code is equal to 404',
-      () {
-        final communicationException = DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 404));
-
-        final domainException = apiExceptionMapper.toExceptionType(communicationException);
-
-        expect(domainException, isA<InvalidUrlException>());
-      },
-    );
+    final inputsToMatchers = {
+      DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 500)): isA<ServerErrorException>(),
+      DioError(error: const SocketException('')): isA<ConnectionException>(),
+      DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 401)): isA<UnauthorizedException>(),
+      DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 404)): isA<InvalidUrlException>(),
+    };
+    inputsToMatchers.forEach((input, matcher) {
+      test("$input -> $matcher", () {
+        expect(apiExceptionMapper.toExceptionType(input), matcher);
+      });
+    });
   });
 }

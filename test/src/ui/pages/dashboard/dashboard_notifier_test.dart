@@ -5,20 +5,15 @@ import 'package:allthenews/src/domain/settings/app_theme.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_notifier.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_message_mapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../common/change_notifier_test_util.dart';
+import 'news/fake_popular_news_criterion_message_mapper.dart';
 
 class MockNYTimesReactiveRepository extends Mock implements NYTimesReactiveRepository {}
 
 class MockSettingsRepository extends Mock implements SettingsRepository {}
-
-class FakePopularNewsCriterionMessageMapper extends PopularNewsCriterionMessageMapper {
-  @override
-  String map(PopularNewsCriterion popularNewsCriterion) => popularNewsCriterion.toString();
-}
 
 void main() {
   DashboardNotifier dashboardNotifier;
@@ -39,7 +34,7 @@ void main() {
 
   group('notifier tests', () {
     test(
-      'should emit loaded dashboard state when fetching succeed',
+      'should emit loaded dashboard state when fetching articles succeeded',
       () {
         when(mockSettingsRepository.getTheme()).thenAnswer((_) async => AppTheme.light);
         when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);
@@ -65,7 +60,7 @@ void main() {
     );
 
     test(
-      'should emit loaded dashboard state when fetching failed',
+      'should emit loaded dashboard state when fetching articles failed',
       () {
         when(mockSettingsRepository.getTheme()).thenAnswer((_) async => AppTheme.light);
         when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);

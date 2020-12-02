@@ -29,7 +29,7 @@ void main() {
 
   group('contract tests', () {
     test(
-      'should return valid most popular news when nytimes api call finish successfully',
+      'should return valid most popular news when nytimes api call finishes successfully',
       () async {
         when(mockHttpClient.get(any)).thenAnswer((_) async => json.decode(findApiStubBy('most_popular_news.json')));
 
@@ -51,7 +51,7 @@ void main() {
     );
 
     test(
-      'should return valid latest news when nytimes api call finish successfully',
+      'should return valid latest news when nytimes api call finishes successfully',
       () async {
         when(mockHttpClient.get(any)).thenAnswer((_) async => json.decode(findApiStubBy('latest_news.json')));
 

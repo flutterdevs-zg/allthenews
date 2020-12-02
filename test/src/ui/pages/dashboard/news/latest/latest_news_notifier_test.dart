@@ -20,17 +20,6 @@ void main() {
   });
 
   group('notifier tests', () {
-    test(
-      'should emit loading state when fetching newest articles',
-      () async {
-        when(mockGetPageUseCase(any)).thenAnswer((_) async => []);
-
-        latestNewsNotifier.loadFirstPage();
-
-        expect(latestNewsNotifier.state.isLoading, true);
-      },
-    );
-
     test('should emit loaded first page of newest articles', () async {
       when(mockGetPageUseCase(any)).thenAnswer((_) async => []);
 

@@ -5,20 +5,15 @@ import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_notifier.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_message_mapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../../../common/change_notifier_test_util.dart';
+import '../fake_popular_news_criterion_message_mapper.dart';
 
 class MockGetPageUseCase extends Mock implements GetPageUseCase<Article> {}
 
 class MockSettingsRepository extends Mock implements SettingsRepository {}
-
-class FakePopularNewsCriterionMessageMapper extends PopularNewsCriterionMessageMapper {
-  @override
-  String map(PopularNewsCriterion popularNewsCriterion) => popularNewsCriterion.toString();
-}
 
 void main() {
   MostPopularNewsNotifier mostPopularNewsNotifier;
@@ -39,18 +34,6 @@ void main() {
   });
 
   group('notifier tests', () {
-    test(
-      'should emit loading state when fetching most popular articles',
-      () async {
-        when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);
-        when(mockGetPageUseCase(any)).thenAnswer((_) async => []);
-
-        mostPopularNewsNotifier.loadFirstPage();
-
-        expect(mostPopularNewsNotifier.state.isLoading, true);
-      },
-    );
-
     test(
       'should emit loaded first page of most popular articles',
       () async {

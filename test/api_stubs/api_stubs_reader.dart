@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 String findApiStubBy(String name) => File('${_findTestDirectory()}/api_stubs/$name').readAsStringSync();
 
 //https://github.com/flutter/flutter/issues/20907
