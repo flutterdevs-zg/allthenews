@@ -36,17 +36,17 @@ void main() {
         final articles = await nyTimesRestRepository.getMostPopularArticles();
 
         expect(articles, isA<List<Article>>());
-        expect(articles, isNot([]));
+        expect(articles, isNotEmpty);
 
         final article = articles.first;
 
-        expect(article, isNot(null));
-        expect(article.abstract, isNot(null));
-        expect(article.url, isNot(null));
-        expect(article.updateDateTime, isNot(null));
-        expect(article.authorName, isNot(null));
-        expect(article.title, isNot(null));
-        expect(article.thumbnail, isNot(null));
+        expect(article, isNotNull);
+        expect(article.abstract, isNotNull);
+        expect(article.url, isNotNull);
+        expect(article.updateDateTime, isNotNull);
+        expect(article.authorName, isNotNull);
+        expect(article.title, isNotNull);
+        expect(article.thumbnail, isNotNull);
       },
     );
 
@@ -58,17 +58,17 @@ void main() {
         final articles = await nyTimesRestRepository.getNewestArticles();
 
         expect(articles, isA<List<Article>>());
-        expect(articles, isNot([]));
+        expect(articles, isNotEmpty);
 
         final article = articles.first;
 
-        expect(article, isNot(null));
-        expect(article.abstract, isNot(null));
-        expect(article.url, isNot(null));
-        expect(article.updateDateTime, isNot(null));
-        expect(article.authorName, isNot(null));
-        expect(article.title, isNot(null));
-        expect(article.thumbnail, isNot(null));
+        expect(article, isNotNull);
+        expect(article.abstract, isNotNull);
+        expect(article.url, isNotNull);
+        expect(article.updateDateTime, isNotNull);
+        expect(article.authorName, isNotNull);
+        expect(article.title, isNotNull);
+        expect(article.thumbnail, isNotNull);
       },
     );
   });

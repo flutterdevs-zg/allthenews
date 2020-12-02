@@ -53,7 +53,7 @@ void main() {
 
         final response = await httpClient.get(Request(path: 'testPath', queryParameters: {}));
 
-        expect(response, isNot(null));
+        expect(response, isNotNull);
         expect(response, isA<Map<String, dynamic>>());
       },
     );

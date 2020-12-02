@@ -1,14 +1,9 @@
 import 'package:allthenews/src/data/article/ny_times_cached_in_db_repository.dart';
 import 'package:allthenews/src/data/communication/api/http_client.dart';
-import 'package:allthenews/src/data/persistence/database/app_database.dart';
-import 'package:allthenews/src/data/persistence/database/article_dao.dart';
-import 'package:allthenews/src/data/persistence/database/article_dto_type_converter.dart';
-import 'package:allthenews/src/domain/common/page.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:moor/moor.dart';
 
 import '../persistence/database/fake_article_dao.dart';
 
@@ -29,7 +24,7 @@ void main() {
       () async {
         final articles = await nyTimesCachedInDbRepository.getNewestArticles();
 
-        expect(articles, isNot(null));
+        expect(articles, isNotNull);
         expect(articles, isEmpty);
       },
     );
@@ -50,7 +45,7 @@ void main() {
 
         final articles = await nyTimesCachedInDbRepository.getNewestArticles();
 
-        expect(articles, isNot(null));
+        expect(articles, isNotNull);
         expect(articles, isNotEmpty);
       },
     );
@@ -62,7 +57,7 @@ void main() {
       () async {
         final articles = await nyTimesCachedInDbRepository.getMostPopularArticles(PopularNewsCriterion.emailed);
 
-        expect(articles, isNot(null));
+        expect(articles, isNotNull);
         expect(articles, isEmpty);
       },
     );
@@ -86,7 +81,7 @@ void main() {
 
         final articles = await nyTimesCachedInDbRepository.getMostPopularArticles(PopularNewsCriterion.emailed);
 
-        expect(articles, isNot(null));
+        expect(articles, isNotNull);
         expect(articles, isNotEmpty);
       },
     );
