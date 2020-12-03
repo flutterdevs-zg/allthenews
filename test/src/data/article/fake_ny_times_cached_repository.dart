@@ -26,16 +26,19 @@ class FakeNyTimesCachedRepository implements NyTimesCachedRepository {
   Future<List<Article>> getMostPopularArticles(PopularNewsCriterion popularNewsCriterion) async => _findMostPopularSortedArticlesBy(popularNewsCriterion);
 
   @override
-  Future<List<Article>> getNewestArticlesPage(Page page) async => (((page.number - 1) * page.size) > _newestArticles.length)
-      ? []
-      : _sortedNewestArticles.sublist((page.number - 1) * page.size, min((page.number) * page.size, _newestArticles.length));
-
+  Future<List<Article>> getNewestArticlesPage(Page page) async {
+    final fromIndex = (page.number - 1) * page.size;
+    return (fromIndex >= _newestArticles.length)
+        ? []
+        : _sortedNewestArticles.sublist(fromIndex, min(fromIndex + page.size, _newestArticles.length));
+  }
   @override
   Future<List<Article>> getMostPopularArticlesPage(Page page, PopularNewsCriterion popularNewsCriterion) async {
     final articles = _findMostPopularSortedArticlesBy(popularNewsCriterion);
-    return (((page.number - 1) * page.size) > articles.length)
+    final fromIndex = (page.number - 1) * page.size;
+    return (fromIndex >= articles.length)
         ? []
-        : articles.sublist((page.number - 1) * page.size, min((page.number) * page.size, _newestArticles.length));
+        : articles.sublist(fromIndex, min(fromIndex + page.size, articles.length));
   }
 
   @override
