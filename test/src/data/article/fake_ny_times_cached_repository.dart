@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:allthenews/src/domain/common/page.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/nytimes/ny_times_cached_repository.dart';
@@ -24,13 +26,16 @@ class FakeNyTimesCachedRepository implements NyTimesCachedRepository {
   Future<List<Article>> getMostPopularArticles(PopularNewsCriterion popularNewsCriterion) async => _findMostPopularSortedArticlesBy(popularNewsCriterion);
 
   @override
-  Future<List<Article>> getNewestArticlesPage(Page page) async =>
-      ((page.number * page.size) > _newestArticles.length) ? [] : _sortedNewestArticles.sublist((page.number - 1) * page.size, (page.number) * page.size);
+  Future<List<Article>> getNewestArticlesPage(Page page) async => (((page.number - 1) * page.size) > _newestArticles.length)
+      ? []
+      : _sortedNewestArticles.sublist((page.number - 1) * page.size, min((page.number) * page.size, _newestArticles.length));
 
   @override
   Future<List<Article>> getMostPopularArticlesPage(Page page, PopularNewsCriterion popularNewsCriterion) async {
     final articles = _findMostPopularSortedArticlesBy(popularNewsCriterion);
-    return ((page.number * page.size) > articles.length) ? [] : articles.sublist((page.number - 1) * page.size, (page.number) * page.size);
+    return (((page.number - 1) * page.size) > articles.length)
+        ? []
+        : articles.sublist((page.number - 1) * page.size, min((page.number) * page.size, _newestArticles.length));
   }
 
   @override
