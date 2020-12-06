@@ -1,0 +1,129 @@
+{
+  "status": "OK",
+  "copyright": "Copyright (c) 2020 The New York Times Company.  All Rights Reserved.",
+  "num_results": 2,
+  "results": [
+    {
+      "uri": "nyt://article/b555087e-747c-5350-81a9-0a1b78a85024",
+      "url": "https://www.nytimes.com/2020/11/24/us/politics/ivanka-jared.html",
+      "id": 100000007461416,
+      "asset_id": 100000007461416,
+      "source": "New York Times",
+      "published_date": "2020-11-24",
+      "updated": "2020-11-25 12:36:38",
+      "section": "U.S.",
+      "subsection": "Politics",
+      "nytdsection": "u.s.",
+      "adx_keywords": "Presidential Election of 2020;United States Politics and Government;Kushner, Jared;Trump, Ivanka;Trump, Donald J;Washington (DC);Park Avenue (Manhattan, NY)",
+      "column": null,
+      "byline": "By Elizabeth Williamson",
+      "type": "Article",
+      "title": "As Their D.C. Days Dwindle, Ivanka and Jared Look for a New Beginning",
+      "abstract": "The end of President Trump’s time in office leaves his daughter Ivanka Trump and his son-in-law, Jared Kushner, looking for a new home — but they appear to have plans in New Jersey.",
+      "des_facet": [
+        "Presidential Election of 2020",
+        "United States Politics and Government"
+      ],
+      "org_facet": [],
+      "per_facet": [
+        "Kushner, Jared",
+        "Trump, Ivanka",
+        "Trump, Donald J"
+      ],
+      "geo_facet": [
+        "Washington (DC)",
+        "Park Avenue (Manhattan, NY)"
+      ],
+      "media": [
+        {
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Ivanka Trump and Jared Kushner with two of their children in September. The couple found an occasionally awkward reception in Washington, where only 4 percent of residents voted for President Trump in 2016.",
+          "copyright": "Doug Mills/The New York Times",
+          "approved_for_syndication": 1,
+          "media-metadata": [
+            {
+              "url": "https://static01.nyt.com/images/2020/11/19/us/politics/19DC-JAREDIVANKA-3/19DC-JAREDIVANKA-3-thumbStandard-v2.jpg",
+              "format": "Standard Thumbnail",
+              "height": 75,
+              "width": 75
+            },
+            {
+              "url": "https://static01.nyt.com/images/2020/11/19/us/politics/19DC-JAREDIVANKA-3/19DC-JAREDIVANKA-3-mediumThreeByTwo210-v2.jpg",
+              "format": "mediumThreeByTwo210",
+              "height": 140,
+              "width": 210
+            },
+            {
+              "url": "https://static01.nyt.com/images/2020/11/19/us/politics/19DC-JAREDIVANKA-3/19DC-JAREDIVANKA-3-mediumThreeByTwo440-v2.jpg",
+              "format": "mediumThreeByTwo440",
+              "height": 293,
+              "width": 440
+            }
+          ]
+        }
+      ],
+      "eta_id": 0
+    },
+    {
+      "uri": "nyt://article/d656074f-fe2e-501d-bf52-8386a7addecc",
+      "url": "https://www.nytimes.com/2020/11/25/opinion/meghan-markle-miscarriage.html",
+      "id": 100000007469162,
+      "asset_id": 100000007469162,
+      "source": "New York Times",
+      "published_date": "2020-11-25",
+      "updated": "2020-11-25 12:53:18",
+      "section": "Opinion",
+      "subsection": "",
+      "nytdsection": "opinion",
+      "adx_keywords": "Miscarriages;Royal Families;Coronavirus (2019-nCoV);Markle, Meghan;Great Britain",
+      "column": null,
+      "byline": "By Meghan, The Duchess of Sussex",
+      "type": "Article",
+      "title": "The Losses We Share",
+      "abstract": "Perhaps the path to healing begins with three simple words: Are you OK?",
+      "des_facet": [
+        "Miscarriages",
+        "Royal Families",
+        "Coronavirus (2019-nCoV)"
+      ],
+      "org_facet": [],
+      "per_facet": [
+        "Markle, Meghan"
+      ],
+      "geo_facet": [
+        "Great Britain"
+      ],
+      "media": [
+        {
+          "type": "image",
+          "subtype": "photo",
+          "caption": "",
+          "copyright": "Pool photo by Ian Volger",
+          "approved_for_syndication": 1,
+          "media-metadata": [
+            {
+              "url": "https://static01.nyt.com/images/2020/11/24/opinion/00mmPromo/00mmPromo-thumbStandard.jpg",
+              "format": "Standard Thumbnail",
+              "height": 75,
+              "width": 75
+            },
+            {
+              "url": "https://static01.nyt.com/images/2020/11/24/opinion/00mmPromo/00mmPromo-mediumThreeByTwo210.jpg",
+              "format": "mediumThreeByTwo210",
+              "height": 140,
+              "width": 210
+            },
+            {
+              "url": "https://static01.nyt.com/images/2020/11/24/opinion/00mmPromo/00mmPromo-mediumThreeByTwo440.jpg",
+              "format": "mediumThreeByTwo440",
+              "height": 293,
+              "width": 440
+            }
+          ]
+        }
+      ],
+      "eta_id": 0
+    }
+  ]
+}

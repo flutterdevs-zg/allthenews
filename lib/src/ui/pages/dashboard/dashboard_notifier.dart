@@ -5,7 +5,7 @@ import 'package:allthenews/src/domain/nytimes/ny_times_reactive_repository.dart'
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_view_entity.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_extensions.dart';
+import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_message_mapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -14,13 +14,18 @@ import 'dashboard_view_state.dart';
 class DashboardNotifier extends ChangeNotifier {
   final NYTimesReactiveRepository _nyTimesReactiveRepository;
   final SettingsRepository _settingsRepository;
+  final PopularNewsCriterionMessageMapper _popularNewsCriterionMessageMapper;
   StreamSubscription _streamSubscription;
 
   DashboardViewState _state = const DashboardViewState();
 
   DashboardViewState get state => _state;
 
-  DashboardNotifier(this._nyTimesReactiveRepository, this._settingsRepository);
+  DashboardNotifier(
+    this._nyTimesReactiveRepository,
+    this._settingsRepository,
+    this._popularNewsCriterionMessageMapper,
+  );
 
   void fetchArticles() {
     _setNotifierState(const DashboardViewState(isLoading: true));
@@ -34,7 +39,7 @@ class DashboardNotifier extends ChangeNotifier {
         viewEntity: DashboardViewEntity(
           mostPopularArticles: data[0] as List<Article>,
           newestArticles: data[1] as List<Article>,
-          popularNewsTitle: (data[2] as PopularNewsCriterion).getTitle(),
+          popularNewsTitle: _popularNewsCriterionMessageMapper.map(data[2] as PopularNewsCriterion),
         ),
       ),
     ).handleError((error) => _onFetchError(error)).listen((loadedState) => _setNotifierState(loadedState));

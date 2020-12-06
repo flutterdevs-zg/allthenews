@@ -1,0 +1,151 @@
+{
+  "status": "OK",
+  "copyright": "Copyright (c) 2020 The New York Times Company.  All Rights Reserved.",
+  "num_results": 2,
+  "results": [
+    {
+      "slug_name": "25Lmulti",
+      "section": "Opinion",
+      "subsection": "Letters",
+      "title": "Meghan’s Miscarriage, and Mine",
+      "abstract": "A reader found consoling words a great help in her grief; another finds that even decades later the feelings of loss don’t go away. Also: How schools will be transformed.",
+      "url": "https://www.nytimes.com/2020/11/25/opinion/letters/meghan-miscarriage.html",
+      "byline": "",
+      "thumbnail_standard": "https://static01.nyt.com/images/2020/11/25/multimedia/25xp-meghan-reax1/merlin_180425997_01af8f8e-48a0-4484-bf24-e6ff4c277c44-thumbStandard.jpg",
+      "item_type": "Article",
+      "source": "New York Times",
+      "updated_date": "2020-11-25T12:37:43-05:00",
+      "created_date": "2020-11-25T12:37:43-05:00",
+      "published_date": "2020-11-25T12:37:43-05:00",
+      "first_published_date": "2020-11-25T12:37:43-05:00",
+      "material_type_facet": "Letter",
+      "kicker": "letters",
+      "subheadline": "",
+      "des_facet": [
+        "Miscarriages",
+        "Education (K-12)",
+        "Vocational Training"
+      ],
+      "org_facet": null,
+      "per_facet": [
+        "Markle, Meghan"
+      ],
+      "geo_facet": null,
+      "related_urls": null,
+      "multimedia": [
+        {
+          "url": "https://static01.nyt.com/images/2020/11/25/multimedia/25xp-meghan-reax1/merlin_180425997_01af8f8e-48a0-4484-bf24-e6ff4c277c44-thumbStandard.jpg",
+          "format": "Standard Thumbnail",
+          "height": 75,
+          "width": 75,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Meghan, Duchess of Sussex, wrote that she felt “something was not right” the morning she suffered a miscarriage.",
+          "copyright": "Matt Dunham/Associated Press"
+        },
+        {
+          "url": "https://static01.nyt.com/images/2020/11/25/multimedia/25xp-meghan-reax1/merlin_180425997_01af8f8e-48a0-4484-bf24-e6ff4c277c44-mediumThreeByTwo210.jpg",
+          "format": "mediumThreeByTwo210",
+          "height": 140,
+          "width": 210,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Meghan, Duchess of Sussex, wrote that she felt “something was not right” the morning she suffered a miscarriage.",
+          "copyright": "Matt Dunham/Associated Press"
+        },
+        {
+          "url": "https://static01.nyt.com/images/2020/11/25/multimedia/25xp-meghan-reax1/merlin_180425997_01af8f8e-48a0-4484-bf24-e6ff4c277c44-mediumThreeByTwo440.jpg",
+          "format": "mediumThreeByTwo440",
+          "height": 293,
+          "width": 440,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Meghan, Duchess of Sussex, wrote that she felt “something was not right” the morning she suffered a miscarriage.",
+          "copyright": "Matt Dunham/Associated Press"
+        },
+        {
+          "url": "https://static01.nyt.com/images/2020/11/25/multimedia/25xp-meghan-reax1/merlin_180425997_01af8f8e-48a0-4484-bf24-e6ff4c277c44-articleInline.jpg",
+          "format": "Normal",
+          "height": 134,
+          "width": 190,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Meghan, Duchess of Sussex, wrote that she felt “something was not right” the morning she suffered a miscarriage.",
+          "copyright": "Matt Dunham/Associated Press"
+        }
+      ]
+    },
+    {
+      "slug_name": "25tanis",
+      "section": "Food",
+      "subsection": "",
+      "title": "Weary of Cooking? This Simple Dinner Will Invigorate",
+      "abstract": "A fine dinner need not be complicated, nor relegated to the weekend, as David Tanis’s Mediterranean-inspired menu proves.",
+      "url": "https://www.nytimes.com/2020/11/25/dining/simple-dinner-recipes.html",
+      "byline": "BY DAVID TANIS",
+      "thumbnail_standard": "https://static01.nyt.com/images/2020/12/02/dining/25Tanis1/25Tanis1-thumbStandard.jpg",
+      "item_type": "Article",
+      "source": "New York Times",
+      "updated_date": "2020-11-25T12:36:29-05:00",
+      "created_date": "2020-11-25T12:36:29-05:00",
+      "published_date": "2020-11-25T12:36:29-05:00",
+      "first_published_date": "2020-11-25T12:36:29-05:00",
+      "material_type_facet": "News",
+      "kicker": "",
+      "subheadline": "",
+      "des_facet": [
+        "Quarantine (Life and Culture)",
+        "Cooking and Cookbooks",
+        "Olives",
+        "Seafood",
+        "Fennel"
+      ],
+      "org_facet": null,
+      "per_facet": null,
+      "geo_facet": null,
+      "related_urls": null,
+      "multimedia": [
+        {
+          "url": "https://static01.nyt.com/images/2020/12/02/dining/25Tanis1/25Tanis1-thumbStandard.jpg",
+          "format": "Standard Thumbnail",
+          "height": 75,
+          "width": 75,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "This cod and mussel stew comes together quickly.",
+          "copyright": "Andrew Scrivani for The New York Times"
+        },
+        {
+          "url": "https://static01.nyt.com/images/2020/12/02/dining/25Tanis1/merlin_180342168_6258c92c-df60-4fc4-9bdf-92c4c5dc9622-mediumThreeByTwo210.jpg",
+          "format": "mediumThreeByTwo210",
+          "height": 140,
+          "width": 210,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "This cod and mussel stew comes together quickly.",
+          "copyright": "Andrew Scrivani for The New York Times"
+        },
+        {
+          "url": "https://static01.nyt.com/images/2020/12/02/dining/25Tanis1/merlin_180342168_6258c92c-df60-4fc4-9bdf-92c4c5dc9622-mediumThreeByTwo440.jpg",
+          "format": "mediumThreeByTwo440",
+          "height": 293,
+          "width": 440,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "This cod and mussel stew comes together quickly.",
+          "copyright": "Andrew Scrivani for The New York Times"
+        },
+        {
+          "url": "https://static01.nyt.com/images/2020/12/02/dining/25Tanis1/merlin_180342168_6258c92c-df60-4fc4-9bdf-92c4c5dc9622-articleInline.jpg",
+          "format": "Normal",
+          "height": 127,
+          "width": 190,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "This cod and mussel stew comes together quickly.",
+          "copyright": "Andrew Scrivani for The New York Times"
+        }
+      ]
+    }
+  ]
+}
