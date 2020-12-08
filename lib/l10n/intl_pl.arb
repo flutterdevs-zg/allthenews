@@ -24,13 +24,19 @@
   "register": "Zarejestruj",
   "registrationTitle": "Rejestracja",
   "name": "Imię",
-  "email": "Email",
+  "email": "E-mail",
   "password": "Hasło",
   "createAccount": "Utwórz konto",
-  "apiConnectionException": "Brak połączenia sieciowego",
+  "noInternetException": "Brak połączenia sieciowego",
   "apiUnknownException": "Nieznany błąd",
   "apiUnauthorizedException": "Błąd autoryzacyjny",
   "apiServerException": "Błąd na serwerze",
   "apiInvalidUrlException": "Nie znaleziono danych",
-  "emptyFieldError": "To pole nie może być puste"
+  "emptyFieldError": "To pole nie może być puste",
+  "firebaseInvalidEmailError": "Zły format e-maila",
+  "firebaseInitializationError": "Nieudana inicjalizacja firebase, zrestartuj aplikację",
+  "firebaseUserDisabledError": "Użytkownik powiązany z podanym e-mailem został zablokowany",
+  "firebaseUserNotFoundError": "Użytkownik o podanym e-mailu nie istnieje",
+  "firebaseInvalidPasswordError": "Hasło do podanego e-maila jest niepoprawne",
+  "firebaseTooManyRequests": "Zbyt dużo nieudanych prób. Spróbuj ponownie później."
 }

@@ -49,7 +49,7 @@ class _PresentationPageState extends State<PresentationPage> {
       child: Padding(
         padding: const EdgeInsets.all(_Constants.nextButtonPadding),
         child: PrimaryTextButton(
-          text: Strings.of(context).next,
+          text: Strings.current.next,
           onPressed: () {
             if (_controller.page.toInt() == _presentationStepsProvider.provide().length - 1) {
               _navigateToHomePage(context);
@@ -76,7 +76,7 @@ class _PresentationPageState extends State<PresentationPage> {
           const Spacer(),
           FlatButton(
             onPressed: () => _navigateToHomePage(context),
-            child: Text(Strings.of(context).skip),
+            child: Text(Strings.current.skip),
           )
         ],
       ),

@@ -1,5 +1,5 @@
 import 'package:allthenews/src/app/app_config.dart';
-import 'package:allthenews/src/data/communication/api/request.dart';
+import 'package:allthenews/src/data/communication/api/nytimes/request.dart';
 import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:dio/dio.dart';
@@ -54,8 +54,8 @@ class HttpClient {
       );
       final response = await futureResponse.timeout(_Constants.timeoutDuration);
       return response.data;
-    } catch (e) {
-      return Future.error(_exceptionMapper.toExceptionType(e));
+    } on Exception catch (exception) {
+      return Future.error(_exceptionMapper.toDomainException(exception));
     }
   }
 }

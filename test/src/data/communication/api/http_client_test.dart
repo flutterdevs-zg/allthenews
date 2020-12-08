@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:allthenews/src/app/app_config.dart';
-import 'package:allthenews/src/data/communication/api/api_exception_mapper.dart';
-import 'package:allthenews/src/data/communication/api/http_client.dart';
-import 'package:allthenews/src/data/communication/api/request.dart';
+import 'package:allthenews/src/data/communication/api/nytimes/api_exception_mapper.dart';
+import 'package:allthenews/src/data/communication/api/nytimes/http_client.dart';
+import 'package:allthenews/src/data/communication/api/nytimes/request.dart';
 import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
