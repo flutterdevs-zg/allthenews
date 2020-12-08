@@ -89,7 +89,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
                 const SizedBox(height: _Constants.sectionSpacing),
                 _buildNewsSectionHeader(
-                  title: Strings.of(context).newest,
+                  title: Strings.current.newest,
                   routeBuilder: (context) => LatestNewsListPage(),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
@@ -121,7 +121,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
           PrimaryTextButton(
-            text: Strings.of(context).showAll,
+            text: Strings.current.showAll,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(

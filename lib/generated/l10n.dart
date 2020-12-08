@@ -285,10 +285,10 @@ class Strings {
     );
   }
 
-  /// `Email`
+  /// `E-mail`
   String get email {
     return Intl.message(
-      'Email',
+      'E-mail',
       name: 'email',
       desc: '',
       args: [],
@@ -316,10 +316,10 @@ class Strings {
   }
 
   /// `No internet connection`
-  String get apiConnectionException {
+  String get noInternetException {
     return Intl.message(
       'No internet connection',
-      name: 'apiConnectionException',
+      name: 'noInternetException',
       desc: '',
       args: [],
     );
@@ -370,6 +370,96 @@ class Strings {
     return Intl.message(
       'This field cannot be empty',
       name: 'emptyFieldError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong e-mail format`
+  String get firebaseInvalidEmailError {
+    return Intl.message(
+      'Wrong e-mail format',
+      name: 'firebaseInvalidEmailError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Firebase initialization failed, restart the application`
+  String get firebaseInitializationError {
+    return Intl.message(
+      'Firebase initialization failed, restart the application',
+      name: 'firebaseInitializationError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User corresponding to the given email has been disabled`
+  String get firebaseUserDisabledError {
+    return Intl.message(
+      'User corresponding to the given email has been disabled',
+      name: 'firebaseUserDisabledError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no user corresponding to the given email`
+  String get firebaseUserNotFoundError {
+    return Intl.message(
+      'There is no user corresponding to the given email',
+      name: 'firebaseUserNotFoundError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is invalid for the given email`
+  String get firebaseInvalidPasswordError {
+    return Intl.message(
+      'Password is invalid for the given email',
+      name: 'firebaseInvalidPasswordError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail address already in use`
+  String get firebaseEmailAlreadyInUseError {
+    return Intl.message(
+      'E-mail address already in use',
+      name: 'firebaseEmailAlreadyInUseError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The password is too weak`
+  String get firebaseWeakPasswordError {
+    return Intl.message(
+      'The password is too weak',
+      name: 'firebaseWeakPasswordError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail/password accounts are not enabled for the project`
+  String get firebaseOperationNotAllowedError {
+    return Intl.message(
+      'E-mail/password accounts are not enabled for the project',
+      name: 'firebaseOperationNotAllowedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We have blocked all requests from this device due to unusual activity. Try again later.`
+  String get firebaseTooManyRequests {
+    return Intl.message(
+      'We have blocked all requests from this device due to unusual activity. Try again later.',
+      name: 'firebaseTooManyRequests',
       desc: '',
       args: [],
     );

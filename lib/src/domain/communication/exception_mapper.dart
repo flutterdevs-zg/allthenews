@@ -1,3 +1,5 @@
+import 'package:allthenews/src/domain/communication/all_the_news_exception.dart';
+
 abstract class ExceptionMapper {
-  Exception toExceptionType(Object error);
+  AllTheNewsException toDomainException(Exception exception);
 }

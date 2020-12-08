@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ThemeNotifier extends ChangeNotifier {
-
   final SettingsRepository _settingsRepository;
 
   ThemeNotifier(this._settingsRepository);

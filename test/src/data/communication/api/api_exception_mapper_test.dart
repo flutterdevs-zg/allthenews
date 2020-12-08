@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:allthenews/src/data/communication/api/api_exception_mapper.dart';
+import 'package:allthenews/src/data/communication/api/nytimes/api_exception_mapper.dart';
 import 'package:allthenews/src/domain/communication/api_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,7 +21,7 @@ void main() {
     };
     inputsToMatchers.forEach((input, matcher) {
       test("$input -> $matcher", () {
-        expect(apiExceptionMapper.toExceptionType(input), matcher);
+        expect(apiExceptionMapper.toDomainException(input), matcher);
       });
     });
   });

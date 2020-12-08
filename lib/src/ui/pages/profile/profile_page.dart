@@ -1,13 +1,14 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
-import 'package:allthenews/src/ui/pages/profile/auth/authentication_page.dart';
+import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
+import 'package:allthenews/src/ui/pages/authentication/authentication_page.dart';
+import 'package:allthenews/src/ui/pages/profile/profile_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth/authorization_notifier.dart';
-
 abstract class _Constants {
-  static const fontFamily = 'Chomsky';
+  static const buttonVerticalPadding = 30.0;
+  static const buttonHorizontalPadding = 30.0;
 }
 
 class ProfilePage extends StatefulWidget {
@@ -16,12 +17,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final AuthorizationNotifier _authorizationNotifier = inject<AuthorizationNotifier>();
+  final ProfileNotifier _authorizationNotifier = inject<ProfileNotifier>();
 
   @override
   void initState() {
     super.initState();
-    _authorizationNotifier.getCurrentUser();
+    _authorizationNotifier.initUserState();
   }
 
   @override
@@ -29,8 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ChangeNotifierProvider.value(
         value: _authorizationNotifier,
         builder: (providerContext, child) {
-          final viewState =
-              providerContext.select((AuthorizationNotifier notifier) => notifier.state);
+          final viewState = providerContext.select((ProfileNotifier notifier) => notifier.state);
 
           if (viewState.user == null) {
             return AuthenticationPage();
@@ -39,19 +39,16 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(_authorizationNotifier.state.user?.email),
-                  Text(_authorizationNotifier.state.user?.displayName),
-                  Text("User uid: ${_authorizationNotifier.state.user?.uid}"),
-                  FlatButton(
-                    onPressed: () => _authorizationNotifier.logout(),
-                    child: Text(
-                      Strings.of(context).logout,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          .copyWith(fontFamily: _Constants.fontFamily),
+                  Text(_authorizationNotifier.state.user.email),
+                  Text(_authorizationNotifier.state.user.name),
+                  PrimaryTextButton(
+                    textPadding: const EdgeInsets.symmetric(
+                      vertical: _Constants.buttonVerticalPadding,
+                      horizontal: _Constants.buttonHorizontalPadding,
                     ),
-                  )
+                    onPressed: () => _authorizationNotifier.logout(),
+                    text: Strings.current.logout,
+                  ),
                 ],
               ),
             );

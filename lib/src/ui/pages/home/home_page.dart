@@ -47,8 +47,7 @@ class _HomePageState extends State<HomePage> {
       HomeTab(
           page: ProfilePage(),
           appBar: NyTimesAppBar(
-            title: Strings.of(context).profile,
-            hasSettingsAction: true,
+            title: Strings.current.profile,
           ))
     ];
   }
@@ -69,9 +68,7 @@ class _HomePageState extends State<HomePage> {
                 if (selectedPage == 0) {
                   return Future.value(true);
                 } else {
-                  setState(() {
-                    providerContext.read<HomePageNotifier>().setSelectedPage(0);
-                  });
+                  providerContext.read<HomePageNotifier>().setSelectedPage(0);
                   return Future.value(false);
                 }
               },

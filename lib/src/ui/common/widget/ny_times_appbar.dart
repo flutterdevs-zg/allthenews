@@ -1,10 +1,7 @@
-import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
-import 'package:allthenews/src/ui/pages/home/home_page_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 abstract class _Constants {
   static const appBarActionsVerticalPadding = 11.0;
@@ -36,8 +33,6 @@ class NyTimesAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _NyTimesAppBarState extends State<NyTimesAppBar> {
-  final HomePageNotifier _homePageNotifier = inject<HomePageNotifier>();
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -51,25 +46,22 @@ class _NyTimesAppBarState extends State<NyTimesAppBar> {
       brightness: Theme.of(context).brightness,
       elevation: Dimens.appBarElevation,
       iconTheme: const IconThemeData(color: Colors.black),
-      title: _getAppBarTitle(widget.title, context),
+      title: _getAppBarTitle(widget.title),
       backgroundColor: Theme.of(context).backgroundColor,
-      actions: _buildAppBarActions(context),
+      actions: _buildAppBarActions(),
     );
   }
 
-  List<Widget> _buildAppBarActions(BuildContext context) => [
+  List<Widget> _buildAppBarActions() => [
         if (widget.hasSearchAction) _buildSearchAction(),
-        if (widget.hasSettingsAction) _buildSettingsAction(context),
+        if (widget.hasSettingsAction) _buildSettingsAction(),
       ];
 
-  Widget _getAppBarTitle(String title, BuildContext context) => Padding(
+  Widget _getAppBarTitle(String title) => Padding(
         padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
         child: Text(
           title,
-          style: Theme.of(context)
-              .textTheme
-              .headline2
-              .copyWith(fontFamily: _Constants.appBarTitleFontFamily),
+          style: Theme.of(context).textTheme.headline2.copyWith(fontFamily: _Constants.appBarTitleFontFamily),
         ),
       );
 
@@ -85,27 +77,23 @@ class _NyTimesAppBarState extends State<NyTimesAppBar> {
     );
   }
 
-  Widget _buildSettingsAction(BuildContext context) => ChangeNotifierProvider.value(
-        value: _homePageNotifier,
-        builder: (providerContext, child) => Padding(
-          padding: const EdgeInsets.only(
-            top: _Constants.appBarActionsVerticalPadding,
-            bottom: _Constants.appBarActionsVerticalPadding,
-            right: Dimens.pagePadding,
-            left: _Constants.appBarActionsIconsPadding,
-          ),
-          child: PrimaryIconButton(
-            iconData: Icons.settings,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingsPage(
-                      selectedHomePage: providerContext.read<HomePageNotifier>().selectedPage),
-                ),
-              );
-            },
-          ),
+  Widget _buildSettingsAction() => Padding(
+        padding: const EdgeInsets.only(
+          top: _Constants.appBarActionsVerticalPadding,
+          bottom: _Constants.appBarActionsVerticalPadding,
+          right: Dimens.pagePadding,
+          left: _Constants.appBarActionsIconsPadding,
+        ),
+        child: PrimaryIconButton(
+          iconData: Icons.settings,
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SettingsPage(),
+              ),
+            );
+          },
         ),
       );
 }
