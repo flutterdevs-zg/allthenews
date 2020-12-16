@@ -1,9 +1,7 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
-import 'package:allthenews/src/domain/communication/firebase_exception.dart';
 import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
-import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:allthenews/src/ui/pages/authentication/auth_text_field.dart';
 import 'package:allthenews/src/ui/pages/authentication/authentication_error_message.dart';
 import 'package:allthenews/src/ui/pages/authentication/registration/registration_notifier.dart';
@@ -31,15 +29,15 @@ class _RegistrationPageState extends State<RegistrationPage> with Authentication
   @override
   void initState() {
     super.initState();
-    _registrationNotifier.returnToProfile = () => _navigateToHome();
+    _registrationNotifier.returnToProfile = () => Navigator.pop(context);
     _emailTextController.addListener(() {
-      _registrationNotifier.setEmail(_emailTextController.text);
+      _registrationNotifier.updateEmail(_emailTextController.text);
     });
     _nameTextController.addListener(() {
-      _registrationNotifier.setName(_nameTextController.text);
+      _registrationNotifier.updateName(_nameTextController.text);
     });
     _passwordTextController.addListener(() {
-      _registrationNotifier.setPassword(_passwordTextController.text);
+      _registrationNotifier.updatePassword(_passwordTextController.text);
     });
   }
 
@@ -50,7 +48,7 @@ class _RegistrationPageState extends State<RegistrationPage> with Authentication
       appBar: NyTimesAppBar(
         title: Strings.current.registrationTitle,
         hasBackButton: true,
-        backButtonAction: () => _navigateToHome(),
+        backButtonAction: () => Navigator.pop(context),
       ),
       body: ChangeNotifierProvider.value(
         value: _registrationNotifier,
@@ -59,7 +57,7 @@ class _RegistrationPageState extends State<RegistrationPage> with Authentication
 
           return WillPopScope(
             onWillPop: () {
-              _navigateToHome();
+              Navigator.pop(context);
               return Future.value(true);
             },
             child: SingleChildScrollView(
@@ -95,7 +93,7 @@ class _RegistrationPageState extends State<RegistrationPage> with Authentication
           obscureText: true,
         ),
         const SizedBox(height: _Constants.spaceBetweenFields),
-        buildAuthenticationErrorMessage(state.exception as AuthenticationException),
+        buildAuthenticationErrorMessage(state.authenticationError),
         const SizedBox(height: _Constants.spaceBetweenFields),
         PrimaryTextButton(
           textPadding: const EdgeInsets.symmetric(
@@ -104,23 +102,13 @@ class _RegistrationPageState extends State<RegistrationPage> with Authentication
           ),
           isLoading: state.isLoading,
           onPressed: () {
-            providerContext.read<RegistrationNotifier>().createUser(
-                  _emailTextController.text,
-                  _passwordTextController.text,
-                  _nameTextController.text,
-                );
+            providerContext.read<RegistrationNotifier>().validateFieldsAndCreateUser();
           },
           text: Strings.current.createAccount,
         ),
       ],
     );
   }
-
-  void _navigateToHome() => Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HomePage(initialPage: 1),
-      ));
 
   @override
   void dispose() {

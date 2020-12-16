@@ -61,7 +61,9 @@ class _NyTimesAppBarState extends State<NyTimesAppBar> {
         padding: const EdgeInsets.only(left: _Constants.appBarTitleLeftPadding),
         child: Text(
           title,
-          style: Theme.of(context).textTheme.headline2.copyWith(fontFamily: _Constants.appBarTitleFontFamily),
+          style: Theme.of(context).textTheme.headline2.copyWith(
+                fontFamily: _Constants.appBarTitleFontFamily,
+              ),
         ),
       );
 

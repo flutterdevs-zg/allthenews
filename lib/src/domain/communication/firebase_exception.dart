@@ -1,49 +1,23 @@
-import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/domain/communication/all_the_news_exception.dart';
-import 'package:flutter/material.dart';
 
-class AuthenticationException extends AllTheNewsException {
-  final String message;
+class AuthenticationApiException extends AllTheNewsException {}
 
-  AuthenticationException({@required this.message});
-}
+class NetworkException extends AuthenticationApiException {}
 
-class NetworkException extends AuthenticationException {
-  NetworkException([String message]) : super(message: message ?? Strings.current.noInternetException);
-}
+class InvalidEmailException extends AuthenticationApiException {}
 
-class InvalidEmailException extends AuthenticationException {
-  InvalidEmailException([String message]) : super(message: message ?? Strings.current.firebaseInvalidEmailError);
-}
+class UserDisabledException extends AuthenticationApiException {}
 
-class UserDisabledException extends AuthenticationException {
-  UserDisabledException([String message]) : super(message: message ?? Strings.current.firebaseUserDisabledError);
-}
+class UserNotFoundException extends AuthenticationApiException {}
 
-class UserNotFoundException extends AuthenticationException {
-  UserNotFoundException([String message]) : super(message: message ?? Strings.current.firebaseUserNotFoundError);
-}
+class InvalidPasswordException extends AuthenticationApiException {}
 
-class WrongPasswordException extends AuthenticationException {
-  WrongPasswordException([String message]) : super(message: message ?? Strings.current.firebaseInvalidPasswordError);
-}
+class EmailAlreadyInUseException extends AuthenticationApiException {}
 
-class AuthUnknownException extends AuthenticationException {
-  AuthUnknownException([String message]) : super(message: message ?? Strings.current.apiUnknownException);
-}
+class OperationNotAllowedException extends AuthenticationApiException {}
 
-class EmailAlreadyInUseException extends AuthenticationException {
-  EmailAlreadyInUseException([String message]) : super(message: message ?? Strings.current.firebaseEmailAlreadyInUseError);
-}
+class WeakPasswordException extends AuthenticationApiException {}
 
-class OperationNotAllowedException extends AuthenticationException {
-  OperationNotAllowedException([String message]) : super(message: message ?? Strings.current.firebaseOperationNotAllowedError);
-}
+class TooManyRequestsException extends AuthenticationApiException {}
 
-class WeakPasswordException extends AuthenticationException {
-  WeakPasswordException([String message]) : super(message: message ?? Strings.current.firebaseWeakPasswordError);
-}
-
-class TooManyRequests extends AuthenticationException {
-  TooManyRequests([String message]) : super(message: message ?? Strings.current.firebaseTooManyRequests);
-}
+class AuthUnknownException extends AuthenticationApiException {}

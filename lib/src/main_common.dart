@@ -6,7 +6,7 @@ import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Future<void> mainCommon(Environment flavor) async {
+void mainCommon(Environment flavor) {
   WidgetsFlutterBinding.ensureInitialized();
   injectDependencies(flavor);
   runApp(

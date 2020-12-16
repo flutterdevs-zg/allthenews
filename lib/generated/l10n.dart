@@ -135,10 +135,10 @@ class Strings {
     );
   }
 
-  /// `Most Emailed`
+  /// `Most E-mailed`
   String get mostEmailed {
     return Intl.message(
-      'Most Emailed',
+      'Most E-mailed',
       name: 'mostEmailed',
       desc: '',
       args: [],
@@ -326,10 +326,10 @@ class Strings {
   }
 
   /// `Unknown error`
-  String get apiUnknownException {
+  String get unknownError {
     return Intl.message(
       'Unknown error',
-      name: 'apiUnknownException',
+      name: 'unknownError',
       desc: '',
       args: [],
     );
@@ -376,90 +376,90 @@ class Strings {
   }
 
   /// `Wrong e-mail format`
-  String get firebaseInvalidEmailError {
+  String get invalidEmailError {
     return Intl.message(
       'Wrong e-mail format',
-      name: 'firebaseInvalidEmailError',
+      name: 'invalidEmailError',
       desc: '',
       args: [],
     );
   }
 
-  /// `Firebase initialization failed, restart the application`
-  String get firebaseInitializationError {
+  /// `Initialization failed. Restart the application.`
+  String get initializationError {
     return Intl.message(
-      'Firebase initialization failed, restart the application',
-      name: 'firebaseInitializationError',
+      'Initialization failed. Restart the application.',
+      name: 'initializationError',
       desc: '',
       args: [],
     );
   }
 
-  /// `User corresponding to the given email has been disabled`
-  String get firebaseUserDisabledError {
+  /// `User corresponding to the given e-mail has been disabled`
+  String get userDisabledError {
     return Intl.message(
-      'User corresponding to the given email has been disabled',
-      name: 'firebaseUserDisabledError',
+      'User corresponding to the given e-mail has been disabled',
+      name: 'userDisabledError',
       desc: '',
       args: [],
     );
   }
 
-  /// `There is no user corresponding to the given email`
-  String get firebaseUserNotFoundError {
+  /// `There is no user corresponding to the given e-mail`
+  String get userNotFoundError {
     return Intl.message(
-      'There is no user corresponding to the given email',
-      name: 'firebaseUserNotFoundError',
+      'There is no user corresponding to the given e-mail',
+      name: 'userNotFoundError',
       desc: '',
       args: [],
     );
   }
 
-  /// `Password is invalid for the given email`
-  String get firebaseInvalidPasswordError {
+  /// `Password is invalid for the given e-mail`
+  String get invalidPasswordError {
     return Intl.message(
-      'Password is invalid for the given email',
-      name: 'firebaseInvalidPasswordError',
+      'Password is invalid for the given e-mail',
+      name: 'invalidPasswordError',
       desc: '',
       args: [],
     );
   }
 
   /// `E-mail address already in use`
-  String get firebaseEmailAlreadyInUseError {
+  String get emailAlreadyInUseError {
     return Intl.message(
       'E-mail address already in use',
-      name: 'firebaseEmailAlreadyInUseError',
+      name: 'emailAlreadyInUseError',
       desc: '',
       args: [],
     );
   }
 
   /// `The password is too weak`
-  String get firebaseWeakPasswordError {
+  String get weakPasswordError {
     return Intl.message(
       'The password is too weak',
-      name: 'firebaseWeakPasswordError',
+      name: 'weakPasswordError',
       desc: '',
       args: [],
     );
   }
 
   /// `E-mail/password accounts are not enabled for the project`
-  String get firebaseOperationNotAllowedError {
+  String get operationNotAllowedError {
     return Intl.message(
       'E-mail/password accounts are not enabled for the project',
-      name: 'firebaseOperationNotAllowedError',
+      name: 'operationNotAllowedError',
       desc: '',
       args: [],
     );
   }
 
   /// `We have blocked all requests from this device due to unusual activity. Try again later.`
-  String get firebaseTooManyRequests {
+  String get tooManyRequests {
     return Intl.message(
       'We have blocked all requests from this device due to unusual activity. Try again later.',
-      name: 'firebaseTooManyRequests',
+      name: 'tooManyRequests',
       desc: '',
       args: [],
     );

@@ -1,5 +1,6 @@
 import 'package:allthenews/src/app/app_config.dart';
 import 'package:allthenews/src/app/app_flavors.dart';
+import 'package:allthenews/src/app/firebase_app_initializer.dart';
 import 'package:allthenews/src/data/appinfo/app_info_local_repository.dart';
 import 'package:allthenews/src/data/article/article_cache_policy.dart';
 import 'package:allthenews/src/data/article/ny_times_cached_in_db_repository.dart';
@@ -7,6 +8,7 @@ import 'package:allthenews/src/data/article/ny_times_paginated_rest_repository.d
 import 'package:allthenews/src/data/article/ny_times_reactive_rest_repository.dart';
 import 'package:allthenews/src/data/article/ny_times_rest_repository.dart';
 import 'package:allthenews/src/data/communication/api/firebase/firebase_authentication_repository.dart';
+import 'package:allthenews/src/data/communication/api/firebase/firebase_exception_mapper.dart';
 import 'package:allthenews/src/data/communication/api/nytimes/api_exception_mapper.dart';
 import 'package:allthenews/src/data/communication/api/nytimes/api_key_local_repository.dart';
 import 'package:allthenews/src/data/communication/api/nytimes/http_client.dart';
@@ -19,7 +21,6 @@ import 'package:allthenews/src/data/settings/settings_local_repository.dart';
 import 'package:allthenews/src/domain/appinfo/app_info_repository.dart';
 import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
-import 'package:allthenews/src/domain/authorization/firebase_exception_mapper.dart';
 import 'package:allthenews/src/domain/common/persistence/persistence_repository.dart';
 import 'package:allthenews/src/domain/common/usecase/get_page_use_case.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
@@ -34,6 +35,8 @@ import 'package:allthenews/src/domain/presentation/presentation_showing_reposito
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/theme/theme_notifier.dart';
 import 'package:allthenews/src/ui/common/util/mapper.dart';
+import 'package:allthenews/src/ui/pages/authentication/authentication_message_provider.dart';
+import 'package:allthenews/src/ui/pages/authentication/field_error_message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_notifier.dart';
 import 'package:allthenews/src/ui/pages/authentication/registration/registration_notifier.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_notifier.dart';
@@ -48,6 +51,7 @@ import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart'
 import 'package:allthenews/src/ui/pages/profile/profile_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
 abstract class _Constants {
@@ -66,15 +70,20 @@ void injectDependencies(Environment flavor) {
   _locator.registerSingleton<SettingsRepository>(SettingsLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerSingleton<PresentationShowingRepository>(
       PresentationShowingLocalRepository(_locator<PersistenceRepository>()));
-  _locator.registerLazySingleton<AuthenticationRepository>(() => FirebaseAuthenticationRepository());
+  _locator.registerLazySingleton<AuthenticationRepository>(() => FirebaseAuthenticationRepository(
+        _locator<FirebaseAuth>(),
+        _locator<ExceptionMapper>(instanceName: _Constants.firebaseExceptionMapper),
+      ));
+  _locator.registerFactory<FirebaseInitializer>(() => FirebaseAppInitializer());
+  _locator.registerFactory<FirebaseAuth>(() => FirebaseAuth.instance);
   _locator.registerFactory<CachePolicy<Article>>(() => ArticleCachePolicy());
   _injectApiDependencies();
   _injectNotifiers();
 }
 
 void _injectApiDependencies() {
-  _locator.registerSingleton<ExceptionMapper>(ApiExceptionMapper(), instanceName: _Constants.apiExceptionMapper);
-  _locator.registerSingleton<ExceptionMapper>(FirebaseExceptionMapper(),
+  _locator.registerFactory<ExceptionMapper>(() => ApiExceptionMapper(), instanceName: _Constants.apiExceptionMapper);
+  _locator.registerFactory<ExceptionMapper>(() => FirebaseExceptionMapper(),
       instanceName: _Constants.firebaseExceptionMapper);
   _locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
   _locator.registerSingleton<Dio>(Dio());
@@ -84,8 +93,10 @@ void _injectApiDependencies() {
     _locator<ApiKeyRepository>(),
     _locator<ExceptionMapper>(instanceName: _Constants.apiExceptionMapper),
   ));
-  _locator.registerSingleton<NYTimesRepository>(
-      NYTimesRestRepository(_locator<HttpClient>(), _locator<SettingsRepository>()));
+  _locator.registerSingleton<NYTimesRepository>(NYTimesRestRepository(
+    _locator<HttpClient>(),
+    _locator<SettingsRepository>(),
+  ));
   _locator.registerSingleton<AppDatabase>(AppDatabase());
   _locator.registerSingleton<ArticleDao>(ArticleDao(_locator<AppDatabase>()));
   _locator.registerSingleton<NyTimesCachedRepository>(NyTimesCachedInDbRepository(_locator<ArticleDao>()));
@@ -113,9 +124,12 @@ void _injectApiDependencies() {
 }
 
 void _injectNotifiers() {
-  _locator.registerSingleton<HomePageNotifier>(HomePageNotifier());
-  _locator.registerSingleton<ThemeNotifier>(ThemeNotifier(_locator<SettingsRepository>()));
-  _locator.registerFactory(() => SettingsNotifier(_locator<SettingsRepository>(), _locator<AppInfoRepository>()));
+  _locator.registerFactory(() => HomePageNotifier());
+  _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
+  _locator.registerFactory(() => SettingsNotifier(
+        _locator<SettingsRepository>(),
+        _locator<AppInfoRepository>(),
+      ));
   _locator.registerFactory(() => PresentationNotifier(_locator<PresentationShowingRepository>()));
   _locator.registerFactory(() => DashboardNotifier(
         _locator<NYTimesReactiveRepository>(),
@@ -131,11 +145,20 @@ void _injectNotifiers() {
   _locator.registerFactory(() => LatestNewsNotifier(
       _locator<GetPageUseCase<Article>>(instanceName: _Constants.latestNews),
       _locator<Mapper<Article, SecondaryNewsListEntity>>()));
-  _locator.registerFactory(() => ProfileNotifier(_locator<AuthenticationRepository>()));
-  _locator.registerFactory(() => RegistrationNotifier(_locator<AuthenticationRepository>(),
-      _locator<ExceptionMapper>(instanceName: _Constants.firebaseExceptionMapper)));
-  _locator.registerFactory(() => LoginNotifier(_locator<AuthenticationRepository>(),
-      _locator<ExceptionMapper>(instanceName: _Constants.firebaseExceptionMapper)));
+  _locator.registerFactory(() => ProfileNotifier(
+        _locator<AuthenticationRepository>(),
+        AuthenticationMessageProvider(),
+      ));
+  _locator.registerFactory(() => RegistrationNotifier(
+        _locator<AuthenticationRepository>(),
+        AuthenticationMessageProvider(),
+        FieldErrorMessageProvider(),
+      ));
+  _locator.registerFactory(() => LoginNotifier(
+        _locator<AuthenticationRepository>(),
+        AuthenticationMessageProvider(),
+        FieldErrorMessageProvider(),
+      ));
   _locator.registerFactory<PopularNewsCriterionMessageMapper>(() => PopularNewsCriterionMessageLocalMapper());
 }
 

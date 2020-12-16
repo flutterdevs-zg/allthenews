@@ -1,71 +1,72 @@
-import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/domain/authorization/authentication_field_error.dart';
 import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
-import 'package:allthenews/src/domain/communication/exception_mapper.dart';
+import 'package:allthenews/src/domain/communication/firebase_exception.dart';
+import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_state.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginNotifier extends ChangeNotifier {
   final AuthenticationRepository _authorizationRepository;
-  final ExceptionMapper _exceptionMapper;
+  final MessageProvider _authenticationMessageProvider;
+  final MessageProvider _fieldErrorMessageProvider;
 
-  LoginNotifier(this._authorizationRepository, this._exceptionMapper);
+  LoginNotifier(
+    this._authorizationRepository,
+    this._authenticationMessageProvider,
+    this._fieldErrorMessageProvider,
+  );
 
   LoginState _state = const LoginState();
 
   LoginState get state => _state;
 
+  String get emptyFieldError => _fieldErrorMessageProvider.getMessage(AuthenticationFieldError.isEmpty);
+
   VoidCallback returnToProfile;
 
-  Future<void> signIn(String email, String password) async {
-    _validateFields();
+  void validateFieldsAndSignIn() {
+    _validateFields(
+        onInvalid: () {
+          notifyListeners();
+          return;
+        },
+        onValid: () => _signIn());
+  }
 
-    if (!_state.canSubmit) {
-      notifyListeners();
-      return;
-    }
-
-    _setNotifierState(_state.copyWith(isLoading: true));
+  Future<void> _signIn() async {
+    _setNotifierState(_state.copyWithLoading(isLoading: true));
 
     try {
-      await _authorizationRepository.signIn(email, password);
-      _setNotifierState(_state.copyWith(isLoading: false));
+      await _authorizationRepository.signIn(_state.email, _state.password);
+      _setNotifierState(_state.copyWithLoading(isLoading: false));
       returnToProfile?.call();
-    } on Exception catch (exception) {
-      _setNotifierState(_state.copyWith(
-        exception: _exceptionMapper.toDomainException(exception),
+    } on AuthenticationApiException catch (exception) {
+      _setNotifierState(_state.copyWithLoadingAndAuthError(
+        authenticationError: _authenticationMessageProvider.getMessage(exception),
         isLoading: false,
       ));
     }
   }
 
-  void _validateFields() {
-    String emailError;
-    String passwordError;
-
-    if (_state.email.isEmpty) {
-      emailError = Strings.current.emptyFieldError;
-    }
-
-    if (_state.password.isEmpty) {
-      passwordError = Strings.current.emptyFieldError;
-    }
-
-    _state = _state.copyWith(
-      emailError: emailError,
-      passwordError: passwordError,
+  void _validateFields({@required VoidCallback onValid, @required VoidCallback onInvalid}) {
+    _state = _state.copyWithFieldsErrors(
+      emailError: _state.email.isEmpty ? emptyFieldError : null,
+      passwordError: _state.password.isEmpty ? emptyFieldError : null,
     );
+
+    _state.canSubmit ? onValid() : onInvalid();
   }
 
-  Future<void> _setNotifierState(LoginState loginState) async {
+  void _setNotifierState(LoginState loginState) {
     _state = loginState;
     notifyListeners();
   }
 
-  void setEmail(String email) {
-    _setNotifierState(_state.copyWith(email: email));
+  void updateEmail(String email) {
+    _setNotifierState(_state.copyWithEmailAndClearErrors(email: email));
   }
 
-  void setPassword(String password) {
-    _setNotifierState(_state.copyWith(password: password));
+  void updatePassword(String password) {
+    _setNotifierState(_state.copyWithPasswordAndClearErrors(password: password));
   }
 }

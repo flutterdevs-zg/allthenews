@@ -1,8 +1,6 @@
-import 'package:allthenews/src/domain/communication/all_the_news_exception.dart';
-
 class LoginState {
   final bool isLoading;
-  final AllTheNewsException exception;
+  final String authenticationError;
   final String email;
   final String emailError;
   final String password;
@@ -16,23 +14,49 @@ class LoginState {
     this.password = "",
     this.passwordError,
     this.isLoading = false,
-    this.exception,
+    this.authenticationError,
   });
 
-  LoginState copyWith({
-    bool isLoading,
-    AllTheNewsException exception,
-    String email,
+  LoginState copyWithLoading({bool isLoading}) => LoginState(
+        isLoading: isLoading,
+        authenticationError: authenticationError,
+        email: email,
+        emailError: emailError,
+        password: password,
+        passwordError: passwordError,
+      );
+
+  LoginState copyWithLoadingAndAuthError({bool isLoading, String authenticationError}) => LoginState(
+        isLoading: isLoading,
+        authenticationError: authenticationError,
+        email: email,
+        emailError: emailError,
+        password: password,
+        passwordError: passwordError,
+      );
+
+  LoginState copyWithEmailAndClearErrors({String email}) => LoginState(
+        isLoading: isLoading,
+        email: email,
+        password: password,
+      );
+
+  LoginState copyWithPasswordAndClearErrors({String password}) => LoginState(
+        isLoading: isLoading,
+        email: email,
+        password: password,
+      );
+
+  LoginState copyWithFieldsErrors({
     String emailError,
     String passwordError,
-    String password,
   }) =>
       LoginState(
-        isLoading: isLoading ?? this.isLoading,
-        exception: exception,
-        email: email ?? this.email,
+        isLoading: isLoading,
+        authenticationError: authenticationError,
+        email: email,
         emailError: emailError,
-        password: password ?? this.password,
+        password: password,
         passwordError: passwordError,
       );
 }

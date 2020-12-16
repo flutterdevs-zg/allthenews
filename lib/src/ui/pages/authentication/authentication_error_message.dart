@@ -1,4 +1,3 @@
-import 'package:allthenews/src/domain/communication/firebase_exception.dart';
 import 'package:flutter/material.dart';
 
 abstract class _Constants {
@@ -6,11 +5,11 @@ abstract class _Constants {
 }
 
 mixin AuthenticationErrorMessage {
-  Widget buildAuthenticationErrorMessage(AuthenticationException exception) => exception != null
+  Widget buildAuthenticationErrorMessage(String authenticationError) => authenticationError != null
       ? Padding(
           padding: const EdgeInsets.all(_Constants.errorPadding),
           child: Text(
-            exception.message,
+            authenticationError,
             style: const TextStyle(color: Colors.red),
             textAlign: TextAlign.center,
           ),

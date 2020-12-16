@@ -61,7 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Strings.current.settings,
         hasBackButton: true,
         backButtonAction: () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const HomePage())),
+            context, MaterialPageRoute(builder: (context) => HomePage())),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -10,10 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  final int initialPage;
-
-  const HomePage({this.initialPage = 0});
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -22,12 +18,6 @@ class _HomePageState extends State<HomePage> {
   final HomePageNotifier _homePageNotifier = inject<HomePageNotifier>();
 
   List<HomeTab> _tabs;
-
-  @override
-  void initState() {
-    super.initState();
-    _homePageNotifier.setSelectedPage(widget.initialPage);
-  }
 
   @override
   void didChangeDependencies() {
@@ -57,8 +47,7 @@ class _HomePageState extends State<HomePage> {
     return ChangeNotifierProvider.value(
       value: _homePageNotifier,
       builder: (providerContext, child) {
-        final selectedPage =
-            providerContext.select((HomePageNotifier notifier) => notifier.selectedPage);
+        final selectedPage = providerContext.select((HomePageNotifier notifier) => notifier.selectedPage);
 
         return Scaffold(
           appBar: _tabs[selectedPage].appBar,

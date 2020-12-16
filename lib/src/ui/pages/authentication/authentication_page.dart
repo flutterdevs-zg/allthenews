@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 abstract class _Constants {
   static const loginRegistrationSpace = 30.0;
-  static const buttonVerticalPadding = 30.0;
-  static const buttonHorizontalPadding = 30.0;
+  static const buttonVerticalPadding = 10.0;
+  static const buttonHorizontalPadding = 20.0;
 }
 
 class AuthenticationPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   }
 
   void _navigateTo(Widget page) {
-    Navigator.pushReplacement(
+    Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => page,

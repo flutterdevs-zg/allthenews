@@ -8,7 +8,7 @@ extension ExceptionExtension on Exception {
     if (this is ApiException) {
       return _getCommunicationExceptionMessage(context);
     } else {
-      return Strings.current.apiUnknownException;
+      return Strings.current.unknownError;
     }
   }
 
@@ -22,7 +22,7 @@ extension ExceptionExtension on Exception {
     } else if (this is ServerErrorException) {
       return Strings.current.apiServerException;
     } else {
-      return Strings.current.apiUnknownException;
+      return Strings.current.unknownError;
     }
   }
 }

@@ -1,34 +1,43 @@
 import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
-import 'package:allthenews/src/domain/authorization/firebase_exception_mapper.dart';
+import 'package:allthenews/src/ui/common/message_provider.dart';
+import 'package:allthenews/src/ui/pages/authentication/authentication_message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_notifier.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../common/change_notifier_test_util.dart';
+
 class MockAuthenticationRepository extends Mock implements AuthenticationRepository {}
 
-class MockExceptionMapper extends Mock implements FirebaseExceptionMapper {}
+class MockAuthenticationMessageProvider extends Mock implements MessageProvider {}
+
+class MockFieldMessageProvider extends Mock implements MessageProvider {}
 
 void main() {
   LoginNotifier loginNotifier;
   MockAuthenticationRepository mockAuthenticationRepository;
-  MockExceptionMapper mockExceptionMapper;
+  MockAuthenticationMessageProvider mockAuthenticationMessageProvider;
+  MockFieldMessageProvider mockFieldMessageProvider;
 
   setUp(() {
     mockAuthenticationRepository = MockAuthenticationRepository();
-    mockExceptionMapper = MockExceptionMapper();
-    loginNotifier = LoginNotifier(mockAuthenticationRepository, mockExceptionMapper);
 
-    loginNotifier.setEmail("email");
-    loginNotifier.setPassword("password");
+    loginNotifier = LoginNotifier(
+      mockAuthenticationRepository,
+      mockAuthenticationMessageProvider,
+      mockFieldMessageProvider,
+    );
+
+    loginNotifier.updateEmail("email");
+    loginNotifier.updatePassword("password");
   });
 
   group('notifier tests', () {
     test('should emit loaded login state when user logs in', () {
       when(mockAuthenticationRepository.signIn(any, any)).thenAnswer((_) async => Future.value());
 
-      loginNotifier.verifySignIn(
-        loginNotifier.signIn,
+      loginNotifier.verifyStateInOrder(
+        loginNotifier.validateFieldsAndSignIn,
         [
           () {
             expect(loginNotifier.state.isLoading, true);
@@ -41,18 +50,4 @@ void main() {
       );
     });
   });
-}
-
-extension on ChangeNotifier {
-  void verifySignIn(
-    Function(String param1, String param2) testFunction,
-    List<Function()> matchersMethods,
-  ) {
-    int index = 0;
-    addListener(() {
-      matchersMethods[index]();
-      index++;
-    });
-    testFunction("mock", "mock");
-  }
 }

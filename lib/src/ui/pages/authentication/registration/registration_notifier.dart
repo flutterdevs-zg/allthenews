@@ -1,37 +1,46 @@
-import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/domain/authorization/authentication_field_error.dart';
 import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
-import 'package:allthenews/src/domain/communication/exception_mapper.dart';
+import 'package:allthenews/src/domain/communication/firebase_exception.dart';
+import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/registration/registration_state.dart';
 import 'package:flutter/cupertino.dart';
 
 class RegistrationNotifier extends ChangeNotifier {
-  final AuthenticationRepository _authorizationRepository;
-  final ExceptionMapper _exceptionMapper;
+  final AuthenticationRepository _authenticationRepository;
+  final MessageProvider _authenticationMessageProvider;
+  final MessageProvider _fieldErrorMessageProvider;
 
-  RegistrationNotifier(this._authorizationRepository, this._exceptionMapper);
+  RegistrationNotifier(
+    this._authenticationRepository,
+    this._authenticationMessageProvider,
+    this._fieldErrorMessageProvider,
+  );
 
   RegistrationState _state = const RegistrationState();
 
   RegistrationState get state => _state;
 
+  String get emptyFieldError => _fieldErrorMessageProvider.getMessage(AuthenticationFieldError.isEmpty);
+
   VoidCallback returnToProfile;
 
-  Future<void> createUser(String email, String password, String name) async {
-    _validateFields();
+  void validateFieldsAndCreateUser() {
+    _validateFields(
+        onInvalid: () {
+          notifyListeners();
+          return;
+        },
+        onValid: () => _createUser());
+  }
 
-    if (!_state.canSubmit) {
-      notifyListeners();
-      return;
-    }
-
-    _setNotifierState(_state.copyWith(isLoading: true));
-
+  Future<void> _createUser() async {
+    _setNotifierState(_state.copyWithLoadingAndAuthError(isLoading: true));
     try {
-      await _authorizationRepository.createUser(email, password);
-      _updateUserName(name);
-    } on Exception catch (exception) {
-      _setNotifierState(_state.copyWith(
-        exception: _exceptionMapper.toDomainException(exception),
+      await _authenticationRepository.createUser(_state.email, _state.password);
+      _updateUserName(_state.name);
+    } on AuthenticationApiException catch (exception) {
+      _setNotifierState(_state.copyWithLoadingAndAuthError(
+        authenticationError: _authenticationMessageProvider.getMessage(exception),
         isLoading: false,
       ));
     }
@@ -39,39 +48,25 @@ class RegistrationNotifier extends ChangeNotifier {
 
   Future<void> _updateUserName(String name) async {
     try {
-      await _authorizationRepository.updateUser(name);
-      _setNotifierState(_state.copyWith(isLoading: false));
+      await _authenticationRepository.updateUser(name);
+      _setNotifierState(_state.copyWithLoadingAndAuthError(isLoading: false));
       returnToProfile?.call();
-    } on Exception catch (exception) {
-      _setNotifierState(_state.copyWith(
-        exception: _exceptionMapper.toDomainException(exception),
+    } on AuthenticationApiException catch (exception) {
+      _setNotifierState(_state.copyWithLoadingAndAuthError(
+        authenticationError: _authenticationMessageProvider.getMessage(exception),
         isLoading: false,
       ));
     }
   }
 
-  void _validateFields() {
-    String emailError;
-    String nameError;
-    String passwordError;
-
-    if (_state.email.isEmpty) {
-      emailError = Strings.current.emptyFieldError;
-    }
-
-    if (_state.name.isEmpty) {
-      nameError = Strings.current.emptyFieldError;
-    }
-
-    if (_state.password.isEmpty) {
-      passwordError = Strings.current.emptyFieldError;
-    }
-
-    _state = _state.copyWith(
-      emailError: emailError,
-      passwordError: passwordError,
-      nameError: nameError,
+  void _validateFields({@required VoidCallback onValid, @required VoidCallback onInvalid}) {
+    _state = _state.copyWithFieldsError(
+      emailError: _state.email.isEmpty ? emptyFieldError : null,
+      nameError: _state.name.isEmpty ? emptyFieldError : null,
+      passwordError: _state.password.isEmpty ? emptyFieldError : null,
     );
+
+    _state.canSubmit ? onValid() : onInvalid();
   }
 
   void _setNotifierState(RegistrationState registrationState) {
@@ -79,15 +74,15 @@ class RegistrationNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setEmail(String email) {
-    _setNotifierState(_state.copyWith(email: email));
+  void updateEmail(String email) {
+    _setNotifierState(_state.copyWithEmailAndClearError(email: email));
   }
 
-  void setName(String name) {
-    _setNotifierState(_state.copyWith(name: name));
+  void updateName(String name) {
+    _setNotifierState(_state.copyWithNameAndClearError(name: name));
   }
 
-  void setPassword(String password) {
-    _setNotifierState(_state.copyWith(password: password));
+  void updatePassword(String password) {
+    _setNotifierState(_state.copyWithPasswordAndClearError(password: password));
   }
 }
