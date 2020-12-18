@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:allthenews/src/domain/model/user.dart' as domain;
 import 'package:firebase_auth/firebase_auth.dart';

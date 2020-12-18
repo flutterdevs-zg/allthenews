@@ -1,4 +1,4 @@
-import 'package:allthenews/src/domain/communication/all_the_news_exception.dart';
+import 'package:allthenews/src/domain/common/error/all_the_news_exception.dart';
 
 abstract class ApiException extends AllTheNewsException {}
 

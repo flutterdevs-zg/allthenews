@@ -1,5 +1,5 @@
-import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
-import 'package:allthenews/src/domain/communication/firebase_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
+import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
 import 'package:allthenews/src/ui/pages/authentication/authentication_message_provider.dart';
 import 'package:allthenews/src/ui/pages/profile/profile_state.dart';
 import 'package:flutter/widgets.dart';

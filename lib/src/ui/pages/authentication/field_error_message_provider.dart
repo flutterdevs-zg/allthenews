@@ -1,13 +1,13 @@
 import 'package:allthenews/generated/l10n.dart';
-import 'package:allthenews/src/domain/authorization/authentication_field_error.dart';
+import 'package:allthenews/src/domain/common/error/field_error.dart';
 import 'package:allthenews/src/ui/common/message_provider.dart';
 
-class FieldErrorMessageProvider extends MessageProvider {
+class FieldErrorMessageProvider extends MessageProvider<FieldError> {
   @override
-  String getMessage(Object error) {
-    if (error is AuthenticationFieldError) {
+  String getMessage(FieldError error) {
+    if (error is FieldError) {
       switch (error) {
-        case AuthenticationFieldError.isEmpty:
+        case FieldError.isEmpty:
           return Strings.current.emptyFieldError;
       }
     }

@@ -1,6 +1,6 @@
-import 'package:allthenews/src/domain/authorization/authentication_field_error.dart';
-import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
-import 'package:allthenews/src/domain/communication/firebase_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
+import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
+import 'package:allthenews/src/domain/common/error/field_error.dart';
 import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/registration/registration_state.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,17 +20,15 @@ class RegistrationNotifier extends ChangeNotifier {
 
   RegistrationState get state => _state;
 
-  String get emptyFieldError => _fieldErrorMessageProvider.getMessage(AuthenticationFieldError.isEmpty);
+  String get emptyFieldError => _fieldErrorMessageProvider.getMessage(FieldError.isEmpty);
 
   VoidCallback returnToProfile;
 
   void validateFieldsAndCreateUser() {
     _validateFields(
-        onInvalid: () {
-          notifyListeners();
-          return;
-        },
-        onValid: () => _createUser());
+      onInvalid: () => notifyListeners(),
+      onValid: () => _createUser(),
+    );
   }
 
   Future<void> _createUser() async {

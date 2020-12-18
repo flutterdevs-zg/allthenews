@@ -1,5 +1,5 @@
-import 'package:allthenews/src/data/communication/api/nytimes/http_client.dart';
-import 'package:allthenews/src/data/communication/api/nytimes/request.dart';
+import 'package:allthenews/src/data/communication/api/http_client.dart';
+import 'package:allthenews/src/data/communication/api/request.dart';
 import 'package:allthenews/src/data/response/most_popular_article_response.dart';
 import 'package:allthenews/src/data/response/newest_article_response.dart';
 import 'package:allthenews/src/data/response/ny_times_response.dart';

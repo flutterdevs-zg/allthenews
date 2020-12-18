@@ -1,4 +1,4 @@
-import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
 import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/registration/registration_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';

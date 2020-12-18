@@ -1,5 +1,5 @@
-import 'package:allthenews/src/data/communication/api/firebase/firebase_exception_mapper.dart';
-import 'package:allthenews/src/domain/communication/firebase_exception.dart';
+import 'package:allthenews/src/data/authentication/firebase_exception_mapper.dart';
+import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 

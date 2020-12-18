@@ -1,5 +1,5 @@
 import 'package:allthenews/src/data/article/ny_times_cached_in_db_repository.dart';
-import 'package:allthenews/src/data/communication/api/nytimes/http_client.dart';
+import 'package:allthenews/src/data/communication/api/http_client.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:flutter_test/flutter_test.dart';

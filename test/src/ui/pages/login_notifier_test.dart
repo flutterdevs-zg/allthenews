@@ -1,6 +1,5 @@
-import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
 import 'package:allthenews/src/ui/common/message_provider.dart';
-import 'package:allthenews/src/ui/pages/authentication/authentication_message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

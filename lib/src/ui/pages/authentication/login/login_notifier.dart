@@ -1,17 +1,17 @@
-import 'package:allthenews/src/domain/authorization/authentication_field_error.dart';
-import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
-import 'package:allthenews/src/domain/communication/firebase_exception.dart';
+import 'package:allthenews/src/domain/common/error/field_error.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
+import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
 import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_state.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginNotifier extends ChangeNotifier {
-  final AuthenticationRepository _authorizationRepository;
+  final AuthenticationRepository _authenticationRepository;
   final MessageProvider _authenticationMessageProvider;
   final MessageProvider _fieldErrorMessageProvider;
 
   LoginNotifier(
-    this._authorizationRepository,
+    this._authenticationRepository,
     this._authenticationMessageProvider,
     this._fieldErrorMessageProvider,
   );
@@ -20,24 +20,22 @@ class LoginNotifier extends ChangeNotifier {
 
   LoginState get state => _state;
 
-  String get emptyFieldError => _fieldErrorMessageProvider.getMessage(AuthenticationFieldError.isEmpty);
+  String get emptyFieldError => _fieldErrorMessageProvider.getMessage(FieldError.isEmpty);
 
   VoidCallback returnToProfile;
 
   void validateFieldsAndSignIn() {
     _validateFields(
-        onInvalid: () {
-          notifyListeners();
-          return;
-        },
-        onValid: () => _signIn());
+      onInvalid: () => notifyListeners(),
+      onValid: () => _signIn(),
+    );
   }
 
   Future<void> _signIn() async {
     _setNotifierState(_state.copyWithLoading(isLoading: true));
 
     try {
-      await _authorizationRepository.signIn(_state.email, _state.password);
+      await _authenticationRepository.signIn(_state.email, _state.password);
       _setNotifierState(_state.copyWithLoading(isLoading: false));
       returnToProfile?.call();
     } on AuthenticationApiException catch (exception) {

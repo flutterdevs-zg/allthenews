@@ -1,3 +1,3 @@
-abstract class MessageProvider {
-  String getMessage(Object error);
+abstract class MessageProvider<T> {
+  String getMessage(T identifier);
 }

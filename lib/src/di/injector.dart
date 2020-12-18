@@ -7,11 +7,11 @@ import 'package:allthenews/src/data/article/ny_times_cached_in_db_repository.dar
 import 'package:allthenews/src/data/article/ny_times_paginated_rest_repository.dart';
 import 'package:allthenews/src/data/article/ny_times_reactive_rest_repository.dart';
 import 'package:allthenews/src/data/article/ny_times_rest_repository.dart';
-import 'package:allthenews/src/data/communication/api/firebase/firebase_authentication_repository.dart';
-import 'package:allthenews/src/data/communication/api/firebase/firebase_exception_mapper.dart';
-import 'package:allthenews/src/data/communication/api/nytimes/api_exception_mapper.dart';
-import 'package:allthenews/src/data/communication/api/nytimes/api_key_local_repository.dart';
-import 'package:allthenews/src/data/communication/api/nytimes/http_client.dart';
+import 'package:allthenews/src/data/authentication/firebase_authentication_repository.dart';
+import 'package:allthenews/src/data/authentication/firebase_exception_mapper.dart';
+import 'package:allthenews/src/data/communication/api/api_exception_mapper.dart';
+import 'package:allthenews/src/data/communication/api/api_key_local_repository.dart';
+import 'package:allthenews/src/data/communication/api/http_client.dart';
 import 'package:allthenews/src/data/persistence/cache/cache_policy.dart';
 import 'package:allthenews/src/data/persistence/database/app_database.dart';
 import 'package:allthenews/src/data/persistence/database/article_dao.dart';
@@ -20,7 +20,7 @@ import 'package:allthenews/src/data/presentation/presentation_showing_local_repo
 import 'package:allthenews/src/data/settings/settings_local_repository.dart';
 import 'package:allthenews/src/domain/appinfo/app_info_repository.dart';
 import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
-import 'package:allthenews/src/domain/authorization/authentication_repository.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
 import 'package:allthenews/src/domain/common/persistence/persistence_repository.dart';
 import 'package:allthenews/src/domain/common/usecase/get_page_use_case.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';

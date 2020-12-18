@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
-  Widget _bindLoading() => const CircularProgressIndicator();
+  Widget _bindLoading() => const Center(child: CircularProgressIndicator());
 
   Widget _bindAuthentication() => AuthenticationPage();
 

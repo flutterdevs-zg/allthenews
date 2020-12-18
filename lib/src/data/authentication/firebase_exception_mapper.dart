@@ -1,5 +1,5 @@
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
-import 'package:allthenews/src/domain/communication/firebase_exception.dart';
+import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class _Constants {

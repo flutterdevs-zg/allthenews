@@ -79,6 +79,7 @@ class _LoginPageState extends State<LoginPage> with AuthenticationErrorMessage {
                       ),
                       text: Strings.current.login,
                       isLoading: state.isLoading,
+
                       onPressed: () {
                         context.read<LoginNotifier>().validateFieldsAndSignIn();
                       },
