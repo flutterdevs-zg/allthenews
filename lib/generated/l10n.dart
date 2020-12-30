@@ -135,10 +135,10 @@ class Strings {
     );
   }
 
-  /// `Most Emailed`
+  /// `Most E-mailed`
   String get mostEmailed {
     return Intl.message(
-      'Most Emailed',
+      'Most E-mailed',
       name: 'mostEmailed',
       desc: '',
       args: [],
@@ -225,21 +225,111 @@ class Strings {
     );
   }
 
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get login {
+    return Intl.message(
+      'Login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get loginTitle {
+    return Intl.message(
+      'Login',
+      name: 'loginTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get register {
+    return Intl.message(
+      'Register',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registration`
+  String get registrationTitle {
+    return Intl.message(
+      'Registration',
+      name: 'registrationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail`
+  String get email {
+    return Intl.message(
+      'E-mail',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create account`
+  String get createAccount {
+    return Intl.message(
+      'Create account',
+      name: 'createAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No internet connection`
-  String get apiConnectionException {
+  String get noInternetException {
     return Intl.message(
       'No internet connection',
-      name: 'apiConnectionException',
+      name: 'noInternetException',
       desc: '',
       args: [],
     );
   }
 
   /// `Unknown error`
-  String get apiUnknownException {
+  String get unknownError {
     return Intl.message(
       'Unknown error',
-      name: 'apiUnknownException',
+      name: 'unknownError',
       desc: '',
       args: [],
     );
@@ -270,6 +360,106 @@ class Strings {
     return Intl.message(
       'Resource not found',
       name: 'apiInvalidUrlException',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This field cannot be empty`
+  String get emptyFieldError {
+    return Intl.message(
+      'This field cannot be empty',
+      name: 'emptyFieldError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong e-mail format`
+  String get invalidEmailError {
+    return Intl.message(
+      'Wrong e-mail format',
+      name: 'invalidEmailError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Initialization failed. Restart the application.`
+  String get initializationError {
+    return Intl.message(
+      'Initialization failed. Restart the application.',
+      name: 'initializationError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User corresponding to the given e-mail has been disabled`
+  String get userDisabledError {
+    return Intl.message(
+      'User corresponding to the given e-mail has been disabled',
+      name: 'userDisabledError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no user corresponding to the given e-mail`
+  String get userNotFoundError {
+    return Intl.message(
+      'There is no user corresponding to the given e-mail',
+      name: 'userNotFoundError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is invalid for the given e-mail`
+  String get invalidPasswordError {
+    return Intl.message(
+      'Password is invalid for the given e-mail',
+      name: 'invalidPasswordError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail address already in use`
+  String get emailAlreadyInUseError {
+    return Intl.message(
+      'E-mail address already in use',
+      name: 'emailAlreadyInUseError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The password is too weak`
+  String get weakPasswordError {
+    return Intl.message(
+      'The password is too weak',
+      name: 'weakPasswordError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail/password accounts are not enabled for the project`
+  String get operationNotAllowedError {
+    return Intl.message(
+      'E-mail/password accounts are not enabled for the project',
+      name: 'operationNotAllowedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We have blocked all requests from this device due to unusual activity. Try again later.`
+  String get tooManyRequests {
+    return Intl.message(
+      'We have blocked all requests from this device due to unusual activity. Try again later.',
+      name: 'tooManyRequests',
       desc: '',
       args: [],
     );

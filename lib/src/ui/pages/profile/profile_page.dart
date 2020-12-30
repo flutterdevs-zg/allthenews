@@ -1,12 +1,70 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/di/injector.dart';
+import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
+import 'package:allthenews/src/ui/pages/authentication/authentication_page.dart';
+import 'package:allthenews/src/ui/pages/profile/profile_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ProfilePage extends StatelessWidget {
+abstract class _Constants {
+  static const buttonVerticalPadding = 10.0;
+  static const buttonHorizontalPadding = 20.0;
+}
+
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final ProfileNotifier _authorizationNotifier = inject<ProfileNotifier>();
+
+  @override
+  void initState() {
+    super.initState();
+    _authorizationNotifier.initUserState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Text(Strings.of(context).profile),
+    return ChangeNotifierProvider.value(
+        value: _authorizationNotifier,
+        builder: (providerContext, child) {
+          final viewState = providerContext.select((ProfileNotifier notifier) => notifier.state);
+
+          if (viewState.isLoading) {
+            return _bindLoading();
+          } else {
+            if (viewState.user == null) {
+              return _bindAuthentication();
+            } else {
+              return _bindUser();
+            }
+          }
+        });
+  }
+
+  Widget _bindLoading() => const Center(child: CircularProgressIndicator());
+
+  Widget _bindAuthentication() => AuthenticationPage();
+
+  Widget _bindUser() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(_authorizationNotifier.state.user.email),
+          Text(_authorizationNotifier.state.user.name),
+          PrimaryTextButton(
+            textPadding: const EdgeInsets.symmetric(
+              vertical: _Constants.buttonVerticalPadding,
+              horizontal: _Constants.buttonHorizontalPadding,
+            ),
+            onPressed: () => _authorizationNotifier.logout(),
+            text: Strings.current.logout,
+          ),
+        ],
+      ),
     );
   }
 }

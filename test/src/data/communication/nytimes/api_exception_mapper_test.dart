@@ -21,7 +21,7 @@ void main() {
     };
     inputsToMatchers.forEach((input, matcher) {
       test("$input -> $matcher", () {
-        expect(apiExceptionMapper.toExceptionType(input), matcher);
+        expect(apiExceptionMapper.toDomainException(input), matcher);
       });
     });
   });

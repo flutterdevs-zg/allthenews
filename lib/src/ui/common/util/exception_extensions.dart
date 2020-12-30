@@ -8,21 +8,21 @@ extension ExceptionExtension on Exception {
     if (this is ApiException) {
       return _getCommunicationExceptionMessage(context);
     } else {
-      return Strings.of(context).apiUnknownException;
+      return Strings.current.unknownError;
     }
   }
 
   String _getCommunicationExceptionMessage(BuildContext context) {
     if (this is UnauthorizedException) {
-      return Strings.of(context).apiUnauthorizedException;
+      return Strings.current.apiUnauthorizedException;
     } else if (this is ConnectionException) {
-      return Strings.of(context).apiConnectionException;
+      return Strings.current.noInternetException;
     } else if (this is InvalidUrlException) {
-      return Strings.of(context).apiInvalidUrlException;
+      return Strings.current.apiInvalidUrlException;
     } else if (this is ServerErrorException) {
-      return Strings.of(context).apiServerException;
+      return Strings.current.apiServerException;
     } else {
-      return Strings.of(context).apiUnknownException;
+      return Strings.current.unknownError;
     }
   }
 }

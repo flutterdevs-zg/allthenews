@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 
 class ApiExceptionMapper extends ExceptionMapper {
   @override
-  ApiException toExceptionType(Object error) {
+  ApiException toDomainException(Object error) {
     if (error is DioError) {
       switch (error.type) {
         case DioErrorType.DEFAULT:

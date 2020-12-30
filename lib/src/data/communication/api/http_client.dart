@@ -54,8 +54,8 @@ class HttpClient {
       );
       final response = await futureResponse.timeout(_Constants.timeoutDuration);
       return response.data;
-    } catch (e) {
-      return Future.error(_exceptionMapper.toExceptionType(e));
+    } on Exception catch (exception) {
+      return Future.error(_exceptionMapper.toDomainException(exception));
     }
   }
 }
