@@ -18,7 +18,7 @@ class NyTimesAppBar extends StatefulWidget implements PreferredSizeWidget {
   final VoidCallback backButtonAction;
 
   const NyTimesAppBar({
-    this.title,
+    this.title = "",
     this.backButtonAction,
     this.hasBackButton = false,
     this.hasSettingsAction = false,
