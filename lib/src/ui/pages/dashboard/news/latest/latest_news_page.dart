@@ -3,8 +3,8 @@ import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/pagination/paginated_list_view.dart';
 import 'package:allthenews/src/ui/common/pagination/paginated_view_state.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
-import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
+import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_item.dart';
 import 'package:flutter/material.dart';
@@ -73,12 +73,16 @@ class _LatestNewsListPageState extends State<LatestNewsListPage> {
   Widget _buildHeader(BuildContext context) => Padding(
         padding: const EdgeInsets.only(
           top: Dimens.pagePadding,
-          left: Dimens.pagePadding,
           right: Dimens.pagePadding,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            IconButton(
+              color: Theme.of(context).indicatorColor,
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.arrow_back_ios),
+            ),
             Hero(
               tag: Strings.current.newest,
               child: Text(

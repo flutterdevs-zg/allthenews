@@ -71,12 +71,16 @@ class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
   Widget _buildHeader(BuildContext context, String title) => Padding(
         padding: const EdgeInsets.only(
           top: Dimens.pagePadding,
-          left: Dimens.pagePadding,
           right: Dimens.pagePadding,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            IconButton(
+              color: Theme.of(context).indicatorColor,
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.arrow_back_ios),
+            ),
             Hero(
               tag: title,
               child: Text(
