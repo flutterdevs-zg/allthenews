@@ -43,7 +43,7 @@ class _LocationPageState extends State<LocationPage> {
           } else if (viewState.error != null) {
             return _buildErrorContent(providerContext, viewState.error);
           } else if (viewState.location != null) {
-            return LocationMap(location: viewState.location);
+            return LocationMap(viewState.location);
           } else {
             return Container();
           }

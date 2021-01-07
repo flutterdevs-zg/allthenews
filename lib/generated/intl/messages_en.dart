@@ -53,7 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "operationNotAllowedError" : MessageLookupByLibrary.simpleMessage("E-mail/password accounts are not enabled for the project"),
     "password" : MessageLookupByLibrary.simpleMessage("Password"),
     "permissionDeniedErrorMessage" : MessageLookupByLibrary.simpleMessage("Permission denied. Click the button to retry action."),
-    "permissionDeniedForeverErrorMessage" : MessageLookupByLibrary.simpleMessage("Location service is not available. Please go to the settings to grant the permission.\n"),
+    "permissionDeniedForeverErrorMessage" : MessageLookupByLibrary.simpleMessage("Location service is not available. Please go to the settings to grant the permission."),
     "popular" : MessageLookupByLibrary.simpleMessage("Popular"),
     "profile" : MessageLookupByLibrary.simpleMessage("Profile"),
     "register" : MessageLookupByLibrary.simpleMessage("Register"),

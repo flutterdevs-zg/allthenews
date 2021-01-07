@@ -4,40 +4,33 @@ import 'package:flutter/material.dart';
 
 class _Constants {
   static const widthScreenRatio = 0.70;
-  static const height = 70.0;
+  static const height = 80.0;
   static const padding = 20.0;
   static const radius = 50.0;
-  static const shadowOpacity = 0.5;
-  static const shadowBlurRadius = 20.0;
-  static const infoFontSize = 12.0;
 }
 
-class LocationInfoPin extends StatefulWidget {
+class LocationInfoPin extends StatelessWidget {
   final double leftPosition;
   final double rightPosition;
   final double topPosition;
   final double bottomPosition;
   final Location location;
 
-  const LocationInfoPin(
-      {this.leftPosition,
-      this.rightPosition,
-      this.topPosition,
-      this.bottomPosition,
-      this.location});
+  const LocationInfoPin({
+    this.leftPosition,
+    this.rightPosition,
+    this.topPosition,
+    this.bottomPosition,
+    this.location,
+  });
 
-  @override
-  State<StatefulWidget> createState() => LocationInfoPinState();
-}
-
-class LocationInfoPinState extends State<LocationInfoPin> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: widget.topPosition,
-      right: widget.rightPosition,
-      bottom: widget.bottomPosition,
-      left: widget.leftPosition,
+      top: topPosition,
+      right: rightPosition,
+      bottom: bottomPosition,
+      left: leftPosition,
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
@@ -45,13 +38,9 @@ class LocationInfoPinState extends State<LocationInfoPin> {
           height: _Constants.height,
           width: MediaQuery.of(context).size.width * _Constants.widthScreenRatio,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).backgroundColor,
               borderRadius: const BorderRadius.all(Radius.circular(_Constants.radius)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    blurRadius: _Constants.shadowBlurRadius,
-                    color: Colors.grey.withOpacity(_Constants.shadowOpacity))
-              ]),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -59,13 +48,12 @@ class LocationInfoPinState extends State<LocationInfoPin> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(Strings.current.yourLocation, style: const TextStyle(color: Colors.blue)),
-                    Text('${Strings.current.latitude}: ${widget.location.latitude.toString()}',
-                        style:
-                            const TextStyle(fontSize: _Constants.infoFontSize, color: Colors.grey)),
-                    Text('${Strings.current.longitude}: ${widget.location.longitude.toString()}',
-                        style:
-                            const TextStyle(fontSize: _Constants.infoFontSize, color: Colors.grey)),
+                    Text(Strings.current.yourLocation,
+                        style: Theme.of(context).textTheme.bodyText2),
+                    Text('${Strings.current.latitude}: ${location.latitude.toString()}',
+                        style: Theme.of(context).textTheme.bodyText2),
+                    Text('${Strings.current.longitude}: ${location.longitude.toString()}',
+                        style: Theme.of(context).textTheme.bodyText2),
                   ],
                 ),
               ),

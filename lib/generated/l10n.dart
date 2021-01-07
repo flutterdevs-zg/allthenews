@@ -115,10 +115,10 @@ class Strings {
     );
   }
 
-  /// `Location service is not available. Please go to the settings to grant the permission.\n`
+  /// `Location service is not available. Please go to the settings to grant the permission.`
   String get permissionDeniedForeverErrorMessage {
     return Intl.message(
-      'Location service is not available. Please go to the settings to grant the permission.\n',
+      'Location service is not available. Please go to the settings to grant the permission.',
       name: 'permissionDeniedForeverErrorMessage',
       desc: '',
       args: [],

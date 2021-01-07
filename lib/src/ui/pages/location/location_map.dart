@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:allthenews/src/domain/location/location.dart';
 import 'package:allthenews/src/ui/pages/location/location_info_pin.dart';
@@ -13,17 +12,10 @@ abstract class _Constants {
   static const pinBottomPosition = 0.0;
 }
 
-class LocationMap extends StatefulWidget {
+class LocationMap extends StatelessWidget {
   final Location location;
 
-  const LocationMap({Key key, this.location}) : super(key: key);
-
-  @override
-  _LocationMapState createState() => _LocationMapState();
-}
-
-class _LocationMapState extends State<LocationMap> {
-  final Completer<GoogleMapController> _controller = Completer();
+  const LocationMap(this.location);
 
   @override
   Widget build(BuildContext context) {
@@ -32,22 +24,19 @@ class _LocationMapState extends State<LocationMap> {
         GoogleMap(
           initialCameraPosition: CameraPosition(
             target: LatLng(
-              widget.location.latitude,
-              widget.location.longitude,
+              location.latitude,
+              location.longitude,
             ),
             zoom: _Constants.mapZoom,
           ),
           myLocationButtonEnabled: false,
-          markers: {_toMarker(context, widget.location)},
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
+          markers: {_toMarker(context, location)},
         ),
         LocationInfoPin(
           leftPosition: _Constants.pinLeftPosition,
           rightPosition: _Constants.pinRightPosition,
           bottomPosition: _Constants.pinBottomPosition,
-          location: widget.location,
+          location: location,
         ),
       ],
     );
