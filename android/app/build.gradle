@@ -21,6 +21,17 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def googleMapsDevApiKey = localProperties.getProperty('googleMaps.apiKeyDev')
+if (googleMapsDevApiKey == null) {
+    googleMapsDevApiKey = System.getenv("BITRISEIO_ANDROID_MAPS_KEY_DEV")
+}
+
+def googleMapsProdApiKey = localProperties.getProperty('googleMaps.apiKeyProd')
+if (googleMapsProdApiKey == null) {
+    googleMapsProdApiKey = System.getenv("BITRISEIO_ANDROID_MAPS_KEY_PROD")
+}
+
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -85,7 +96,7 @@ android {
             versionNameSuffix "-dev"
             manifestPlaceholders = [
                     appName: "AllTheNews DEV",
-                    googleMapsApiKey: localProperties.getProperty('googleMaps.apiKeyDev')
+                    googleMapsApiKey: googleMapsDevApiKey
             ]
         }
 
@@ -93,7 +104,7 @@ android {
             dimension "flavor-type"
             manifestPlaceholders = [
                     appName: "AllTheNews",
-                    googleMapsApiKey: localProperties.getProperty('googleMaps.apiKeyProd')
+                    googleMapsApiKey: googleMapsProdApiKey
             ]
         }
 

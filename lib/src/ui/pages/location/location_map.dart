@@ -19,26 +19,29 @@ class LocationMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        GoogleMap(
-          initialCameraPosition: CameraPosition(
-            target: LatLng(
-              location.latitude,
-              location.longitude,
+    return Container(
+      color: Theme.of(context).backgroundColor,
+      child: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                location.latitude,
+                location.longitude,
+              ),
+              zoom: _Constants.mapZoom,
             ),
-            zoom: _Constants.mapZoom,
+            myLocationButtonEnabled: false,
+            markers: {_toMarker(context, location)},
           ),
-          myLocationButtonEnabled: false,
-          markers: {_toMarker(context, location)},
-        ),
-        LocationInfoPin(
-          leftPosition: _Constants.pinLeftPosition,
-          rightPosition: _Constants.pinRightPosition,
-          bottomPosition: _Constants.pinBottomPosition,
-          location: location,
-        ),
-      ],
+          LocationInfoPin(
+            leftPosition: _Constants.pinLeftPosition,
+            rightPosition: _Constants.pinRightPosition,
+            bottomPosition: _Constants.pinBottomPosition,
+            location: location,
+          ),
+        ],
+      ),
     );
   }
 

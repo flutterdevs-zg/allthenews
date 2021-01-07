@@ -7,3 +7,5 @@ class PermissionDeniedForeverException extends LocationException {}
 class PermissionDeniedException extends LocationException {}
 
 class LocationServiceDisabledException extends LocationException {}
+
+class UnknownException extends LocationException {}

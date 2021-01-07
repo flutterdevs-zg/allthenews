@@ -24,7 +24,6 @@ import 'package:allthenews/src/domain/authentication/authentication_repository.d
 import 'package:allthenews/src/domain/common/persistence/persistence_repository.dart';
 import 'package:allthenews/src/domain/common/usecase/get_page_use_case.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
-import 'package:allthenews/src/domain/location/get_location_use_case.dart';
 import 'package:allthenews/src/domain/location/location_resolver.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/nytimes/get_latest_news_page_use_case.dart';
@@ -171,12 +170,10 @@ void _injectNotifiers() {
 
 void _injectLocationDependencies() {
   _locator.registerFactory<LocationResolver>(() => GeolocatorLocationResolver());
-  _locator.registerFactory(() => GetLocationUseCase(_locator<LocationResolver>()));
   _locator.registerFactory<LocationErrorViewEntityMapper>(
         () => LocationErrorViewEntityLocalMapper(),
   );
   _locator.registerFactory(() => LocationNotifier(
-        _locator<GetLocationUseCase>(),
         _locator<LocationErrorViewEntityMapper>(),
         _locator<LocationResolver>(),
       ));
