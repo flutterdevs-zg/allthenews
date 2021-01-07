@@ -83,12 +83,18 @@ android {
             dimension "flavor-type"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            manifestPlaceholders = [appName: "AllTheNews DEV"]
+            manifestPlaceholders = [
+                    appName: "AllTheNews DEV",
+                    googleMapsApiKey: localProperties.getProperty('googleMaps.apiKeyDev')
+            ]
         }
 
         prod {
             dimension "flavor-type"
-            manifestPlaceholders = [appName: "AllTheNews"]
+            manifestPlaceholders = [
+                    appName: "AllTheNews",
+                    googleMapsApiKey: localProperties.getProperty('googleMaps.apiKeyProd')
+            ]
         }
 
     }

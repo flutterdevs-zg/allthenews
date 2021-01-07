@@ -36,9 +36,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "initializationError" : MessageLookupByLibrary.simpleMessage("Błąd inicjalizacji. Zrestartuj aplikację."),
     "invalidEmailError" : MessageLookupByLibrary.simpleMessage("Zły format e-maila"),
     "invalidPasswordError" : MessageLookupByLibrary.simpleMessage("Hasło do podanego e-maila jest niepoprawne"),
+    "latitude" : MessageLookupByLibrary.simpleMessage("Szerokość geograficzna"),
+    "location" : MessageLookupByLibrary.simpleMessage("Lokalizacja"),
+    "locationServiceDisabledErrorMessage" : MessageLookupByLibrary.simpleMessage("Usługa lokalizacji jest niedostępna. Włącz lokalizację"),
     "login" : MessageLookupByLibrary.simpleMessage("Zaloguj"),
     "loginTitle" : MessageLookupByLibrary.simpleMessage("Logowanie"),
     "logout" : MessageLookupByLibrary.simpleMessage("Wyloguj"),
+    "longitude" : MessageLookupByLibrary.simpleMessage("Długość geograficzna"),
     "mostEmailed" : MessageLookupByLibrary.simpleMessage("Najczęściej mailowane"),
     "mostShared" : MessageLookupByLibrary.simpleMessage("Najczęściej udostępniane"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Najczęściej oglądane"),
@@ -48,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "noInternetException" : MessageLookupByLibrary.simpleMessage("Brak połączenia sieciowego"),
     "operationNotAllowedError" : MessageLookupByLibrary.simpleMessage("Logowanie za pomocą e-maila i hasła zostało wyłączone"),
     "password" : MessageLookupByLibrary.simpleMessage("Hasło"),
+    "permissionDeniedErrorMessage" : MessageLookupByLibrary.simpleMessage("Brak uprawnień. Kliknij przycisk, aby spróbować ponownie"),
+    "permissionDeniedForeverErrorMessage" : MessageLookupByLibrary.simpleMessage("Usługa lokalizacji jest niedostępna. Przejdź do ustawień, aby udzielić pozwolenia."),
     "popular" : MessageLookupByLibrary.simpleMessage("Popularne"),
     "profile" : MessageLookupByLibrary.simpleMessage("Profil"),
     "register" : MessageLookupByLibrary.simpleMessage("Zarejestruj"),
@@ -63,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "userNotFoundError" : MessageLookupByLibrary.simpleMessage("Użytkownik o podanym e-mailu nie istnieje"),
     "version" : MessageLookupByLibrary.simpleMessage("Wersja"),
     "viewed" : MessageLookupByLibrary.simpleMessage("Wyświetlane"),
-    "weakPasswordError" : MessageLookupByLibrary.simpleMessage("Hasło jest zbyt słabe")
+    "weakPasswordError" : MessageLookupByLibrary.simpleMessage("Hasło jest zbyt słabe"),
+    "yourLocation" : MessageLookupByLibrary.simpleMessage("Twoja lokalizacja")
   };
 }
