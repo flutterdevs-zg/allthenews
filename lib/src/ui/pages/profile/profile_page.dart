@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Text(_authorizationNotifier.state.user.name),
           TextButton.icon(
             icon: const Icon(Icons.map),
-            label: const Text('Lokalizacja'),
+            label: Text(Strings.current.location),
             onPressed: _navigateToLocationScreen,
           ),
           PrimaryTextButton(
