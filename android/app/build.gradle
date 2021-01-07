@@ -23,12 +23,12 @@ if (flutterVersionName == null) {
 
 def googleMapsDevApiKey = localProperties.getProperty('googleMaps.apiKeyDev')
 if (googleMapsDevApiKey == null) {
-    googleMapsDevApiKey = System.getenv("BITRISEIO_ANDROID_MAPS_KEY_DEV")
+    googleMapsDevApiKey = System.getenv("BITRISEIO_ANDROID_MAPS_KEY_DEV") ?: ""
 }
 
 def googleMapsProdApiKey = localProperties.getProperty('googleMaps.apiKeyProd')
 if (googleMapsProdApiKey == null) {
-    googleMapsProdApiKey = System.getenv("BITRISEIO_ANDROID_MAPS_KEY_PROD")
+    googleMapsProdApiKey = System.getenv("BITRISEIO_ANDROID_MAPS_KEY_PROD") ?: ""
 }
 
 
