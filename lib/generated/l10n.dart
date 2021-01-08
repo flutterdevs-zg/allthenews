@@ -116,20 +116,20 @@ class Strings {
   }
 
   /// `Location service is not available. Please go to the settings to grant the permission.`
-  String get permissionDeniedForeverErrorMessage {
+  String get locationPermissionDeniedForeverErrorMessage {
     return Intl.message(
       'Location service is not available. Please go to the settings to grant the permission.',
-      name: 'permissionDeniedForeverErrorMessage',
+      name: 'locationPermissionDeniedForeverErrorMessage',
       desc: '',
       args: [],
     );
   }
 
   /// `Permission denied. Click the button to retry action.`
-  String get permissionDeniedErrorMessage {
+  String get locationPermissionDeniedErrorMessage {
     return Intl.message(
       'Permission denied. Click the button to retry action.',
-      name: 'permissionDeniedErrorMessage',
+      name: 'locationPermissionDeniedErrorMessage',
       desc: '',
       args: [],
     );

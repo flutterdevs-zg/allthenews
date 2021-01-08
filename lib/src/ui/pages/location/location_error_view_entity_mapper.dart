@@ -15,9 +15,9 @@ class LocationErrorViewEntityLocalMapper extends LocationErrorViewEntityMapper {
 
   String _resolveErrorMessage(Exception exception) {
     if (exception is PermissionDeniedForeverException) {
-      return Strings.current.permissionDeniedForeverErrorMessage;
+      return Strings.current.locationPermissionDeniedForeverErrorMessage;
     } else if (exception is PermissionDeniedException) {
-      return Strings.current.permissionDeniedErrorMessage;
+      return Strings.current.locationPermissionDeniedErrorMessage;
     } else if (exception is LocationServiceDisabledException) {
       return Strings.current.locationServiceDisabledErrorMessage;
     }

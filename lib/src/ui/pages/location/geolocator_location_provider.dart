@@ -1,12 +1,9 @@
 import 'package:allthenews/src/domain/location/location.dart';
-import 'package:allthenews/src/domain/location/location_resolver.dart';
+import 'package:allthenews/src/domain/location/location_provider.dart';
 import 'package:allthenews/src/domain/location/location_exception.dart' as domain;
 import 'package:geolocator/geolocator.dart';
 
-class GeolocatorLocationResolver implements LocationResolver {
-  @override
-  Future<bool> openLocationSettings() => Geolocator.openLocationSettings();
-
+class GeolocatorLocationProvider implements LocationProvider {
   @override
   Future<Location> getCurrentLocation() async {
     try {

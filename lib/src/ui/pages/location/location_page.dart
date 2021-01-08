@@ -63,7 +63,7 @@ class _LocationPageState extends State<LocationPage> {
         children: [
           if (errorViewEntity.shouldShowRetryButton)
             RetryActionContainer(
-                onRetryPressed: () => _locationNotifier.retry()),
+                onRetryPressed: () => _locationNotifier.findUserLocation()),
           const SizedBox(height: _Constants.errorWidgetVerticalSpacing),
           Text(errorViewEntity.errorMessage, textAlign: TextAlign.center),
         ],

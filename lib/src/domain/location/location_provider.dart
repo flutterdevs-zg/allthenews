@@ -1,9 +1,7 @@
 import 'package:allthenews/src/domain/location/location.dart';
 
-abstract class LocationResolver {
+abstract class LocationProvider {
 
   Future<Location> getCurrentLocation();
-
-  Future<void> openLocationSettings();
 
 }
