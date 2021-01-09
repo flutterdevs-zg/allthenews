@@ -75,6 +75,76 @@ class Strings {
     );
   }
 
+  /// `Location`
+  String get location {
+    return Intl.message(
+      'Location',
+      name: 'location',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your location`
+  String get yourLocation {
+    return Intl.message(
+      'Your location',
+      name: 'yourLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latitude`
+  String get latitude {
+    return Intl.message(
+      'Latitude',
+      name: 'latitude',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Longitude`
+  String get longitude {
+    return Intl.message(
+      'Longitude',
+      name: 'longitude',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location service is not available. Please go to the settings to grant the permission.`
+  String get locationPermissionDeniedForeverErrorMessage {
+    return Intl.message(
+      'Location service is not available. Please go to the settings to grant the permission.',
+      name: 'locationPermissionDeniedForeverErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permission denied. Click the button to retry action.`
+  String get locationPermissionDeniedErrorMessage {
+    return Intl.message(
+      'Permission denied. Click the button to retry action.',
+      name: 'locationPermissionDeniedErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location service is not available. Please turn on the location.`
+  String get locationServiceDisabledErrorMessage {
+    return Intl.message(
+      'Location service is not available. Please turn on the location.',
+      name: 'locationServiceDisabledErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dark mode`
   String get darkMode {
     return Intl.message(

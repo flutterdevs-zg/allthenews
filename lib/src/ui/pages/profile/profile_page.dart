@@ -2,6 +2,7 @@ import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/pages/authentication/authentication_page.dart';
+import 'package:allthenews/src/ui/pages/location/location_page.dart';
 import 'package:allthenews/src/ui/pages/profile/profile_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +56,11 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Text(_authorizationNotifier.state.user.email),
           Text(_authorizationNotifier.state.user.name),
+          TextButton.icon(
+            icon: const Icon(Icons.map),
+            label: Text(Strings.current.location),
+            onPressed: _navigateToLocationScreen,
+          ),
           PrimaryTextButton(
             textPadding: const EdgeInsets.symmetric(
               vertical: _Constants.buttonVerticalPadding,
@@ -67,4 +73,11 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  void _navigateToLocationScreen() => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LocationPage(),
+        ),
+      );
 }

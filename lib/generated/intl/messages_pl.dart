@@ -36,9 +36,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "initializationError" : MessageLookupByLibrary.simpleMessage("Błąd inicjalizacji. Zrestartuj aplikację."),
     "invalidEmailError" : MessageLookupByLibrary.simpleMessage("Zły format e-maila"),
     "invalidPasswordError" : MessageLookupByLibrary.simpleMessage("Hasło do podanego e-maila jest niepoprawne"),
+    "latitude" : MessageLookupByLibrary.simpleMessage("Szerokość geograficzna"),
+    "location" : MessageLookupByLibrary.simpleMessage("Lokalizacja"),
+    "locationPermissionDeniedErrorMessage" : MessageLookupByLibrary.simpleMessage("Brak uprawnień. Kliknij przycisk, aby spróbować ponownie"),
+    "locationPermissionDeniedForeverErrorMessage" : MessageLookupByLibrary.simpleMessage("Usługa lokalizacji jest niedostępna. Przejdź do ustawień, aby udzielić pozwolenia."),
+    "locationServiceDisabledErrorMessage" : MessageLookupByLibrary.simpleMessage("Usługa lokalizacji jest niedostępna. Włącz lokalizację"),
     "login" : MessageLookupByLibrary.simpleMessage("Zaloguj"),
     "loginTitle" : MessageLookupByLibrary.simpleMessage("Logowanie"),
     "logout" : MessageLookupByLibrary.simpleMessage("Wyloguj"),
+    "longitude" : MessageLookupByLibrary.simpleMessage("Długość geograficzna"),
     "mostEmailed" : MessageLookupByLibrary.simpleMessage("Najczęściej mailowane"),
     "mostShared" : MessageLookupByLibrary.simpleMessage("Najczęściej udostępniane"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Najczęściej oglądane"),
@@ -63,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "userNotFoundError" : MessageLookupByLibrary.simpleMessage("Użytkownik o podanym e-mailu nie istnieje"),
     "version" : MessageLookupByLibrary.simpleMessage("Wersja"),
     "viewed" : MessageLookupByLibrary.simpleMessage("Wyświetlane"),
-    "weakPasswordError" : MessageLookupByLibrary.simpleMessage("Hasło jest zbyt słabe")
+    "weakPasswordError" : MessageLookupByLibrary.simpleMessage("Hasło jest zbyt słabe"),
+    "yourLocation" : MessageLookupByLibrary.simpleMessage("Twoja lokalizacja")
   };
 }

@@ -21,6 +21,21 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def dartEnvironmentVariables = []
+if (project.hasProperty('dart-defines')) {
+    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+                def pair = URLDecoder.decode(entry).split('=')
+                [(pair.first()): pair.last()]
+            }
+}
+
+def secretsFile = rootProject.file('../auth/secrets.json')
+def secrets = new groovy.json.JsonSlurper().parseText(secretsFile.text)
+def googleMapsDevApiKey = dartEnvironmentVariables.androidMapsKey ?: secrets.googleMapsAndroidApiKeyDev ?: ""
+def googleMapsProdApiKey = dartEnvironmentVariables.androidMapsKey ?: secrets.googleMapsAndroidApiKeyProd ?: ""
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -83,12 +98,18 @@ android {
             dimension "flavor-type"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            manifestPlaceholders = [appName: "AllTheNews DEV"]
+            manifestPlaceholders = [
+                    appName: "AllTheNews DEV",
+                    googleMapsApiKey: googleMapsDevApiKey
+            ]
         }
 
         prod {
             dimension "flavor-type"
-            manifestPlaceholders = [appName: "AllTheNews"]
+            manifestPlaceholders = [
+                    appName: "AllTheNews",
+                    googleMapsApiKey: googleMapsProdApiKey
+            ]
         }
 
     }
@@ -100,6 +121,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:1.2.0"
     implementation 'com.google.firebase:firebase-analytics-ktx:17.4.4'
     implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
     testImplementation 'junit:junit:4.12'

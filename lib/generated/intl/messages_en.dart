@@ -36,9 +36,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "initializationError" : MessageLookupByLibrary.simpleMessage("Initialization failed. Restart the application."),
     "invalidEmailError" : MessageLookupByLibrary.simpleMessage("Wrong e-mail format"),
     "invalidPasswordError" : MessageLookupByLibrary.simpleMessage("Password is invalid for the given e-mail"),
+    "latitude" : MessageLookupByLibrary.simpleMessage("Latitude"),
+    "location" : MessageLookupByLibrary.simpleMessage("Location"),
+    "locationPermissionDeniedErrorMessage" : MessageLookupByLibrary.simpleMessage("Permission denied. Click the button to retry action."),
+    "locationPermissionDeniedForeverErrorMessage" : MessageLookupByLibrary.simpleMessage("Location service is not available. Please go to the settings to grant the permission."),
+    "locationServiceDisabledErrorMessage" : MessageLookupByLibrary.simpleMessage("Location service is not available. Please turn on the location."),
     "login" : MessageLookupByLibrary.simpleMessage("Login"),
     "loginTitle" : MessageLookupByLibrary.simpleMessage("Login"),
     "logout" : MessageLookupByLibrary.simpleMessage("Logout"),
+    "longitude" : MessageLookupByLibrary.simpleMessage("Longitude"),
     "mostEmailed" : MessageLookupByLibrary.simpleMessage("Most E-mailed"),
     "mostShared" : MessageLookupByLibrary.simpleMessage("Most Shared"),
     "mostViewed" : MessageLookupByLibrary.simpleMessage("Most Viewed"),
@@ -63,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "userNotFoundError" : MessageLookupByLibrary.simpleMessage("There is no user corresponding to the given e-mail"),
     "version" : MessageLookupByLibrary.simpleMessage("Version"),
     "viewed" : MessageLookupByLibrary.simpleMessage("Viewed"),
-    "weakPasswordError" : MessageLookupByLibrary.simpleMessage("The password is too weak")
+    "weakPasswordError" : MessageLookupByLibrary.simpleMessage("The password is too weak"),
+    "yourLocation" : MessageLookupByLibrary.simpleMessage("Your location")
   };
 }
