@@ -1,15 +1,12 @@
 
 import 'package:allthenews/src/domain/location/location.dart';
-import 'package:allthenews/src/ui/pages/location/location_info_pin.dart';
+import 'package:allthenews/src/ui/pages/location/location_info_label.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class _Constants {
   static const mapZoom = 12.0;
   static const markerId = 'markerId';
-  static const pinLeftPosition = 0.0;
-  static const pinRightPosition = 0.0;
-  static const pinBottomPosition = 0.0;
 }
 
 class LocationMap extends StatelessWidget {
@@ -32,12 +29,9 @@ class LocationMap extends StatelessWidget {
               zoom: _Constants.mapZoom,
             ),
             myLocationButtonEnabled: false,
-            markers: {_toMarker(context, location)},
+            markers: {_toMarker(location)},
           ),
-          LocationInfoPin(
-            leftPosition: _Constants.pinLeftPosition,
-            rightPosition: _Constants.pinRightPosition,
-            bottomPosition: _Constants.pinBottomPosition,
+          LocationInfoLabel(
             location: location,
           ),
         ],
@@ -45,7 +39,7 @@ class LocationMap extends StatelessWidget {
     );
   }
 
-  Marker _toMarker(BuildContext context, Location location) {
+  Marker _toMarker(Location location) {
     return Marker(
       markerId: MarkerId(_Constants.markerId),
       position: LatLng(

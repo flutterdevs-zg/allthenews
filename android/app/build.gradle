@@ -21,9 +21,20 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def googleMapsDevApiKey = localProperties.getProperty('googleMaps.apiKeyDev') ?: System.getenv("BITRISEIO_ANDROID_MAPS_KEY_DEV") ?: ""
-def googleMapsProdApiKey = localProperties.getProperty('googleMaps.apiKeyProd') ?: System.getenv("BITRISEIO_ANDROID_MAPS_KEY_PROD") ?: ""
+def dartEnvironmentVariables = []
+if (project.hasProperty('dart-defines')) {
+    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+                def pair = URLDecoder.decode(entry).split('=')
+                [(pair.first()): pair.last()]
+            }
+}
 
+def secretsFile = rootProject.file('../auth/secrets.json')
+def secrets = new groovy.json.JsonSlurper().parseText(secretsFile.text)
+def googleMapsDevApiKey = dartEnvironmentVariables.androidMapsKeyProd ?: secrets.googleMapsAndroidApiKeyDev ?: ""
+def googleMapsProdApiKey = dartEnvironmentVariables.androidMapsKeyDev ?: secrets.googleMapsAndroidApiKeyProd ?: ""
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -110,6 +121,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:1.2.0"
     implementation 'com.google.firebase:firebase-analytics-ktx:17.4.4'
     implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
     testImplementation 'junit:junit:4.12'
