@@ -1,15 +1,22 @@
 import 'dart:async';
 
 import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
+import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:allthenews/src/domain/model/user.dart' as domain;
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthenticationRepository implements AuthenticationRepository {
   final FirebaseAuth _auth;
   final ExceptionMapper _exceptionMapper;
+  final Connectivity _connectivity;
 
-  FirebaseAuthenticationRepository(this._auth, this._exceptionMapper);
+  FirebaseAuthenticationRepository(
+    this._auth,
+    this._exceptionMapper,
+    this._connectivity,
+  );
 
   @override
   Future<void> createUser(String email, String password) async {
@@ -48,7 +55,14 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
   }
 
   @override
-  Stream<domain.User> observeUserChanges() => _auth
-      .userChanges()
-      .map((User user) => user == null ? null : domain.User(email: user.email, name: user.displayName));
+  Future<Stream<domain.User>> observeUserChanges() async {
+    final connection = await _connectivity.checkConnectivity();
+    if (connection == ConnectivityResult.none) {
+      throw NetworkException();
+    } else {
+      return _auth
+          .userChanges()
+          .map((User user) => user == null ? null : domain.User(email: user.email, name: user.displayName));
+    }
+  }
 }

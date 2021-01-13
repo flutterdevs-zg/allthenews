@@ -30,9 +30,10 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   final DashboardNotifier _dashboardNotifier = inject<DashboardNotifier>();
-  final Mapper<Article, PrimaryNewsListEntity> primaryNewsViewEntityMapper = inject<Mapper<Article, PrimaryNewsListEntity>>();
-  final Mapper<Article, SecondaryNewsListEntity> secondaryNewsViewEntityMapper = inject<Mapper<Article, SecondaryNewsListEntity>>();
-
+  final Mapper<Article, PrimaryNewsListEntity> primaryNewsViewEntityMapper =
+      inject<Mapper<Article, PrimaryNewsListEntity>>();
+  final Mapper<Article, SecondaryNewsListEntity> secondaryNewsViewEntityMapper =
+      inject<Mapper<Article, SecondaryNewsListEntity>>();
 
   @override
   void initState() {
@@ -58,7 +59,7 @@ class _DashboardPageState extends State<DashboardPage> {
           } else if (viewState.viewEntity != null) {
             return _buildLoadedContent(viewState.viewEntity);
           } else if (viewState.error != null) {
-            return _buildErrorContent(providerContext);
+            return _buildErrorContent();
           } else {
             return Container();
           }
@@ -143,7 +144,7 @@ class _DashboardPageState extends State<DashboardPage> {
             .toList(),
       );
 
-  Widget _buildErrorContent(BuildContext providerContext) => RetryActionContainer(
-        onRetryPressed: () => providerContext.read<DashboardNotifier>().fetchArticles(),
+  Widget _buildErrorContent() => RetryActionContainer(
+        onRetryPressed: () => _dashboardNotifier.fetchArticles(),
       );
 }
