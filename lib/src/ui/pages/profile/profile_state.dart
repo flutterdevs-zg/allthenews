@@ -1,5 +1,4 @@
 import 'package:allthenews/src/domain/model/user.dart';
-import 'package:flutter/foundation.dart';
 
 class ProfileState {
   final bool isLoading;

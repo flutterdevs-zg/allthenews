@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
-import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_api_exception.dart';
 import 'package:allthenews/src/ui/pages/authentication/authentication_message_provider.dart';
 import 'package:allthenews/src/ui/pages/profile/profile_state.dart';
 import 'package:flutter/widgets.dart';
@@ -28,7 +28,7 @@ class ProfileNotifier extends ChangeNotifier {
       userStream.listen((user) {
         _setNotifierState(ProfileState(user: user));
       });
-    } on AuthenticationApiException catch (exception) {
+    } on ConnectionException catch (exception) {
       _setNotifierState(ProfileState(error: _authenticationMessageProvider.getMessage(exception)));
     }
   }

@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
           if (viewState.isLoading) {
             return _bindLoading();
           } else if (viewState.error != null) {
-            return _buildErrorContent(providerContext);
+            return _buildErrorContent();
           } else {
             if (viewState.user == null) {
               return _bindAuthentication();
@@ -84,6 +84,6 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
 
-  Widget _buildErrorContent(BuildContext providerContext) =>
+  Widget _buildErrorContent() =>
       RetryActionContainer(onRetryPressed: () => _profileNotifier.initUserState());
 }

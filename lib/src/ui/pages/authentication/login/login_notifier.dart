@@ -1,6 +1,6 @@
 import 'package:allthenews/src/domain/common/error/field_error.dart';
 import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
-import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_api_exception.dart';
 import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_state.dart';
 import 'package:flutter/cupertino.dart';

@@ -2,7 +2,7 @@ import 'package:allthenews/src/domain/common/error/all_the_news_exception.dart';
 
 class AuthenticationApiException extends AllTheNewsException {}
 
-class NetworkException extends AuthenticationApiException {}
+class ConnectionException extends AuthenticationApiException {}
 
 class InvalidEmailException extends AuthenticationApiException {}
 
