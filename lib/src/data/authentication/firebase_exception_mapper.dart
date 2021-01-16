@@ -1,5 +1,5 @@
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
-import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_api_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class _Constants {
@@ -21,7 +21,7 @@ class FirebaseExceptionMapper extends ExceptionMapper {
       if (error is FirebaseAuthException) {
         switch (error.code) {
           case _Constants.networkError:
-            return NetworkException();
+            return ConnectionException();
           case _Constants.invalidEmail:
             return InvalidEmailException();
           case _Constants.emailAlreadyInUse:

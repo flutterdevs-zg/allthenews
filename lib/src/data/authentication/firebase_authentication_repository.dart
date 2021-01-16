@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:allthenews/src/data/communication/connection/connection_status_provider.dart';
+import 'package:allthenews/src/domain/authentication/authentication_api_exception.dart';
 import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
+import 'package:allthenews/src/domain/communication/connection_status.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:allthenews/src/domain/model/user.dart' as domain;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,8 +11,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirebaseAuthenticationRepository implements AuthenticationRepository {
   final FirebaseAuth _auth;
   final ExceptionMapper _exceptionMapper;
+  final ConnectionStatusProvider _connectionStatusProvider;
 
-  FirebaseAuthenticationRepository(this._auth, this._exceptionMapper);
+  FirebaseAuthenticationRepository(
+    this._auth,
+    this._exceptionMapper,
+    this._connectionStatusProvider,
+  );
 
   @override
   Future<void> createUser(String email, String password) async {
@@ -48,7 +56,13 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
   }
 
   @override
-  Stream<domain.User> observeUserChanges() => _auth
-      .userChanges()
-      .map((User user) => user == null ? null : domain.User(email: user.email, name: user.displayName));
+  Future<Stream<domain.User>> observeUserChanges() async {
+    final connectionStatus = await _connectionStatusProvider.getConnectionStatus();
+    if (connectionStatus == ConnectionStatus.none) {
+      return Future.error(ConnectionException());
+    } else {
+      return _auth.userChanges().map((User user) =>
+          user == null ? null : domain.User(email: user.email, name: user.displayName));
+    }
+  }
 }

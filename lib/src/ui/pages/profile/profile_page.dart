@@ -1,6 +1,7 @@
 import 'package:allthenews/generated/l10n.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
+import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/pages/authentication/authentication_page.dart';
 import 'package:allthenews/src/ui/pages/location/location_page.dart';
 import 'package:allthenews/src/ui/pages/profile/profile_notifier.dart';
@@ -18,23 +19,25 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final ProfileNotifier _authorizationNotifier = inject<ProfileNotifier>();
+  final ProfileNotifier _profileNotifier = inject<ProfileNotifier>();
 
   @override
   void initState() {
     super.initState();
-    _authorizationNotifier.initUserState();
+    _profileNotifier.initUserState();
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-        value: _authorizationNotifier,
+        value: _profileNotifier,
         builder: (providerContext, child) {
           final viewState = providerContext.select((ProfileNotifier notifier) => notifier.state);
 
           if (viewState.isLoading) {
             return _bindLoading();
+          } else if (viewState.error != null) {
+            return _buildErrorContent();
           } else {
             if (viewState.user == null) {
               return _bindAuthentication();
@@ -54,8 +57,8 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(_authorizationNotifier.state.user.email),
-          Text(_authorizationNotifier.state.user.name),
+          Text(_profileNotifier.state.user.email),
+          Text(_profileNotifier.state.user.name),
           TextButton.icon(
             icon: const Icon(Icons.map),
             label: Text(Strings.current.location),
@@ -66,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
               vertical: _Constants.buttonVerticalPadding,
               horizontal: _Constants.buttonHorizontalPadding,
             ),
-            onPressed: () => _authorizationNotifier.logout(),
+            onPressed: () => _profileNotifier.logout(),
             text: Strings.current.logout,
           ),
         ],
@@ -80,4 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
           builder: (context) => LocationPage(),
         ),
       );
+
+  Widget _buildErrorContent() =>
+      RetryActionContainer(onRetryPressed: () => _profileNotifier.initUserState());
 }

@@ -1,5 +1,5 @@
 import 'package:allthenews/src/data/authentication/firebase_exception_mapper.dart';
-import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_api_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -26,7 +26,7 @@ void main() {
     final inputsToMatchers = {
       FirebaseAuthException(code: _Constants.tooManyRequests, message: ""): TooManyRequestsException(),
       FirebaseAuthException(code: _Constants.invalidEmail, message: ""): InvalidEmailException(),
-      FirebaseAuthException(code: _Constants.networkError, message: ""): NetworkException(),
+      FirebaseAuthException(code: _Constants.networkError, message: ""): ConnectionException(),
       FirebaseAuthException(code: _Constants.userNotFound, message: ""): UserNotFoundException(),
       FirebaseAuthException(code: _Constants.operationNotAllowed, message: ""): OperationNotAllowedException(),
       FirebaseAuthException(code: _Constants.emailAlreadyInUse, message: ""): EmailAlreadyInUseException(),

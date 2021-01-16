@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
-import 'package:allthenews/src/domain/authentication/firebase_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_api_exception.dart';
 import 'package:allthenews/src/ui/pages/authentication/authentication_message_provider.dart';
 import 'package:allthenews/src/ui/pages/profile/profile_state.dart';
 import 'package:flutter/widgets.dart';
@@ -18,11 +20,17 @@ class ProfileNotifier extends ChangeNotifier {
 
   VoidCallback returnToProfile;
 
-  void initUserState() {
-    _setNotifierState(_state.copyWithLoading(isLoading: true));
-    _authorizationRepository.observeUserChanges().listen((user) {
-      _setNotifierState(_state.copyWithUserAndLoading(user: user, isLoading: false));
-    });
+  Future<void> initUserState() async {
+    _setNotifierState(const ProfileState(isLoading: true));
+
+    try {
+      final userStream = await _authorizationRepository.observeUserChanges();
+      userStream.listen((user) {
+        _setNotifierState(ProfileState(user: user));
+      });
+    } on ConnectionException catch (exception) {
+      _setNotifierState(ProfileState(error: _authenticationMessageProvider.getMessage(exception)));
+    }
   }
 
   Future<void> logout() async {
@@ -30,10 +38,7 @@ class ProfileNotifier extends ChangeNotifier {
       await _authorizationRepository.logout();
       returnToProfile?.call();
     } on AuthenticationApiException catch (exception) {
-      _setNotifierState(_state.copyWithLoadingAndAuthError(
-        error: _authenticationMessageProvider.getMessage(exception),
-        isLoading: false,
-      ));
+      _setNotifierState(ProfileState(error: _authenticationMessageProvider.getMessage(exception)));
     }
   }
 

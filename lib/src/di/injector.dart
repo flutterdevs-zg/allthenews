@@ -12,6 +12,8 @@ import 'package:allthenews/src/data/authentication/firebase_exception_mapper.dar
 import 'package:allthenews/src/data/communication/api/api_exception_mapper.dart';
 import 'package:allthenews/src/data/communication/api/api_key_local_repository.dart';
 import 'package:allthenews/src/data/communication/api/http_client.dart';
+import 'package:allthenews/src/data/communication/connection/connection_status_provider.dart';
+import 'package:allthenews/src/data/communication/connection/connections_status_local_provider.dart';
 import 'package:allthenews/src/data/persistence/cache/cache_policy.dart';
 import 'package:allthenews/src/data/persistence/database/app_database.dart';
 import 'package:allthenews/src/data/persistence/database/article_dao.dart';
@@ -19,8 +21,8 @@ import 'package:allthenews/src/data/persistence/shared_preferences_persistence_r
 import 'package:allthenews/src/data/presentation/presentation_showing_local_repository.dart';
 import 'package:allthenews/src/data/settings/settings_local_repository.dart';
 import 'package:allthenews/src/domain/appinfo/app_info_repository.dart';
-import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
+import 'package:allthenews/src/domain/authorization/api_key_repository.dart';
 import 'package:allthenews/src/domain/common/persistence/persistence_repository.dart';
 import 'package:allthenews/src/domain/common/usecase/get_page_use_case.dart';
 import 'package:allthenews/src/domain/communication/exception_mapper.dart';
@@ -54,6 +56,7 @@ import 'package:allthenews/src/ui/pages/location/location_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
 import 'package:allthenews/src/ui/pages/profile/profile_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -71,13 +74,17 @@ void injectDependencies(Environment flavor) {
   _locator.registerSingleton<AppConfig>(AppConfig());
   _locator.registerSingleton<AppInfoRepository>(AppInfoLocalRepository());
   _locator.registerSingleton<PersistenceRepository>(SharedPreferencesPersistenceRepository());
-  _locator.registerSingleton<SettingsRepository>(SettingsLocalRepository(_locator<PersistenceRepository>()));
+  _locator.registerSingleton<SettingsRepository>(
+      SettingsLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerSingleton<PresentationShowingRepository>(
       PresentationShowingLocalRepository(_locator<PersistenceRepository>()));
   _locator.registerLazySingleton<AuthenticationRepository>(() => FirebaseAuthenticationRepository(
         _locator<FirebaseAuth>(),
         _locator<ExceptionMapper>(instanceName: _Constants.firebaseExceptionMapper),
+        _locator<ConnectionStatusProvider>(),
       ));
+  _locator.registerFactory<ConnectionStatusProvider>(
+      () => ConnectionStatusLocalProvider(Connectivity()));
   _locator.registerFactory<FirebaseInitializer>(() => FirebaseAppInitializer());
   _locator.registerFactory<FirebaseAuth>(() => FirebaseAuth.instance);
   _locator.registerFactory<CachePolicy<Article>>(() => ArticleCachePolicy());
@@ -87,7 +94,8 @@ void injectDependencies(Environment flavor) {
 }
 
 void _injectApiDependencies() {
-  _locator.registerFactory<ExceptionMapper>(() => ApiExceptionMapper(), instanceName: _Constants.apiExceptionMapper);
+  _locator.registerFactory<ExceptionMapper>(() => ApiExceptionMapper(),
+      instanceName: _Constants.apiExceptionMapper);
   _locator.registerFactory<ExceptionMapper>(() => FirebaseExceptionMapper(),
       instanceName: _Constants.firebaseExceptionMapper);
   _locator.registerSingleton<ApiKeyRepository>(ApiKeyLocalRepository());
@@ -104,7 +112,8 @@ void _injectApiDependencies() {
   ));
   _locator.registerSingleton<AppDatabase>(AppDatabase());
   _locator.registerSingleton<ArticleDao>(ArticleDao(_locator<AppDatabase>()));
-  _locator.registerSingleton<NyTimesCachedRepository>(NyTimesCachedInDbRepository(_locator<ArticleDao>()));
+  _locator.registerSingleton<NyTimesCachedRepository>(
+      NyTimesCachedInDbRepository(_locator<ArticleDao>()));
   _locator.registerSingleton<NYTimesPaginatedRepository>(NyTimesPaginatedRestRepository(
     _locator<NYTimesRepository>(),
     _locator<NyTimesCachedRepository>(),
@@ -116,8 +125,10 @@ void _injectApiDependencies() {
     _locator<CachePolicy<Article>>(),
     _locator<SettingsRepository>(),
   ));
-  _locator.registerFactory<Mapper<Article, SecondaryNewsListEntity>>(() => SecondaryNewsViewEntityMapper());
-  _locator.registerFactory<Mapper<Article, PrimaryNewsListEntity>>(() => PrimaryNewsViewEntityMapper());
+  _locator.registerFactory<Mapper<Article, SecondaryNewsListEntity>>(
+      () => SecondaryNewsViewEntityMapper());
+  _locator
+      .registerFactory<Mapper<Article, PrimaryNewsListEntity>>(() => PrimaryNewsViewEntityMapper());
   _locator.registerSingleton<GetPageUseCase<Article>>(
     GetLatestNewsPageUseCase(_locator<NYTimesPaginatedRepository>()),
     instanceName: _Constants.latestNews,
@@ -171,7 +182,7 @@ void _injectNotifiers() {
 void _injectLocationDependencies() {
   _locator.registerFactory<LocationProvider>(() => GeolocatorLocationProvider());
   _locator.registerFactory<LocationErrorViewEntityMapper>(
-        () => LocationErrorViewEntityLocalMapper(),
+    () => LocationErrorViewEntityLocalMapper(),
   );
   _locator.registerFactory(() => LocationNotifier(
         _locator<LocationErrorViewEntityMapper>(),
