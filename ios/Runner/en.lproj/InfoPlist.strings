@@ -1,0 +1,8 @@
+
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Uses location for getting user current address";
+
+"NSLocationAlwaysUsageDescription" = "Uses location for getting user current address";
+
+"NSLocationUsageDescription" = "Uses location for getting user current address";
+
+"NSLocationWhenInUseUsageDescription" = "Uses location for getting user current address";
