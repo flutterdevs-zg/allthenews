@@ -1,10 +1,10 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
 import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
-import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: NyTimesAppBar(
         title: Strings.current.settings,
         hasBackButton: true,
-        backButtonAction: () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage())),
+        backButtonAction: () => context.read<RoutePageManager>().pop(),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

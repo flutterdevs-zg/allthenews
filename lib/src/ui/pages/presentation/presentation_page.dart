@@ -1,7 +1,8 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
+import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/presentation/presentation_step.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
-import 'package:allthenews/src/ui/pages/home/home_page.dart';
 import 'package:allthenews/src/ui/pages/presentation/indicator_container.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_steps_provider.dart';
@@ -22,23 +23,51 @@ class PresentationPage extends StatefulWidget {
 }
 
 class _PresentationPageState extends State<PresentationPage> {
+  final _presentationNotifier = inject<PresentationNotifier>();
   final _controller = PageController();
   final _presentationStepsProvider = PresentationStepsProvider();
+
+  @override
+  void initState() {
+    _presentationNotifier.checkAppPresentation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            _buildPresentationHeader(context),
-            _buildPresentationContent(),
-            _buildPresentationFooter(context),
-          ],
-        ),
+        child: ChangeNotifierProvider.value(
+            value: _presentationNotifier,
+            builder: (providerContext, child) {
+              final isLoading =
+                  providerContext.select((PresentationNotifier notifier) => notifier.isLoading);
+              if (isLoading) {
+                return _buildProgressIndicator();
+              } else {
+                return _buildPage(providerContext, context);
+              }
+            }),
       ),
     );
+  }
+
+  Widget _buildPage(BuildContext providerContext, BuildContext context) {
+    final shouldShowPresentation =
+        providerContext.select((PresentationNotifier state) => state.shouldShowPresentation);
+    if (shouldShowPresentation) {
+      return Column(
+        children: [
+          _buildPresentationHeader(context),
+          _buildPresentationContent(),
+          _buildPresentationFooter(context),
+        ],
+      );
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _navigateToHomePage(context));
+      return _buildProgressIndicator();
+    }
   }
 
   Widget _buildPresentationFooter(BuildContext context) {
@@ -89,7 +118,9 @@ class _PresentationPageState extends State<PresentationPage> {
           controller: _controller,
           itemBuilder: (BuildContext context, int index) {
             final presentationSteps = _presentationStepsProvider.provide();
-            return (index < presentationSteps.length) ? _buildPresentationStep(context, presentationSteps[index]) : null;
+            return (index < presentationSteps.length)
+                ? _buildPresentationStep(context, presentationSteps[index])
+                : null;
           },
         ),
       );
@@ -126,14 +157,11 @@ class _PresentationPageState extends State<PresentationPage> {
   }
 
   void _navigateToHomePage(BuildContext context) {
-    context.read<PresentationNotifier>().completePresentation();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomePage(),
-      ),
-    );
+    _presentationNotifier.completePresentation();
+    context.read<RoutePageManager>().resetToHome();
   }
+
+  Widget _buildProgressIndicator() => const Center(child: CircularProgressIndicator());
 
   @override
   void dispose() {

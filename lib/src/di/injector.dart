@@ -49,7 +49,6 @@ import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular
 import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_message_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/home/home_page_notifier.dart';
 import 'package:allthenews/src/ui/pages/location/geolocator_location_provider.dart';
 import 'package:allthenews/src/ui/pages/location/location_error_view_entity_mapper.dart';
 import 'package:allthenews/src/ui/pages/location/location_notifier.dart';
@@ -140,8 +139,7 @@ void _injectApiDependencies() {
 }
 
 void _injectNotifiers() {
-  _locator.registerFactory(() => HomePageNotifier());
-  _locator.registerFactory(() => ThemeNotifier(_locator<SettingsRepository>()));
+  _locator.registerSingleton<ThemeNotifier>(ThemeNotifier(_locator<SettingsRepository>()));
   _locator.registerFactory(() => SettingsNotifier(
         _locator<SettingsRepository>(),
         _locator<AppInfoRepository>(),

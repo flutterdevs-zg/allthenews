@@ -1,9 +1,9 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/pages/authentication/authentication_page.dart';
-import 'package:allthenews/src/ui/pages/location/location_page.dart';
 import 'package:allthenews/src/ui/pages/profile/profile_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -77,12 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void _navigateToLocationScreen() => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LocationPage(),
-        ),
-      );
+  void _navigateToLocationScreen() => context.read<RoutePageManager>().openLocation();
 
   Widget _buildErrorContent() =>
       RetryActionContainer(onRetryPressed: () => _profileNotifier.initUserState());

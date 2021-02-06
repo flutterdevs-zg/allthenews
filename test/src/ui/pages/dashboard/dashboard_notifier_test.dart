@@ -37,7 +37,7 @@ void main() {
       'should emit loaded dashboard state when fetching articles succeeded',
       () {
         when(mockSettingsRepository.getTheme()).thenAnswer((_) async => AppTheme.light);
-        when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);
+        when(mockSettingsRepository.getPopularNewsCriterionStream()).thenAnswer((_) => Stream.value(PopularNewsCriterion.emailed));
         when(mockNYTimesReactiveRepository.getMostPopularArticlesStream()).thenAnswer((_) => Stream.value(<Article>[]));
         when(mockNYTimesReactiveRepository.getNewestArticlesStream()).thenAnswer((_) => Stream.value(<Article>[]));
 
@@ -63,7 +63,7 @@ void main() {
       'should emit loaded dashboard state when fetching articles failed',
       () {
         when(mockSettingsRepository.getTheme()).thenAnswer((_) async => AppTheme.light);
-        when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);
+        when(mockSettingsRepository.getPopularNewsCriterionStream()).thenAnswer((_) => Stream.value(PopularNewsCriterion.emailed));
         when(mockNYTimesReactiveRepository.getMostPopularArticlesStream()).thenAnswer((_) => Stream.error(UnknownException()));
         when(mockNYTimesReactiveRepository.getNewestArticlesStream()).thenAnswer((_) => Stream.value(<Article>[]));
 

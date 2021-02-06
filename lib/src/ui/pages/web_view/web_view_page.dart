@@ -1,6 +1,8 @@
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:provider/provider.dart';
 
 class WebViewPage extends StatelessWidget {
   final String url;
@@ -12,7 +14,7 @@ class WebViewPage extends StatelessWidget {
     return Scaffold(
       appBar: NyTimesAppBar(
         hasBackButton: true,
-        backButtonAction: () => Navigator.pop(context),
+        backButtonAction: () => context.read<RoutePageManager>().pop(),
       ),
       body: Builder(
         builder: (context) {

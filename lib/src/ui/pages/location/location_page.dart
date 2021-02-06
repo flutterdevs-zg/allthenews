@@ -1,4 +1,5 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
@@ -34,7 +35,7 @@ class _LocationPageState extends State<LocationPage> {
       appBar: NyTimesAppBar(
         title: Strings.current.location,
         hasBackButton: true,
-        backButtonAction: () => Navigator.pop(context),
+        backButtonAction: () => context.read<RoutePageManager>().pop(),
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: ChangeNotifierProvider.value(

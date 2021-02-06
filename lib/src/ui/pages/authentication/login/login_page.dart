@@ -1,4 +1,5 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
@@ -26,7 +27,7 @@ class _LoginPageState extends State<LoginPage> with AuthenticationErrorMessage {
   @override
   void initState() {
     super.initState();
-    _loginNotifier.returnToProfile = () => Navigator.pop(context);
+    _loginNotifier.returnToProfile = () => context.read<RoutePageManager>().pop();
 
     _emailTextController.addListener(() {
       _loginNotifier.updateEmail(_emailTextController.text);
@@ -43,7 +44,7 @@ class _LoginPageState extends State<LoginPage> with AuthenticationErrorMessage {
       appBar: NyTimesAppBar(
         title: Strings.current.loginTitle,
         hasBackButton: true,
-        backButtonAction: () => Navigator.pop(context),
+        backButtonAction: () => context.read<RoutePageManager>().pop(),
       ),
       body: ChangeNotifierProvider.value(
           value: _loginNotifier,
@@ -52,7 +53,7 @@ class _LoginPageState extends State<LoginPage> with AuthenticationErrorMessage {
 
             return WillPopScope(
               onWillPop: () {
-                Navigator.pop(context);
+                context.read<RoutePageManager>().pop();
                 return Future.value(true);
               },
               child: SingleChildScrollView(

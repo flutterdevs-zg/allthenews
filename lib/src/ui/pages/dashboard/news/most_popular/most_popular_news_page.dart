@@ -1,3 +1,4 @@
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/pagination/paginated_list_view.dart';
 import 'package:allthenews/src/ui/common/pagination/paginated_view_state.dart';
@@ -78,7 +79,7 @@ class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
           children: [
             IconButton(
               color: Theme.of(context).indicatorColor,
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.read<RoutePageManager>().pop(),
               icon: const Icon(Icons.arrow_back_ios),
             ),
             Hero(
