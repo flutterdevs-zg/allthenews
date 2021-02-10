@@ -114,6 +114,7 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 
 # secrets storage
+secrets.json
 google-services.json
 GoogleService-Info.plist
 Credentials.generated.swift

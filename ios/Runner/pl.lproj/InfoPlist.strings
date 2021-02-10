@@ -3,6 +3,6 @@
 
 "NSLocationAlwaysUsageDescription" = "Użycie lokalizacji do określenie położenia użytkownika";
 
-"NSLocationUsageDescription" = "Użycie lokalizacji do określenie położenia użytkownika";
+"NSLocationUsageDescription" = "Użycie lokalizacji do określenia położenia użytkownika";
 
 "NSLocationWhenInUseUsageDescription" = "Użycie lokalizacji do określenie położenia użytkownika";
