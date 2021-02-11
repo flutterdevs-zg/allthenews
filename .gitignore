@@ -117,3 +117,5 @@ app.*.symbols
 secrets.json
 google-services.json
 GoogleService-Info.plist
+Credentials.generated.swift
+credentials/add_credentials_to_env.sh
