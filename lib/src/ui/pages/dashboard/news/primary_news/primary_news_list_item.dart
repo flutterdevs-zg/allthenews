@@ -1,7 +1,8 @@
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/web_view/web_view_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class _Constants {
   static const imageRadius = 15.0;
@@ -52,12 +53,7 @@ class PrimaryNewsListItem extends StatelessWidget {
                   child: InkWell(
                     splashColor: _Constants.itemSplashColor,
                     highlightColor: _Constants.itemHighlightColor,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => WebViewPage(news.articleUrl),
-                      ),
-                    ),
+                    onTap: () => context.read<RoutePageManager>().openWebView(news.articleUrl),
                   ),
                 ),
               ),

@@ -1,8 +1,8 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
-import 'package:allthenews/src/ui/pages/authentication/login/login_page.dart';
-import 'package:allthenews/src/ui/pages/authentication/registration/registration_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class _Constants {
   static const loginRegistrationSpace = 30.0;
@@ -27,7 +27,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               vertical: _Constants.buttonVerticalPadding,
               horizontal: _Constants.buttonHorizontalPadding,
             ),
-            onPressed: () => _navigateTo(LoginPage()),
+            onPressed: () => context.read<RoutePageManager>().openLogin(),
             text: Strings.current.login,
           ),
           const SizedBox(height: _Constants.loginRegistrationSpace),
@@ -36,19 +36,11 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               vertical: _Constants.buttonVerticalPadding,
               horizontal: _Constants.buttonHorizontalPadding,
             ),
-            onPressed: () => _navigateTo(RegistrationPage()),
+            onPressed: () => context.read<RoutePageManager>().openRegistration(),
             text: Strings.current.register,
           ),
         ],
       ),
     );
-  }
-
-  void _navigateTo(Widget page) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => page,
-        ));
   }
 }

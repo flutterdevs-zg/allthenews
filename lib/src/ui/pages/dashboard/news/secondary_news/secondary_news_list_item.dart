@@ -1,8 +1,9 @@
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/widget/dot_separator.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
-import 'package:allthenews/src/ui/pages/web_view/web_view_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class _Constants {
   static const imageBorderRadius = 8.0;
@@ -29,12 +30,7 @@ class SecondaryNewsListItem extends StatelessWidget {
     return Material(
       color: Theme.of(context).backgroundColor,
       child: InkWell(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WebViewPage(news.articleUrl),
-          ),
-        ),
+        onTap: () => context.read<RoutePageManager>().openWebView(news.articleUrl),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: Dimens.pagePadding,

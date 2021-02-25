@@ -1,89 +1,64 @@
-import 'package:allthenews/generated/l10n.dart';
-import 'package:allthenews/src/di/injector.dart';
-import 'package:allthenews/src/ui/common/util/untranslatable_strings.dart';
-import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
-import 'package:allthenews/src/ui/pages/dashboard/dashboard_page.dart';
-import 'package:allthenews/src/ui/pages/home/home_page_notifier.dart';
-import 'package:allthenews/src/ui/pages/home/home_tab.dart';
-import 'package:allthenews/src/ui/pages/profile/profile_page.dart';
+import 'package:allthenews/src/ui/pages/home/bottom_bar_notifier.dart';
+import 'package:allthenews/src/ui/pages/home/bottom_bar_router_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
+  final BottomBarNotifier _bottomBarNotifier;
+
+  const HomePage(this._bottomBarNotifier);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final HomePageNotifier _homePageNotifier = inject<HomePageNotifier>();
+  BottomBarRouterDelegate _routerDelegate;
+  ChildBackButtonDispatcher _backButtonDispatcher;
 
-  List<HomeTab> _tabs;
+  @override
+  void initState() {
+    super.initState();
+    _routerDelegate = BottomBarRouterDelegate(widget._bottomBarNotifier);
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _tabs = _buildHomeTabs();
+    _backButtonDispatcher =
+        Router.of(context).backButtonDispatcher.createChildBackButtonDispatcher();
   }
 
-  List<HomeTab> _buildHomeTabs() {
-    return [
-      HomeTab(
-          page: DashboardPage(),
-          appBar: const NyTimesAppBar(
-            title: UntranslatableStrings.newYorkTimes,
-            hasSearchAction: true,
-            hasSettingsAction: true,
-          )),
-      HomeTab(
-          page: ProfilePage(),
-          appBar: NyTimesAppBar(
-            title: Strings.current.profile,
-          ))
-    ];
+  @override
+  void didUpdateWidget(covariant HomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _routerDelegate.bottomBarNotifier = widget._bottomBarNotifier;
   }
 
   @override
   Widget build(BuildContext context) {
+    _backButtonDispatcher.takePriority();
     return ChangeNotifierProvider.value(
-      value: _homePageNotifier,
+      value: widget._bottomBarNotifier,
       builder: (providerContext, child) {
-        final selectedPage = providerContext.select((HomePageNotifier notifier) => notifier.selectedPage);
-
+        final index = providerContext.select((BottomBarNotifier state) => state.selectedIndex);
         return Scaffold(
-          appBar: _tabs[selectedPage].appBar,
+          appBar: _routerDelegate.appBar,
           backgroundColor: Theme.of(context).backgroundColor,
           body: WillPopScope(
-              onWillPop: () {
-                if (selectedPage == 0) {
-                  return Future.value(true);
-                } else {
-                  providerContext.read<HomePageNotifier>().setSelectedPage(0);
-                  return Future.value(false);
-                }
-              },
-              child: _tabs[selectedPage].page),
+            onWillPop: () => _routerDelegate.onWillPop(),
+            child: Router(
+              routerDelegate: _routerDelegate,
+              backButtonDispatcher: _backButtonDispatcher,
+            ),
+          ),
           bottomNavigationBar: BottomNavigationBar(
-            onTap: (index) {
-              if (selectedPage != index) {
-                providerContext.read<HomePageNotifier>().setSelectedPage(index);
-              }
-            },
-            items: _buildBottomNavigationItems(),
-            currentIndex: selectedPage,
+            onTap: (index) => providerContext.read<BottomBarNotifier>().selectedIndex = index,
+            items: _routerDelegate.buildBottomNavigationItems(),
+            currentIndex: index,
           ),
         );
       },
     );
   }
-
-  List<BottomNavigationBarItem> _buildBottomNavigationItems() => [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: UntranslatableStrings.news,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.account_circle),
-          label: Strings.current.profile,
-        ),
-      ];
 }
