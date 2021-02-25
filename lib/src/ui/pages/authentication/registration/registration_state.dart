@@ -21,7 +21,7 @@ class RegistrationState {
 
   bool get canSubmit => [emailError, nameError, passwordError].every((element) => element == null);
 
-  RegistrationState copyWithLoadingAndAuthError({
+  RegistrationState copyWithLoading({
     bool isLoading,
     String authenticationError,
   }) =>
@@ -40,6 +40,7 @@ class RegistrationState {
     String emailError,
     String nameError,
     String passwordError,
+    bool isLoading
   }) =>
       RegistrationState(
         name: name,

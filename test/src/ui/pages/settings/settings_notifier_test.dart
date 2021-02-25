@@ -28,17 +28,19 @@ void main() {
       'should emit loaded settings state when fetching articles succeeded',
       () async {
         when(mockSettingsRepository.getTheme()).thenAnswer((_) async => AppTheme.light);
-        when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);
+        when(mockSettingsRepository.getPopularNewsCriterion())
+            .thenAnswer((_) async => PopularNewsCriterion.emailed);
         when(mockAppInfoRepository.getAppVersion()).thenAnswer((_) async => '1.0');
 
         settingsNotifier.verifyStateInOrder(
-          settingsNotifier.loadSettings,
-          [
+          testFunction: settingsNotifier.loadSettings,
+          matchersMethods: [
             () {
               expect(settingsNotifier.viewState.isLoading, false);
               expect(settingsNotifier.viewState.appVersion, equals('1.0'));
               expect(settingsNotifier.viewState.isDarkModeEnabled, false);
-              expect(settingsNotifier.viewState.selectedPopularNewsCriterion, equals(PopularNewsCriterion.emailed));
+              expect(settingsNotifier.viewState.selectedPopularNewsCriterion,
+                  equals(PopularNewsCriterion.emailed));
             },
           ],
         );

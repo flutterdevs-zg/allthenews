@@ -50,6 +50,7 @@ class LoginState {
   LoginState copyWithFieldsErrors({
     String emailError,
     String passwordError,
+    bool isLoading
   }) =>
       LoginState(
         isLoading: isLoading,

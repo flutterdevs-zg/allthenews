@@ -42,8 +42,8 @@ void main() {
         when(mockNYTimesReactiveRepository.getNewestArticlesStream()).thenAnswer((_) => Stream.value(<Article>[]));
 
         dashboardNotifier.verifyStateInOrder(
-          dashboardNotifier.fetchArticles,
-          [
+          testFunction: dashboardNotifier.fetchArticles,
+          matchersMethods: [
             () {
               expect(dashboardNotifier.state.isLoading, true);
               expect(dashboardNotifier.state.viewEntity, isNull);
@@ -63,13 +63,16 @@ void main() {
       'should emit loaded dashboard state when fetching articles failed',
       () {
         when(mockSettingsRepository.getTheme()).thenAnswer((_) async => AppTheme.light);
-        when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);
-        when(mockNYTimesReactiveRepository.getMostPopularArticlesStream()).thenAnswer((_) => Stream.error(UnknownException()));
-        when(mockNYTimesReactiveRepository.getNewestArticlesStream()).thenAnswer((_) => Stream.value(<Article>[]));
+        when(mockSettingsRepository.getPopularNewsCriterion())
+            .thenAnswer((_) async => PopularNewsCriterion.emailed);
+        when(mockNYTimesReactiveRepository.getMostPopularArticlesStream())
+            .thenAnswer((_) => Stream.error(UnknownException()));
+        when(mockNYTimesReactiveRepository.getNewestArticlesStream())
+            .thenAnswer((_) => Stream.value(<Article>[]));
 
         dashboardNotifier.verifyStateInOrder(
-          dashboardNotifier.fetchArticles,
-          [
+          testFunction: dashboardNotifier.fetchArticles,
+          matchersMethods: [
             () {
               expect(dashboardNotifier.state.isLoading, true);
               expect(dashboardNotifier.state.viewEntity, isNull);

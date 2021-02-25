@@ -1,18 +1,19 @@
-import 'package:allthenews/src/domain/common/error/field_error.dart';
-import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
 import 'package:allthenews/src/domain/authentication/authentication_api_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
+import 'package:allthenews/src/domain/common/error/field_error.dart';
 import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class LoginNotifier extends ChangeNotifier {
   final AuthenticationRepository _authenticationRepository;
-  final MessageProvider _authenticationMessageProvider;
+  final MessageProvider _authenticationErrorMessageProvider;
   final MessageProvider _fieldErrorMessageProvider;
 
   LoginNotifier(
     this._authenticationRepository,
-    this._authenticationMessageProvider,
+    this._authenticationErrorMessageProvider,
     this._fieldErrorMessageProvider,
   );
 
@@ -25,6 +26,8 @@ class LoginNotifier extends ChangeNotifier {
   VoidCallback returnToProfile;
 
   void validateFieldsAndSignIn() {
+    _setNotifierState(_state.copyWithLoading(isLoading: true));
+
     _validateFields(
       onInvalid: () => notifyListeners(),
       onValid: () => _signIn(),
@@ -32,16 +35,13 @@ class LoginNotifier extends ChangeNotifier {
   }
 
   Future<void> _signIn() async {
-    _setNotifierState(_state.copyWithLoading(isLoading: true));
-
     try {
       await _authenticationRepository.signIn(_state.email, _state.password);
-      _setNotifierState(_state.copyWithLoading(isLoading: false));
+      _setNotifierState(const LoginState());
       returnToProfile?.call();
     } on AuthenticationApiException catch (exception) {
-      _setNotifierState(_state.copyWithLoadingAndAuthError(
-        authenticationError: _authenticationMessageProvider.getMessage(exception),
-        isLoading: false,
+      _setNotifierState(LoginState(
+        authenticationError: _authenticationErrorMessageProvider.getMessage(exception),
       ));
     }
   }
@@ -50,6 +50,7 @@ class LoginNotifier extends ChangeNotifier {
     _state = _state.copyWithFieldsErrors(
       emailError: _state.email.isEmpty ? emptyFieldError : null,
       passwordError: _state.password.isEmpty ? emptyFieldError : null,
+      isLoading: false,
     );
 
     _state.canSubmit ? onValid() : onInvalid();

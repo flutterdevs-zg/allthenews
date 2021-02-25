@@ -37,29 +37,33 @@ void main() {
     test(
       'should emit loaded first page of most popular articles',
       () async {
-        when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);
+        when(mockSettingsRepository.getPopularNewsCriterion())
+            .thenAnswer((_) async => PopularNewsCriterion.emailed);
         when(mockGetPageUseCase(any)).thenAnswer((_) async => []);
 
         mostPopularNewsNotifier.verifyStateInOrder(
-          mostPopularNewsNotifier.loadFirstPage,
-          [
+          testFunction: mostPopularNewsNotifier.loadFirstPage,
+          matchersMethods: [
             () {
               expect(mostPopularNewsNotifier.state.isLoading, true);
               expect(mostPopularNewsNotifier.state.paginatedItems, isNull);
               expect(mostPopularNewsNotifier.state.error, isNull);
-              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle, isEmpty);
+              expect(
+                  mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle, isEmpty);
             },
             () {
               expect(mostPopularNewsNotifier.state.isLoading, true);
               expect(mostPopularNewsNotifier.state.paginatedItems, isNull);
               expect(mostPopularNewsNotifier.state.error, isNull);
-              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle, isNotEmpty);
+              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle,
+                  isNotEmpty);
             },
             () {
               expect(mostPopularNewsNotifier.state.isLoading, false);
               expect(mostPopularNewsNotifier.state.paginatedItems, isNotNull);
               expect(mostPopularNewsNotifier.state.error, isNull);
-              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle, isNotEmpty);
+              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle,
+                  isNotEmpty);
             },
           ],
         );
@@ -69,29 +73,33 @@ void main() {
     test(
       'should emit error state when fetching news failed',
       () async {
-        when(mockSettingsRepository.getPopularNewsCriterion()).thenAnswer((_) async => PopularNewsCriterion.emailed);
+        when(mockSettingsRepository.getPopularNewsCriterion())
+            .thenAnswer((_) async => PopularNewsCriterion.emailed);
         when(mockGetPageUseCase(any)).thenAnswer((_) async => Future.error(UnknownException()));
 
         mostPopularNewsNotifier.verifyStateInOrder(
-          mostPopularNewsNotifier.loadFirstPage,
-          [
+          testFunction: mostPopularNewsNotifier.loadFirstPage,
+          matchersMethods: [
             () {
               expect(mostPopularNewsNotifier.state.isLoading, true);
               expect(mostPopularNewsNotifier.state.paginatedItems, isNull);
               expect(mostPopularNewsNotifier.state.error, isNull);
-              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle, isEmpty);
+              expect(
+                  mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle, isEmpty);
             },
             () {
               expect(mostPopularNewsNotifier.state.isLoading, true);
               expect(mostPopularNewsNotifier.state.paginatedItems, isNull);
               expect(mostPopularNewsNotifier.state.error, isNull);
-              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle, isNotEmpty);
+              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle,
+                  isNotEmpty);
             },
-                () {
+            () {
               expect(mostPopularNewsNotifier.state.isLoading, false);
               expect(mostPopularNewsNotifier.state.paginatedItems, isNull);
               expect(mostPopularNewsNotifier.state.error, isA<UnknownException>());
-              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle, isNotEmpty);
+              expect(mostPopularNewsNotifier.mostPopularViewState.mostPopularNewsPageTitle,
+                  isNotEmpty);
             },
           ],
         );
