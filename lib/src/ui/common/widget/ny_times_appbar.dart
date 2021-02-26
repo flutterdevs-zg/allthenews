@@ -1,7 +1,8 @@
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
 import 'package:allthenews/src/ui/common/widget/primary_icon_button.dart';
-import 'package:allthenews/src/ui/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class _Constants {
   static const appBarActionsVerticalPadding = 11.0;
@@ -88,14 +89,7 @@ class _NyTimesAppBarState extends State<NyTimesAppBar> {
         ),
         child: PrimaryIconButton(
           iconData: Icons.settings,
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SettingsPage(),
-              ),
-            );
-          },
+          onPressed: () => context.read<RoutePageManager>().openSettings(),
         ),
       );
 }

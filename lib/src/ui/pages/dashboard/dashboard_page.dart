@@ -1,4 +1,5 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/ui/common/util/dimens.dart';
@@ -6,8 +7,6 @@ import 'package:allthenews/src/ui/common/util/mapper.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/common/widget/retry_action_container.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_view_entity.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_page.dart';
-import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_page.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +78,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 _buildNewsSectionHeader(
                   title: homePageViewEntity.popularNewsTitle,
-                  routeBuilder: (context) => MostPopularNewsListPage(),
+                  navigationAction: () => context.read<RoutePageManager>().openMostPopularNews(),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 PrimaryNewsListView(
@@ -91,7 +90,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: _Constants.sectionSpacing),
                 _buildNewsSectionHeader(
                   title: Strings.current.newest,
-                  routeBuilder: (context) => LatestNewsListPage(),
+                    navigationAction: () => context.read<RoutePageManager>().openLatestNews(),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 _buildSecondaryNewsItems(homePageViewEntity.newestArticles),
@@ -105,7 +104,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _buildNewsSectionHeader({
     @required String title,
-    @required WidgetBuilder routeBuilder,
+    @required VoidCallback navigationAction,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimens.pagePadding),
@@ -123,12 +122,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           PrimaryTextButton(
             text: Strings.current.showAll,
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: routeBuilder,
-              ),
-            ),
+            onPressed: () => navigationAction(),
           ),
         ],
       ),

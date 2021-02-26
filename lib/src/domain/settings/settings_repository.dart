@@ -7,6 +7,8 @@ abstract class SettingsRepository {
 
   Future<PopularNewsCriterion> getPopularNewsCriterion();
 
+  Stream<PopularNewsCriterion> getPopularNewsCriterionStream();
+
   Future<void> saveTheme(AppTheme theme);
 
   Future<AppTheme> getTheme();

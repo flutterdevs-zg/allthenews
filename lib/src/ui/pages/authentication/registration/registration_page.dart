@@ -1,4 +1,5 @@
 import 'package:allthenews/generated/l10n.dart';
+import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
@@ -29,7 +30,7 @@ class _RegistrationPageState extends State<RegistrationPage> with Authentication
   @override
   void initState() {
     super.initState();
-    _registrationNotifier.returnToProfile = () => Navigator.pop(context);
+    _registrationNotifier.returnToProfile = () => context.read<RoutePageManager>().pop();
     _emailTextController.addListener(() {
       _registrationNotifier.updateEmail(_emailTextController.text);
     });
@@ -48,7 +49,7 @@ class _RegistrationPageState extends State<RegistrationPage> with Authentication
       appBar: NyTimesAppBar(
         title: Strings.current.registrationTitle,
         hasBackButton: true,
-        backButtonAction: () => Navigator.pop(context),
+        backButtonAction: () => context.read<RoutePageManager>().pop(),
       ),
       body: ChangeNotifierProvider.value(
         value: _registrationNotifier,
@@ -57,7 +58,7 @@ class _RegistrationPageState extends State<RegistrationPage> with Authentication
 
           return WillPopScope(
             onWillPop: () {
-              Navigator.pop(context);
+              context.read<RoutePageManager>().pop();
               return Future.value(true);
             },
             child: SingleChildScrollView(

@@ -31,18 +31,23 @@ class DashboardNotifier extends ChangeNotifier {
     _setNotifierState(const DashboardViewState(isLoading: true));
     _streamSubscription = Rx.combineLatest(
       [
-        _nyTimesReactiveRepository.getMostPopularArticlesStream(),
         _nyTimesReactiveRepository.getNewestArticlesStream(),
-        Stream.fromFuture(_settingsRepository.getPopularNewsCriterion()),
+        _settingsRepository.getPopularNewsCriterionStream().flatMap((criterion) =>
+            _nyTimesReactiveRepository
+                .getMostPopularArticlesStream()
+                .map((articles) => [articles, criterion]))
       ],
       (data) => DashboardViewState(
         viewEntity: DashboardViewEntity(
-          mostPopularArticles: data[0] as List<Article>,
-          newestArticles: data[1] as List<Article>,
-          popularNewsTitle: _popularNewsCriterionMessageMapper.map(data[2] as PopularNewsCriterion),
+          newestArticles: data[0] as List<Article>,
+          mostPopularArticles: data[1][0] as List<Article>,
+          popularNewsTitle:
+              _popularNewsCriterionMessageMapper.map(data[1][1] as PopularNewsCriterion),
         ),
       ),
-    ).handleError((error) => _onFetchError(error)).listen((loadedState) => _setNotifierState(loadedState));
+    )
+        .handleError((error) => _onFetchError(error))
+        .listen((loadedState) => _setNotifierState(loadedState));
   }
 
   @override
