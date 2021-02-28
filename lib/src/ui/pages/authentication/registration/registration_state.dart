@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class RegistrationState {
   final String name;
   final String email;
@@ -21,9 +23,20 @@ class RegistrationState {
 
   bool get canSubmit => [emailError, nameError, passwordError].every((element) => element == null);
 
+  RegistrationState copyWithLoading({@required bool isLoading}) => RegistrationState(
+        name: name,
+        email: email,
+        password: password,
+        isLoading: isLoading,
+        nameError: nameError,
+        passwordError: passwordError,
+        emailError: emailError,
+        authenticationError: authenticationError,
+      );
+
   RegistrationState copyWithLoadingAndAuthError({
-    bool isLoading,
-    String authenticationError,
+    @required bool isLoading,
+    @required String authenticationError,
   }) =>
       RegistrationState(
         name: name,
@@ -37,9 +50,9 @@ class RegistrationState {
       );
 
   RegistrationState copyWithFieldsError({
-    String emailError,
-    String nameError,
-    String passwordError,
+    @required String emailError,
+    @required String nameError,
+    @required String passwordError,
   }) =>
       RegistrationState(
         name: name,
@@ -52,51 +65,30 @@ class RegistrationState {
         authenticationError: authenticationError,
       );
 
-  RegistrationState copyWithNameAndClearError({
-    String name,
-    String authenticationError,
-    String nameError,
-  }) =>
-      RegistrationState(
+  RegistrationState copyWithNameAndClearError({@required String name}) => RegistrationState(
         name: name,
         email: email,
         password: password,
         isLoading: isLoading,
-        nameError: nameError,
         passwordError: passwordError,
         emailError: emailError,
-        authenticationError: authenticationError,
       );
 
-  RegistrationState copyWithEmailAndClearError({
-    String email,
-    String authenticationError,
-    String emailError,
-  }) =>
-      RegistrationState(
+  RegistrationState copyWithEmailAndClearError({@required String email}) => RegistrationState(
         name: name,
         email: email,
         password: password,
         isLoading: isLoading,
         nameError: nameError,
         passwordError: passwordError,
-        emailError: emailError,
-        authenticationError: authenticationError,
       );
 
-  RegistrationState copyWithPasswordAndClearError({
-    String password,
-    String authenticationError,
-    String passwordError,
-  }) =>
-      RegistrationState(
+  RegistrationState copyWithPasswordAndClearError({@required String password}) => RegistrationState(
         name: name,
         email: email,
         password: password,
         isLoading: isLoading,
         nameError: nameError,
-        passwordError: passwordError,
         emailError: emailError,
-        authenticationError: authenticationError,
       );
 }

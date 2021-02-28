@@ -1,5 +1,5 @@
-import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
 import 'package:allthenews/src/domain/authentication/authentication_api_exception.dart';
+import 'package:allthenews/src/domain/authentication/authentication_repository.dart';
 import 'package:allthenews/src/domain/common/error/field_error.dart';
 import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/registration/registration_state.dart';
@@ -32,28 +32,30 @@ class RegistrationNotifier extends ChangeNotifier {
   }
 
   Future<void> _createUser() async {
-    _setNotifierState(_state.copyWithLoadingAndAuthError(isLoading: true));
+    _setNotifierState(_state.copyWithLoading(isLoading: true));
     try {
       await _authenticationRepository.createUser(_state.email, _state.password);
       _updateUserName(_state.name);
     } on AuthenticationApiException catch (exception) {
-      _setNotifierState(_state.copyWithLoadingAndAuthError(
-        authenticationError: _authenticationMessageProvider.getMessage(exception),
-        isLoading: false,
-      ));
+      _setNotifierState(
+        _state.copyWithLoadingAndAuthError(
+            authenticationError: _authenticationMessageProvider.getMessage(exception),
+            isLoading: false),
+      );
     }
   }
 
   Future<void> _updateUserName(String name) async {
     try {
       await _authenticationRepository.updateUser(name);
-      _setNotifierState(_state.copyWithLoadingAndAuthError(isLoading: false));
+      _setNotifierState(const RegistrationState());
       returnToProfile?.call();
     } on AuthenticationApiException catch (exception) {
-      _setNotifierState(_state.copyWithLoadingAndAuthError(
-        authenticationError: _authenticationMessageProvider.getMessage(exception),
-        isLoading: false,
-      ));
+      _setNotifierState(
+        _state.copyWithLoadingAndAuthError(
+            authenticationError: _authenticationMessageProvider.getMessage(exception),
+            isLoading: false),
+      );
     }
   }
 

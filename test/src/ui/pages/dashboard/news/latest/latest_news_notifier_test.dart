@@ -24,8 +24,8 @@ void main() {
       when(mockGetPageUseCase(any)).thenAnswer((_) async => []);
 
       latestNewsNotifier.verifyStateInOrder(
-        latestNewsNotifier.loadFirstPage,
-        [
+        testFunction: latestNewsNotifier.loadFirstPage,
+        matchersMethods: [
           () {
             expect(latestNewsNotifier.state.isLoading, true);
             expect(latestNewsNotifier.state.paginatedItems, isNull);
@@ -46,8 +46,8 @@ void main() {
         when(mockGetPageUseCase(any)).thenAnswer((_) async => Future.error(UnknownException()));
 
         latestNewsNotifier.verifyStateInOrder(
-          latestNewsNotifier.loadFirstPage,
-          [
+          testFunction: latestNewsNotifier.loadFirstPage,
+          matchersMethods: [
             () {
               expect(latestNewsNotifier.state.isLoading, true);
               expect(latestNewsNotifier.state.paginatedItems, isNull);

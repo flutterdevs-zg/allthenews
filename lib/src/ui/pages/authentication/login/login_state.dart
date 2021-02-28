@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class LoginState {
   final bool isLoading;
   final String authenticationError;
@@ -17,7 +19,7 @@ class LoginState {
     this.authenticationError,
   });
 
-  LoginState copyWithLoading({bool isLoading}) => LoginState(
+  LoginState copyWithLoading({@required bool isLoading}) => LoginState(
         isLoading: isLoading,
         authenticationError: authenticationError,
         email: email,
@@ -26,7 +28,11 @@ class LoginState {
         passwordError: passwordError,
       );
 
-  LoginState copyWithLoadingAndAuthError({bool isLoading, String authenticationError}) => LoginState(
+  LoginState copyWithLoadingAndAuthError({
+    @required bool isLoading,
+    @required String authenticationError,
+  }) =>
+      LoginState(
         isLoading: isLoading,
         authenticationError: authenticationError,
         email: email,
@@ -35,21 +41,21 @@ class LoginState {
         passwordError: passwordError,
       );
 
-  LoginState copyWithEmailAndClearErrors({String email}) => LoginState(
+  LoginState copyWithEmailAndClearErrors({@required String email}) => LoginState(
         isLoading: isLoading,
         email: email,
         password: password,
       );
 
-  LoginState copyWithPasswordAndClearErrors({String password}) => LoginState(
+  LoginState copyWithPasswordAndClearErrors({@required String password}) => LoginState(
         isLoading: isLoading,
         email: email,
         password: password,
       );
 
   LoginState copyWithFieldsErrors({
-    String emailError,
-    String passwordError,
+    @required String emailError,
+    @required String passwordError,
   }) =>
       LoginState(
         isLoading: isLoading,

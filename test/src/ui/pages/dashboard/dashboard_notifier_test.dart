@@ -42,8 +42,8 @@ void main() {
         when(mockNYTimesReactiveRepository.getNewestArticlesStream()).thenAnswer((_) => Stream.value(<Article>[]));
 
         dashboardNotifier.verifyStateInOrder(
-          dashboardNotifier.fetchArticles,
-          [
+          testFunction: dashboardNotifier.fetchArticles,
+          matchersMethods: [
             () {
               expect(dashboardNotifier.state.isLoading, true);
               expect(dashboardNotifier.state.viewEntity, isNull);
@@ -68,8 +68,8 @@ void main() {
         when(mockNYTimesReactiveRepository.getNewestArticlesStream()).thenAnswer((_) => Stream.value(<Article>[]));
 
         dashboardNotifier.verifyStateInOrder(
-          dashboardNotifier.fetchArticles,
-          [
+          testFunction: dashboardNotifier.fetchArticles,
+          matchersMethods: [
             () {
               expect(dashboardNotifier.state.isLoading, true);
               expect(dashboardNotifier.state.viewEntity, isNull);
