@@ -23,6 +23,9 @@ void main() {
   MockConnectionStatusProvider mockConnectionStatusProvider;
   AuthenticationRepository authenticationRepository;
 
+  const testEmail = "email";
+  const testPassword = "password";
+
   setUp(() {
     mockFirebaseAuth = MockFirebaseAuth();
     mockExceptionMapper = MockExceptionMapper();
@@ -36,30 +39,32 @@ void main() {
 
   group("firebase auth test", () {
     test("creates an user successfully", () {
-      when(mockFirebaseAuth.createUserWithEmailAndPassword(email: "email", password: "password"))
+      when(mockFirebaseAuth.createUserWithEmailAndPassword(
+              email: testEmail, password: testPassword))
           .thenAnswer((realInvocation) => Future.value());
 
-      authenticationRepository.createUser("email", "password");
+      authenticationRepository.createUser(testEmail, testPassword);
       verifyZeroInteractions(mockExceptionMapper);
     });
 
     test("signs in successfully", () {
-      when(mockFirebaseAuth.signInWithEmailAndPassword(email: "email", password: "password"))
+      when(mockFirebaseAuth.signInWithEmailAndPassword(email: testEmail, password: testPassword))
           .thenAnswer((_) => Future.value());
 
-      authenticationRepository.signIn("email", "password");
+      authenticationRepository.signIn(testEmail, testPassword);
       verifyZeroInteractions(mockExceptionMapper);
     });
 
     test("throws error when signing in fails", () {
       final firebaseException = FirebaseAuthException(message: "no connection");
-      when(mockFirebaseAuth.signInWithEmailAndPassword(email: "email", password: "password"))
+      when(mockFirebaseAuth.signInWithEmailAndPassword(email: testEmail, password: testPassword))
           .thenAnswer((_) => Future.error(firebaseException));
 
-      when(mockExceptionMapper.toDomainException(firebaseException)).thenReturn(ConnectionException());
+      when(mockExceptionMapper.toDomainException(firebaseException))
+          .thenReturn(ConnectionException());
 
-      expect(authenticationRepository.signIn("email", "password"), throwsA(isInstanceOf<ConnectionException>()));
-
+      expect(authenticationRepository.signIn(testEmail, testPassword),
+          throwsA(isInstanceOf<ConnectionException>()));
     });
 
     test("updates user successfully", () {
@@ -69,7 +74,7 @@ void main() {
 
       authenticationRepository.updateUser(testUserName);
       verify(testUser.updateProfile(displayName: testUserName)).called(1);
-      verifyNoMoreInteractions(mockExceptionMapper);
+      verifyZeroInteractions(mockExceptionMapper);
     });
 
     test("gets user when observing the stream", () async {
@@ -77,8 +82,8 @@ void main() {
       when(mockConnectionStatusProvider.getConnectionStatus()).thenAnswer((answer) {
         return Future.value(ConnectionStatus.mobile);
       });
-
       when(mockFirebaseAuth.userChanges()).thenAnswer((_) => Stream.value(testUser));
+
       final userStream = await authenticationRepository.observeUserChanges();
 
       expect(userStream, emits(isInstanceOf<domain.User>()));
@@ -89,9 +94,9 @@ void main() {
         return Future.value(ConnectionStatus.none);
       });
 
-      expect(authenticationRepository.observeUserChanges,
-          throwsA(isInstanceOf<ConnectionException>()));
+      final userStream = authenticationRepository.observeUserChanges;
 
+      expect(userStream, throwsA(isInstanceOf<ConnectionException>()));
       verifyZeroInteractions(mockFirebaseAuth);
     });
   });

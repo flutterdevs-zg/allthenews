@@ -26,8 +26,6 @@ class LoginNotifier extends ChangeNotifier {
   VoidCallback returnToProfile;
 
   void validateFieldsAndSignIn() {
-    _setNotifierState(_state.copyWithLoading(isLoading: true));
-
     _validateFields(
       onInvalid: () => notifyListeners(),
       onValid: () => _signIn(),
@@ -35,14 +33,17 @@ class LoginNotifier extends ChangeNotifier {
   }
 
   Future<void> _signIn() async {
+    _setNotifierState(_state.copyWithLoading(isLoading: true));
     try {
       await _authenticationRepository.signIn(_state.email, _state.password);
       _setNotifierState(const LoginState());
       returnToProfile?.call();
     } on AuthenticationApiException catch (exception) {
-      _setNotifierState(LoginState(
-        authenticationError: _authenticationErrorMessageProvider.getMessage(exception),
-      ));
+      _setNotifierState(
+        _state.copyWithLoadingAndAuthError(
+            authenticationError: _authenticationErrorMessageProvider.getMessage(exception),
+            isLoading: false),
+      );
     }
   }
 
@@ -50,7 +51,6 @@ class LoginNotifier extends ChangeNotifier {
     _state = _state.copyWithFieldsErrors(
       emailError: _state.email.isEmpty ? emptyFieldError : null,
       passwordError: _state.password.isEmpty ? emptyFieldError : null,
-      isLoading: false,
     );
 
     _state.canSubmit ? onValid() : onInvalid();

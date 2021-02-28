@@ -19,6 +19,10 @@ void main() {
   MockAuthenticationMessageProvider mockAuthenticationMessageProvider;
   MockFieldErrorMessageProvider mockFieldErrorMessageProvider;
 
+  const testErrorMessage = "error";
+  const testEmail = "email";
+  const testPassword = "password";
+
   setUp(() {
     mockAuthenticationRepository = MockAuthenticationRepository();
     mockAuthenticationMessageProvider = MockAuthenticationMessageProvider();
@@ -32,8 +36,8 @@ void main() {
 
   group("login notifier test group", () {
     test("should log in successfully", () {
-      loginNotifier.updateEmail("email");
-      loginNotifier.updatePassword("password");
+      loginNotifier.updateEmail(testEmail);
+      loginNotifier.updatePassword(testPassword);
 
       when(mockAuthenticationRepository.signIn(any, any)).thenAnswer((_) => Future.value());
 
@@ -42,11 +46,20 @@ void main() {
         matchersMethods: [
           () {
             expect(loginNotifier.state.isLoading, true);
+            expect(loginNotifier.state.authenticationError, null);
+            expect(loginNotifier.state.emailError, null);
+            expect(loginNotifier.state.passwordError, null);
+            expect(loginNotifier.state.email, testEmail);
+            expect(loginNotifier.state.password, testPassword);
           },
           () {
-            verify(mockAuthenticationRepository.signIn(any, any)).called(1);
+            verify(mockAuthenticationRepository.signIn(testEmail, testPassword));
             expect(loginNotifier.state.isLoading, false);
             expect(loginNotifier.state.authenticationError, null);
+            expect(loginNotifier.state.emailError, null);
+            expect(loginNotifier.state.passwordError, null);
+            expect(loginNotifier.state.email, "");
+            expect(loginNotifier.state.password, "");
 
             verifyZeroInteractions(mockAuthenticationMessageProvider);
             verifyZeroInteractions(mockFieldErrorMessageProvider);
@@ -56,44 +69,51 @@ void main() {
     });
 
     test('should set validation error when credentials fields are empty', () {
-      const errorMessage = "blad";
-      when(mockFieldErrorMessageProvider.getMessage(any)).thenReturn(errorMessage);
+      when(mockFieldErrorMessageProvider.getMessage(any)).thenReturn(testErrorMessage);
 
       loginNotifier.verifyStateInOrder(
         testFunction: loginNotifier.validateFieldsAndSignIn,
         matchersMethods: [
           () {
-            expect(loginNotifier.state.isLoading, true);
-          },
-          () {
             verifyZeroInteractions(mockAuthenticationRepository);
             expect(loginNotifier.state.isLoading, false);
-            expect(loginNotifier.state.passwordError, errorMessage);
-            expect(loginNotifier.state.emailError, errorMessage);
+            expect(loginNotifier.state.authenticationError, null);
+            expect(loginNotifier.state.passwordError, testErrorMessage);
+            expect(loginNotifier.state.emailError, testErrorMessage);
+            expect(loginNotifier.state.email, "");
+            expect(loginNotifier.state.password, "");
           }
         ],
       );
     });
 
     test('should return error when signing in', () {
-      const errorMessage = "blad";
-      loginNotifier.updatePassword("mock");
-      loginNotifier.updateEmail("mock");
+      loginNotifier.updatePassword(testPassword);
+      loginNotifier.updateEmail(testEmail);
 
       when(mockAuthenticationRepository.signIn(any, any))
           .thenAnswer((_) async => Future.error(ConnectionException()));
-      when(mockAuthenticationMessageProvider.getMessage(any)).thenReturn(errorMessage);
+      when(mockAuthenticationMessageProvider.getMessage(any)).thenReturn(testErrorMessage);
 
       loginNotifier.verifyStateInOrder(
         testFunction: loginNotifier.validateFieldsAndSignIn,
         matchersMethods: [
           () {
             expect(loginNotifier.state.isLoading, true);
+            expect(loginNotifier.state.authenticationError, null);
+            expect(loginNotifier.state.passwordError, null);
+            expect(loginNotifier.state.emailError, null);
+            expect(loginNotifier.state.email, testEmail);
+            expect(loginNotifier.state.password, testPassword);
           },
           () {
-            verify(mockAuthenticationRepository.signIn(any, any));
-            expect(loginNotifier.state.authenticationError, errorMessage);
+            verify(mockAuthenticationRepository.signIn(testEmail, testPassword));
             expect(loginNotifier.state.isLoading, false);
+            expect(loginNotifier.state.authenticationError, testErrorMessage);
+            expect(loginNotifier.state.passwordError, null);
+            expect(loginNotifier.state.emailError, null);
+            expect(loginNotifier.state.email, testEmail);
+            expect(loginNotifier.state.password, testPassword);
           }
         ],
       );
