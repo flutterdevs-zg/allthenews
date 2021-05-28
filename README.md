@@ -1,16 +1,20 @@
-# allthenews
+### allthenews
 
-Combined news from different apis
+Flutter application displaying most popular news from [NY Times API](https://developer.nytimes.com/apis). There are three types of news popularity available:
+- viewed
+- emailed
+- shared
 
-## Getting Started
+The application serves as a learning environment and is not intended for commercial use.
 
-This project is a starting point for a Flutter application.
+## Key points:
 
-A few resources to get you started if this is your first Flutter project:
+-  the application uses [provider](https://pub.dev/packages/provider) pattern with a single state per screen 
+-  navigation is handled using Navigator 2.0
+-  local cache - [moor](https://pub.dev/packages/moor_flutter)
+-  in app firebase e-mail authentication
+-  dark mode support
+-  internationalization - currently Polish and English languages
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
