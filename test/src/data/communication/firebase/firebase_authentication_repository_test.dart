@@ -56,7 +56,7 @@ void main() {
     });
 
     test("throws error when signing in fails", () {
-      final firebaseException = FirebaseAuthException(message: "no connection");
+      final firebaseException = FirebaseAuthException(message: "no connection", code: "");
       when(mockFirebaseAuth.signInWithEmailAndPassword(email: testEmail, password: testPassword))
           .thenAnswer((_) => Future.error(firebaseException));
 

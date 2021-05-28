@@ -8,33 +8,33 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^1.0.0
+  google_fonts: ^2.0.0
   cupertino_icons: ^0.1.2
   get_it: ^4.0.2
   webview_flutter: ^1.0.7
   provider: ^4.1.3
   shared_preferences: ^0.5.7+3
   package_info: ^0.4.1
-  flutter_svg: ^0.18.0
-  moor: ^3.4.0
-  moor_ffi: ^0.8.0
+  flutter_svg: 0.21.0-nullsafety.0
+  moor: ^4.1.0
+  sqlite3_flutter_libs: ^0.4.1
   rxdart: ^0.24.1
-  intl: ^0.16.1
+  intl: ^0.17.0
 
   # Networking
-  json_annotation: ^3.0.1
-  connectivity: ^2.0.2
-  dio: ^3.0.9
+  json_annotation: ^4.0.0
+  connectivity: ^3.0.2
+  dio: 4.0.0-beta6
   pretty_dio_logger: ^1.1.1
 
   # Firebase
-  firebase_crashlytics: ^0.2.3
-  firebase_core: ^0.5.3
-  firebase_auth: ^0.18.4+1
+  firebase_crashlytics: ^2.0.2
+  firebase_core: ^1.1.0
+  firebase_auth: ^1.1.3
 
   #Location
-  google_maps_flutter: ^1.0.6
-  geolocator: ^6.1.13
+  google_maps_flutter: ^2.0.1
+  geolocator: ^7.0.1
 
   flutter_localizations:
     sdk: flutter
@@ -42,10 +42,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^4.1.3
-  build_runner: ^1.8.0
-  moor_generator: ^3.3.1
-  json_serializable: ^3.2.5
+  mockito: ^5.0.2
+  build_runner: ^1.12.1
+  moor_generator:
+    git:
+      url: https://github.com/simolus3/moor.git
+      ref: develop
+      path: moor_generator
+  json_serializable: ^4.0.3
   lint: ^1.3.0
 
 flutter:

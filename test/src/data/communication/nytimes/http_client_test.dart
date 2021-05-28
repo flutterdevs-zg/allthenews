@@ -48,7 +48,7 @@ void main() {
       'should return a map response when status code is equal to 200',
       () async {
         when(mockDio.get<dynamic>(any, queryParameters: anyNamed('queryParameters'))).thenAnswer(
-          (_) async => Response(data: json.decode(findApiStubBy('most_popular_news.json')), statusCode: 200),
+          (_) async => Response(data: json.decode(findApiStubBy('most_popular_news.json')), statusCode: 200, request: RequestOptions(path: "")),
         );
 
         final response = await httpClient.get(Request(path: 'testPath', queryParameters: {}));

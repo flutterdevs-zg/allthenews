@@ -68,7 +68,7 @@ class ArticleDao extends DatabaseAccessor<AppDatabase> with _$ArticleDaoMixin {
           ]),
         )
         ..limit(1))
-      .getSingle();
+      .getSingleOrNull();
 
   Future<ArticleDto> getLatestMostPopularArticle(PopularNewsCriterion popularNewsCriterion) => (select(articles)
         ..where((article) => article.type.equals(popularNewsCriterion.toDtoType().toString()))
@@ -79,7 +79,7 @@ class ArticleDao extends DatabaseAccessor<AppDatabase> with _$ArticleDaoMixin {
           ]),
         )
         ..limit(1))
-      .getSingle();
+      .getSingleOrNull();
 }
 
 extension PopularNewsCriterionExtension on PopularNewsCriterion {

@@ -9,12 +9,12 @@ class ApiExceptionMapper extends ExceptionMapper {
   ApiException toDomainException(Object error) {
     if (error is DioError) {
       switch (error.type) {
-        case DioErrorType.DEFAULT:
+        case DioErrorType.other:
           if (error.error is SocketException) {
             return ConnectionException();
           }
           return UnknownException();
-        case DioErrorType.RESPONSE:
+        case DioErrorType.response:
           return _fromStatusCode(error.response.statusCode);
         default:
           return UnknownException();

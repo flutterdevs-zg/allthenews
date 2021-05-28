@@ -41,7 +41,7 @@ class LocationMap extends StatelessWidget {
 
   Marker _toMarker(Location location) {
     return Marker(
-      markerId: MarkerId(_Constants.markerId),
+      markerId: const MarkerId(_Constants.markerId),
       position: LatLng(
         location.latitude,
         location.longitude,
