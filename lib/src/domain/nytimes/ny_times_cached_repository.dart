@@ -11,9 +11,9 @@ abstract class NyTimesCachedRepository {
 
   Future<List<Article>> getMostPopularArticlesPage(Page page, PopularNewsCriterion popularNewsCriterion);
 
-  Future<Article> getLatestArticle();
+  Future<Article?> getLatestArticle();
 
-  Future<Article> getLatestMostPopularArticle(PopularNewsCriterion popularNewsCriterion);
+  Future<Article?> getLatestMostPopularArticle(PopularNewsCriterion popularNewsCriterion);
 
   Future<void> saveMostPopularArticles(List<Article> articles, PopularNewsCriterion popularNewsCriterion);
 

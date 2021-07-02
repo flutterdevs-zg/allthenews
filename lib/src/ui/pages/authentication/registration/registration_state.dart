@@ -1,14 +1,12 @@
-import 'package:flutter/foundation.dart';
-
 class RegistrationState {
   final String name;
   final String email;
   final String password;
   final bool isLoading;
-  final String emailError;
-  final String nameError;
-  final String passwordError;
-  final String authenticationError;
+  final String? emailError;
+  final String? nameError;
+  final String? passwordError;
+  final String? authenticationError;
 
   const RegistrationState({
     this.email = "",
@@ -23,7 +21,7 @@ class RegistrationState {
 
   bool get canSubmit => [emailError, nameError, passwordError].every((element) => element == null);
 
-  RegistrationState copyWithLoading({@required bool isLoading}) => RegistrationState(
+  RegistrationState copyWithLoading({required bool isLoading}) => RegistrationState(
         name: name,
         email: email,
         password: password,
@@ -35,8 +33,8 @@ class RegistrationState {
       );
 
   RegistrationState copyWithLoadingAndAuthError({
-    @required bool isLoading,
-    @required String authenticationError,
+    required bool isLoading,
+    required String authenticationError,
   }) =>
       RegistrationState(
         name: name,
@@ -50,9 +48,9 @@ class RegistrationState {
       );
 
   RegistrationState copyWithFieldsError({
-    @required String emailError,
-    @required String nameError,
-    @required String passwordError,
+    String? emailError,
+    String? nameError,
+    String? passwordError,
   }) =>
       RegistrationState(
         name: name,
@@ -65,7 +63,7 @@ class RegistrationState {
         authenticationError: authenticationError,
       );
 
-  RegistrationState copyWithNameAndClearError({@required String name}) => RegistrationState(
+  RegistrationState copyWithNameAndClearError({required String name}) => RegistrationState(
         name: name,
         email: email,
         password: password,
@@ -74,7 +72,7 @@ class RegistrationState {
         emailError: emailError,
       );
 
-  RegistrationState copyWithEmailAndClearError({@required String email}) => RegistrationState(
+  RegistrationState copyWithEmailAndClearError({required String email}) => RegistrationState(
         name: name,
         email: email,
         password: password,
@@ -83,7 +81,7 @@ class RegistrationState {
         passwordError: passwordError,
       );
 
-  RegistrationState copyWithPasswordAndClearError({@required String password}) => RegistrationState(
+  RegistrationState copyWithPasswordAndClearError({required String password}) => RegistrationState(
         name: name,
         email: email,
         password: password,

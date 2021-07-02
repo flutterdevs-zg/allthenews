@@ -6,18 +6,17 @@ import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../api_stubs/api_stubs_reader.dart';
+import 'ny_times_rest_repository_test.mocks.dart';
 
-class MockHttpClient extends Mock implements HttpClient {}
-
-class MockSettingsRepository extends Mock implements SettingsRepository {}
-
+@GenerateMocks([HttpClient, SettingsRepository])
 void main() {
-  NYTimesRestRepository nyTimesRestRepository;
-  MockHttpClient mockHttpClient;
-  MockSettingsRepository mockSettingsRepository;
+  late NYTimesRestRepository nyTimesRestRepository;
+  late MockHttpClient mockHttpClient;
+  late MockSettingsRepository mockSettingsRepository;
 
   setUp(() {
     mockHttpClient = MockHttpClient();

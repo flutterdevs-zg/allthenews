@@ -14,8 +14,8 @@ class PrimaryTextButton extends StatelessWidget {
   final bool isLoading;
 
   const PrimaryTextButton({
-    @required this.text,
-    @required this.onPressed,
+    required this.text,
+    required this.onPressed,
     this.textPadding = const EdgeInsets.symmetric(),
     this.isLoading = false,
   });
@@ -38,7 +38,7 @@ class PrimaryTextButton extends StatelessWidget {
                   )
                 : Text(
                     text,
-                    style: Theme.of(context).textTheme.button.copyWith(
+                    style: Theme.of(context).textTheme.button?.copyWith(
                           color: Colors.black,
                         ),
                   ),

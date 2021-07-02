@@ -1,12 +1,10 @@
-import 'package:flutter/foundation.dart';
-
 class LoginState {
   final bool isLoading;
-  final String authenticationError;
+  final String? authenticationError;
   final String email;
-  final String emailError;
+  final String? emailError;
   final String password;
-  final String passwordError;
+  final String? passwordError;
 
   bool get canSubmit => [emailError, passwordError].every((element) => element == null);
 
@@ -19,7 +17,7 @@ class LoginState {
     this.authenticationError,
   });
 
-  LoginState copyWithLoading({@required bool isLoading}) => LoginState(
+  LoginState copyWithLoading({required bool isLoading}) => LoginState(
         isLoading: isLoading,
         authenticationError: authenticationError,
         email: email,
@@ -29,8 +27,8 @@ class LoginState {
       );
 
   LoginState copyWithLoadingAndAuthError({
-    @required bool isLoading,
-    @required String authenticationError,
+    required bool isLoading,
+    required String authenticationError,
   }) =>
       LoginState(
         isLoading: isLoading,
@@ -41,21 +39,21 @@ class LoginState {
         passwordError: passwordError,
       );
 
-  LoginState copyWithEmailAndClearErrors({@required String email}) => LoginState(
+  LoginState copyWithEmailAndClearErrors({required String email}) => LoginState(
         isLoading: isLoading,
         email: email,
         password: password,
       );
 
-  LoginState copyWithPasswordAndClearErrors({@required String password}) => LoginState(
+  LoginState copyWithPasswordAndClearErrors({required String password}) => LoginState(
         isLoading: isLoading,
         email: email,
         password: password,
       );
 
   LoginState copyWithFieldsErrors({
-    @required String emailError,
-    @required String passwordError,
+     String? emailError,
+     String? passwordError,
   }) =>
       LoginState(
         isLoading: isLoading,

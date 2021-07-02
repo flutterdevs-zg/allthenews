@@ -13,7 +13,7 @@ class LocationInfoLabel extends StatelessWidget {
   final Location location;
 
   const LocationInfoLabel({
-    this.location,
+    required this.location,
   });
 
   @override

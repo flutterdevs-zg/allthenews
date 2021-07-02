@@ -1,6 +1,7 @@
 import 'package:allthenews/src/data/response/image_format.dart';
 import 'package:allthenews/src/data/response/most_popular_media_response.dart';
 import 'package:allthenews/src/domain/model/article.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:json_annotation/json_annotation.dart';
 
 part 'most_popular_article_response.g.dart';
@@ -48,9 +49,9 @@ class MostPopularArticleResponse {
       url: response.url,
       thumbnail: response.media.isNotEmpty
           ? response.media
-              ?.firstWhere((element) => element.type == _Constants.imageMediaType, orElse: () => null)
+              .firstWhereOrNull((element) => element.type == _Constants.imageMediaType)
               ?.mediaMetadata
-              ?.firstWhere((element) => element.format == ImageFormat.large, orElse: () => null)
+              ?.firstWhereOrNull((element) => element.format == ImageFormat.large)
               ?.url
           : null);
 }

@@ -4,9 +4,9 @@ class NyTimesResponse<T> {
   final List<T> articles;
 
   const NyTimesResponse({
-    this.copyright,
-    this.numResults,
-    this.articles,
+    required this.copyright,
+    required this.numResults,
+    required this.articles,
   });
 
   factory NyTimesResponse.fromJson(Map<String, dynamic> json, Function fromJson) {
@@ -14,7 +14,7 @@ class NyTimesResponse<T> {
 
     return NyTimesResponse<T>(
       copyright: json['copyright'] as String,
-      numResults: json['numResults'] as int,
+      numResults: json['num_results'] as int,
       articles: List<T>.from(items.map((itemJson) => fromJson(itemJson))),
     );
   }

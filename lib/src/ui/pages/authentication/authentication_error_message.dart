@@ -5,7 +5,7 @@ abstract class _Constants {
 }
 
 mixin AuthenticationErrorMessage {
-  Widget buildAuthenticationErrorMessage(String authenticationError) => authenticationError != null
+  Widget buildAuthenticationErrorMessage(String? authenticationError) => authenticationError != null
       ? Padding(
           padding: const EdgeInsets.all(_Constants.errorPadding),
           child: Text(

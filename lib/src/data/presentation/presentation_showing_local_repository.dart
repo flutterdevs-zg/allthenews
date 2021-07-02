@@ -11,7 +11,7 @@ class PresentationShowingLocalRepository extends PresentationShowingRepository {
   PresentationShowingLocalRepository(this._persistenceRepository);
 
   @override
-  Future<bool> shouldShowPresentation() async => await _persistenceRepository.getBool(_Constants.shouldShowPresentationKey) ?? true;
+  Future<bool?> shouldShowPresentation() => _persistenceRepository.getBool(_Constants.shouldShowPresentationKey);
 
   @override
   Future<void> savePresentationShowed() => _persistenceRepository.saveBool(_Constants.shouldShowPresentationKey, false);

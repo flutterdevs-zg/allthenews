@@ -11,8 +11,8 @@ class PrimaryNewsListView extends StatelessWidget {
   final List<PrimaryNewsListEntity> primaryNewsListEntities;
 
   const PrimaryNewsListView({
-    @required this.primaryNewsListEntities,
-  }) : assert(primaryNewsListEntities != null);
+    required this.primaryNewsListEntities,
+  });
 
   @override
   Widget build(BuildContext context) {

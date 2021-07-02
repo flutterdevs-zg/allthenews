@@ -5,14 +5,14 @@ part 'most_popular_media_response.g.dart';
 
 @JsonSerializable()
 class MostPopularMediaResponse {
-  final String type;
+  final String? type;
 
-  final String subtype;
+  final String? subtype;
 
-  final String caption;
+  final String? caption;
 
   @JsonKey(name: 'media-metadata')
-  final List<MediaMetadata> mediaMetadata;
+  final List<MediaMetadata>? mediaMetadata;
 
   const MostPopularMediaResponse(
     this.type,

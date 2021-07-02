@@ -5,4 +5,5 @@ analyzer:
     invalid_assignment: info # because analyzer doesn't respect excluded files: https://github.com/dart-lang/sdk/issues/25551
   exclude:
     - lib/generated/intl/*.dart
-    - lib/src/domain/*.g.dart
+    - lib/src/**.g.dart
+    - test/src/**.mocks.dart

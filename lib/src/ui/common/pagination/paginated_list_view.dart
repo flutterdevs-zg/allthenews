@@ -10,10 +10,10 @@ class PaginatedListView<T> extends StatefulWidget {
   final Widget Function(T item) itemBuilder;
 
   const PaginatedListView({
-    this.paginatedItems,
-    this.nextPageLoadingAction,
-    this.onRetryPressed,
-    this.itemBuilder,
+    required this.paginatedItems,
+    required this.nextPageLoadingAction,
+    required this.onRetryPressed,
+    required this.itemBuilder,
   });
 
   @override

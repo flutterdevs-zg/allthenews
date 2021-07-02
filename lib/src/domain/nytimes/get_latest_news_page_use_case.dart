@@ -11,5 +11,5 @@ class GetLatestNewsPageUseCase extends GetPageUseCase<Article> {
   GetLatestNewsPageUseCase(this._nyTimesPaginatedRepository);
 
   @override
-  Future<List<Article>> call(Page page) => _nyTimesPaginatedRepository.getNewestArticlesPage(page);
+  Future<List<Article>?> call(Page page) => _nyTimesPaginatedRepository.getNewestArticlesPage(page);
 }

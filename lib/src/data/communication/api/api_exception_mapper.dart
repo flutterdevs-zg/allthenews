@@ -15,7 +15,7 @@ class ApiExceptionMapper extends ExceptionMapper {
           }
           return UnknownException();
         case DioErrorType.response:
-          return _fromStatusCode(error.response.statusCode);
+          return _fromStatusCode(error.response?.statusCode);
         default:
           return UnknownException();
       }
@@ -24,12 +24,12 @@ class ApiExceptionMapper extends ExceptionMapper {
     }
   }
 
-  ApiException _fromStatusCode(int code) {
+  ApiException _fromStatusCode(int? code) {
     if (code == 401) {
       return UnauthorizedException();
     } else if (code == 404) {
       return InvalidUrlException();
-    } else if (code >= 500 && code < 600) {
+    } else if (code! >= 500 && code < 600) {
       return ServerErrorException();
     } else {
       return UnknownException();

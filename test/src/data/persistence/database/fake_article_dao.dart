@@ -28,13 +28,12 @@ class FakeArticleDao extends Mock implements ArticleDao {
 
   ArticleDto mapFromCompanion(Insertable<ArticleDto> companion) {
     final asColumnMap = companion.toColumns(false);
-    final context = GenerationContext(SqlTypeSystem.defaultInstance, null);
-    final rawValues = asColumnMap.cast<String, Variable>().map((key, value) => MapEntry(key, value.mapToSimpleValue(context)));
+    final rawValues = asColumnMap.cast<String, Variable>().map((key, value) => MapEntry(key, value.value));
 
     return ArticleDto(
       url: rawValues['url'] as String,
-      updateDateTime: rawValues['updateDateTime'] as DateTime,
-      authorName: rawValues['authorName'] as String,
+      updateDateTime: rawValues['update_date_time'] as DateTime,
+      authorName: rawValues['author_name'] as String,
       title: rawValues['title'] as String,
       abstract: rawValues['abstract'] as String,
       type: const ArticleDtoTypeConverter().mapToDart(rawValues['type'] as String),

@@ -9,14 +9,12 @@ part of 'most_popular_media_response.dart';
 MostPopularMediaResponse _$MostPopularMediaResponseFromJson(
     Map<String, dynamic> json) {
   return MostPopularMediaResponse(
-    json['type'] as String,
-    json['subtype'] as String,
-    json['caption'] as String,
-    (json['media-metadata'] as List)
-        ?.map((e) => e == null
-            ? null
-            : MediaMetadata.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    json['type'] as String?,
+    json['subtype'] as String?,
+    json['caption'] as String?,
+    (json['media-metadata'] as List<dynamic>?)
+        ?.map((e) => MediaMetadata.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 

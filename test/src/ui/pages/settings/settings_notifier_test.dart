@@ -4,18 +4,17 @@ import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../common/change_notifier_test_util.dart';
+import 'settings_notifier_test.mocks.dart';
 
-class MockAppInfoRepository extends Mock implements AppInfoRepository {}
-
-class MockSettingsRepository extends Mock implements SettingsRepository {}
-
+@GenerateMocks([AppInfoRepository, SettingsRepository])
 void main() {
-  SettingsNotifier settingsNotifier;
-  MockAppInfoRepository mockAppInfoRepository;
-  MockSettingsRepository mockSettingsRepository;
+  late SettingsNotifier settingsNotifier;
+  late MockAppInfoRepository mockAppInfoRepository;
+  late MockSettingsRepository mockSettingsRepository;
 
   setUpAll(() {
     mockAppInfoRepository = MockAppInfoRepository();

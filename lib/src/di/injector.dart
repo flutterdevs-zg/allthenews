@@ -188,5 +188,5 @@ void _injectLocationDependencies() {
       ));
 }
 
-T inject<T>({String name, dynamic param}) =>
+T inject<T extends Object>({String? name, dynamic param}) =>
     GetIt.instance.get<T>(instanceName: name, param1: param);

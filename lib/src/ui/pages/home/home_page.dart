@@ -13,8 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  BottomBarRouterDelegate _routerDelegate;
-  ChildBackButtonDispatcher _backButtonDispatcher;
+  late BottomBarRouterDelegate _routerDelegate;
+  ChildBackButtonDispatcher? _backButtonDispatcher;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _backButtonDispatcher =
-        Router.of(context).backButtonDispatcher.createChildBackButtonDispatcher();
+        Router.of(context).backButtonDispatcher?.createChildBackButtonDispatcher();
   }
 
   @override
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _backButtonDispatcher.takePriority();
+    _backButtonDispatcher?.takePriority();
     return ChangeNotifierProvider.value(
       value: widget._bottomBarNotifier,
       builder: (providerContext, child) {

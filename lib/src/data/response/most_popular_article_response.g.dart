@@ -15,11 +15,10 @@ MostPopularArticleResponse _$MostPopularArticleResponseFromJson(
     json['byline'] as String,
     json['title'] as String,
     json['abstract'] as String,
-    (json['media'] as List)
-        ?.map((e) => e == null
-            ? null
-            : MostPopularMediaResponse.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    (json['media'] as List<dynamic>)
+        .map(
+            (e) => MostPopularMediaResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -28,7 +27,7 @@ Map<String, dynamic> _$MostPopularArticleResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'url': instance.url,
-      'updated': instance.updated?.toIso8601String(),
+      'updated': instance.updated.toIso8601String(),
       'byline': instance.author,
       'title': instance.title,
       'abstract': instance.abstract,

@@ -9,14 +9,14 @@ abstract class _Constants {
 class AuthTextField extends StatelessWidget {
   final TextEditingController textController;
   final String labelText;
+  final String? errorText;
   final bool obscureText;
-  final String errorText;
   final TextInputType textInputType;
 
   const AuthTextField({
+    required this.textController,
+    required this.labelText,
     this.errorText,
-    this.textController,
-    this.labelText,
     this.obscureText = false,
     this.textInputType = TextInputType.text,
   });
@@ -32,7 +32,7 @@ class AuthTextField extends StatelessWidget {
         decoration: InputDecoration(
           errorText: errorText,
           labelText: labelText,
-          labelStyle: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.grey),
+          labelStyle: Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(_Constants.borderRadius),
           ),

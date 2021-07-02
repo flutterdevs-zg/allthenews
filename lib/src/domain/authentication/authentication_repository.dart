@@ -1,7 +1,7 @@
 import 'package:allthenews/src/domain/model/user.dart';
 
 abstract class AuthenticationRepository {
-  Future<Stream<User>> observeUserChanges();
+  Future<Stream<User?>> observeUserChanges();
 
   Future<void> createUser(String email, String password);
 

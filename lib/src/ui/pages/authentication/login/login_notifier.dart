@@ -23,7 +23,7 @@ class LoginNotifier extends ChangeNotifier {
 
   String get emptyFieldError => _fieldErrorMessageProvider.getMessage(FieldError.isEmpty);
 
-  VoidCallback returnToProfile;
+  VoidCallback? returnToProfile;
 
   void validateFieldsAndSignIn() {
     _validateFields(
@@ -47,7 +47,7 @@ class LoginNotifier extends ChangeNotifier {
     }
   }
 
-  void _validateFields({@required VoidCallback onValid, @required VoidCallback onInvalid}) {
+  void _validateFields({required VoidCallback onValid, required VoidCallback onInvalid}) {
     _state = _state.copyWithFieldsErrors(
       emailError: _state.email.isEmpty ? emptyFieldError : null,
       passwordError: _state.password.isEmpty ? emptyFieldError : null,

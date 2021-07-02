@@ -4,15 +4,16 @@ import 'package:allthenews/src/domain/model/article.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/latest/latest_news_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../../../common/change_notifier_test_util.dart';
+import 'latest_news_notifier_test.mocks.dart';
 
-class MockGetPageUseCase extends Mock implements GetPageUseCase<Article> {}
-
+@GenerateMocks([GetPageUseCase])
 void main() {
-  LatestNewsNotifier latestNewsNotifier;
-  MockGetPageUseCase mockGetPageUseCase;
+  late LatestNewsNotifier latestNewsNotifier;
+  late MockGetPageUseCase<Article> mockGetPageUseCase;
 
   setUp(() {
     mockGetPageUseCase = MockGetPageUseCase();

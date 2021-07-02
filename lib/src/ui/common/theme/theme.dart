@@ -49,38 +49,38 @@ ThemeData _buildDarkNewsTheme() {
 TextTheme _buildNewsTextTheme(TextTheme base, Color primaryTextColor) {
   return GoogleFonts.openSansTextTheme(
     base.copyWith(
-      headline1: base.headline1.copyWith(
+      headline1: base.headline1?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w300,
         fontSize: 30,
       ),
-      headline2: base.headline2.copyWith(
+      headline2: base.headline2?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w500,
         fontSize: 28,
       ),
-      headline3: base.headline3.copyWith(
+      headline3: base.headline3?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w700,
         fontSize: 26,
       ),
-      headline4: base.headline4.copyWith(
+      headline4: base.headline4?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w700,
         fontSize: 24,
       ),
-      headline5: base.headline5.copyWith(
+      headline5: base.headline5?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w700,
         fontSize: 22,
       ),
-      headline6: base.headline6.copyWith(
+      headline6: base.headline6?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w700,
         fontSize: 20,
       ),
       subtitle1: GoogleFonts.roboto(
-        textStyle: base.subtitle1.copyWith(
+        textStyle: base.subtitle1?.copyWith(
           color: primaryTextColor,
           fontWeight: FontWeight.w600,
           fontSize: 19,
@@ -90,7 +90,7 @@ TextTheme _buildNewsTextTheme(TextTheme base, Color primaryTextColor) {
         ),
       ),
       subtitle2: GoogleFonts.roboto(
-        textStyle: base.subtitle2.copyWith(
+        textStyle: base.subtitle2?.copyWith(
           color: primaryTextColor,
           fontWeight: FontWeight.w600,
           fontSize: 17,
@@ -99,28 +99,28 @@ TextTheme _buildNewsTextTheme(TextTheme base, Color primaryTextColor) {
           wordSpacing: 0,
         ),
       ),
-      bodyText1: base.bodyText1.copyWith(
+      bodyText1: base.bodyText1?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w400,
         fontSize: 16.5,
         height: 1.5,
       ),
-      bodyText2: base.bodyText2.copyWith(
+      bodyText2: base.bodyText2?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w400,
         fontSize: 14,
       ),
-      button: base.button.copyWith(
+      button: base.button?.copyWith(
         color: primaryTextColor,
         fontWeight: FontWeight.w600,
         fontSize: 13,
       ),
-      caption: base.caption.copyWith(
+      caption: base.caption?.copyWith(
         fontWeight: FontWeight.w600,
         fontSize: 12,
         color: Colors.grey,
       ),
-      overline: base.overline.copyWith(
+      overline: base.overline?.copyWith(
         fontWeight: FontWeight.w600,
         fontSize: 12,
         color: Colors.grey,

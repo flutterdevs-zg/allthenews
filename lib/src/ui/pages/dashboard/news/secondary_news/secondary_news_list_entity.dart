@@ -3,13 +3,13 @@ class SecondaryNewsListEntity {
   final String date;
   final String time;
   final String articleUrl;
-  final String imageUrl;
+  final String? imageUrl;
 
   SecondaryNewsListEntity({
-    this.title,
-    this.date,
-    this.time,
-    this.articleUrl,
+    required this.title,
+    required this.date,
+    required this.time,
+    required this.articleUrl,
     this.imageUrl,
   });
 }

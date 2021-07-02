@@ -22,7 +22,7 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
   @override
   Future<void> createUser(String email, String password) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
     } on Exception catch (exception) {
       throw _exceptionMapper.toDomainException(exception);
     }
@@ -31,7 +31,7 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
   @override
   Future<void> signIn(String email, String password) async {
     try {
-      return await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
     } catch (error) {
       throw _exceptionMapper.toDomainException(error);
     }
@@ -40,7 +40,7 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
   @override
   Future<void> updateUser(String name) async {
     try {
-      return await _auth.currentUser.updateProfile(displayName: name);
+      return await _auth.currentUser?.updateProfile(displayName: name);
     } on Exception catch (exception) {
       throw _exceptionMapper.toDomainException(exception);
     }
@@ -56,13 +56,13 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
   }
 
   @override
-  Future<Stream<domain.User>> observeUserChanges() async {
+  Future<Stream<domain.User?>> observeUserChanges() async {
     final connectionStatus = await _connectionStatusProvider.getConnectionStatus();
     if (connectionStatus == ConnectionStatus.none) {
       return Future.error(ConnectionException());
     } else {
-      return _auth.userChanges().map((User user) =>
-          user == null ? null : domain.User(email: user.email, name: user.displayName));
+      return _auth.userChanges().map((User? user) =>
+          user == null ? null : domain.User(email: user.email ?? '', name: user.displayName ?? ''));
     }
   }
 }

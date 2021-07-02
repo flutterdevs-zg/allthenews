@@ -3,7 +3,7 @@ import 'package:allthenews/src/domain/model/article.dart';
 
 class ArticleCachePolicy extends CachePolicy<Article> {
   @override
-  bool isValid(Article article) {
+  bool isValid(Article? article) {
     final currentDateTime = DateTime.now();
     return article != null &&
         article.updateDateTime.isAfter(

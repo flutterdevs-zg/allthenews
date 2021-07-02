@@ -16,6 +16,5 @@ class PopularNewsCriterionMessageLocalMapper extends PopularNewsCriterionMessage
       case PopularNewsCriterion.emailed:
         return Strings.current.mostEmailed;
     }
-    return '';
   }
 }

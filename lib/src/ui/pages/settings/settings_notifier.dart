@@ -33,7 +33,7 @@ class SettingsNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> selectDarkMode({bool isSelected, Read read}) async {
+  Future<void> selectDarkMode({required bool isSelected, required Read read}) async {
     await _settingsRepository.saveTheme(isSelected ? AppTheme.dark : AppTheme.light);
     final selectedTheme = await _settingsRepository.getTheme();
     _viewState = SettingsViewState(
@@ -58,14 +58,14 @@ class SettingsNotifier extends ChangeNotifier {
 
 class SettingsViewState {
   final bool isLoading;
-  final String appVersion;
+  final String? appVersion;
   final bool isDarkModeEnabled;
   final PopularNewsCriterion selectedPopularNewsCriterion;
 
   SettingsViewState({
-    @required this.appVersion,
-    @required this.isDarkModeEnabled,
-    @required this.selectedPopularNewsCriterion,
+    required this.appVersion,
+    required this.isDarkModeEnabled,
+    required this.selectedPopularNewsCriterion,
     this.isLoading = false,
   });
 }

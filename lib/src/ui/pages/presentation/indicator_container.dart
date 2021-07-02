@@ -10,9 +10,9 @@ class _Constants {
 
 class IndicatorContainer extends AnimatedWidget {
   const IndicatorContainer({
-    @required this.controller,
-    @required this.itemCount,
-    @required this.onPageSelected,
+    required this.controller,
+    required this.itemCount,
+    required this.onPageSelected,
   }) : super(listenable: controller);
 
   final PageController controller;
@@ -28,7 +28,7 @@ class IndicatorContainer extends AnimatedWidget {
   }
 
   Widget _buildIndicator(int index) {
-    final double animationValue = max(0, 1.0 - ((controller.hasClients ? controller.page : controller.initialPage) - index).abs());
+    final double animationValue = max(0, 1.0 - ((controller.hasClients ? controller.page! : controller.initialPage) - index).abs());
     final double zoom = 1.0 + (_Constants.indicatorMaxZoom - 1.0) * animationValue;
     return SizedBox(
       width: _Constants.indicatorSpacing,

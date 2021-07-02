@@ -1,5 +1,5 @@
 class ApiKey {
-  final String value;
+  final String? value;
 
   ApiKey(this.value);
 }

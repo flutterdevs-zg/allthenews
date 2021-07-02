@@ -11,10 +11,9 @@ class PrimaryIconButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const PrimaryIconButton({
-    @required this.iconData,
-    @required this.onPressed,
-  })  : assert(onPressed != null),
-        assert(iconData != null);
+    required this.iconData,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) => PrimaryButton(

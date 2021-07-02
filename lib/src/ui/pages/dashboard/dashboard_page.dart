@@ -56,7 +56,7 @@ class _DashboardPageState extends State<DashboardPage> {
           if (viewState.isLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (viewState.viewEntity != null) {
-            return _buildLoadedContent(viewState.viewEntity);
+            return _buildLoadedContent(viewState.viewEntity!);
           } else if (viewState.error != null) {
             return _buildErrorContent();
           } else {
@@ -103,8 +103,8 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Widget _buildNewsSectionHeader({
-    @required String title,
-    @required VoidCallback navigationAction,
+    required String title,
+    required VoidCallback navigationAction,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimens.pagePadding),

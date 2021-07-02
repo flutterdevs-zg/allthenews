@@ -5,13 +5,13 @@ part 'media_metadata.g.dart';
 
 @JsonSerializable()
 class MediaMetadata {
-  final String url;
+  final String? url;
 
-  final ImageFormat format;
+  final ImageFormat? format;
 
-  final int height;
+  final int? height;
 
-  final int width;
+  final int? width;
 
   const MediaMetadata(
     this.url,

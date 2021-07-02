@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppPath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppPath> {
-  RoutePageManager _pageManager;
+  late RoutePageManager _pageManager;
 
   AppRouterDelegate() {
     _pageManager = RoutePageManager();
@@ -40,7 +40,7 @@ class AppRouterDelegate extends RouterDelegate<AppPath>
   GlobalKey<NavigatorState> get navigatorKey => _pageManager.navigatorKey;
 
   @override
-  AppPath get currentConfiguration => _pageManager.currentPath;
+  AppPath? get currentConfiguration => _pageManager.currentPath;
 
   @override
   Future<void> setNewRoutePath(AppPath configuration) async {

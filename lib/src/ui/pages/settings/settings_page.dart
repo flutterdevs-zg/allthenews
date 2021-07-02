@@ -196,8 +196,8 @@ class _SettingsPageState extends State<SettingsPage> {
         text,
         style: Theme.of(context)
             .textTheme
-            .bodyText2
-            .copyWith(color: Theme.of(context).textTheme.caption.color),
+            .bodyText2!
+            .copyWith(color: Theme.of(context).textTheme.caption!.color),
       );
 
   Widget _buildPopularSettingText(PopularNewsCriterion criterion) => Flexible(
@@ -224,6 +224,5 @@ extension on PopularNewsCriterion {
       case PopularNewsCriterion.emailed:
         return Strings.current.emailed;
     }
-    return '';
   }
 }
