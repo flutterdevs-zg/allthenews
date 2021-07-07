@@ -18,8 +18,6 @@ class ProfileNotifier extends ChangeNotifier {
 
   ProfileState get state => _state;
 
-  VoidCallback returnToProfile;
-
   Future<void> initUserState() async {
     _setNotifierState(const ProfileState(isLoading: true));
 
@@ -36,7 +34,6 @@ class ProfileNotifier extends ChangeNotifier {
   Future<void> logout() async {
     try {
       await _authorizationRepository.logout();
-      returnToProfile?.call();
     } on AuthenticationApiException catch (exception) {
       _setNotifierState(ProfileState(error: _authenticationMessageProvider.getMessage(exception)));
     }

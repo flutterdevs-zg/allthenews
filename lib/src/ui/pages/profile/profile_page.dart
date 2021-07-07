@@ -57,8 +57,8 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(_profileNotifier.state.user.email),
-          Text(_profileNotifier.state.user.name),
+          Text(_profileNotifier.state.user!.email),
+          Text(_profileNotifier.state.user!.name),
           TextButton.icon(
             icon: const Icon(Icons.map),
             label: Text(Strings.current.location),

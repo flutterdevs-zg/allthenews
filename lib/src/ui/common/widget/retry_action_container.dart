@@ -10,7 +10,7 @@ class _Constants {
 class RetryActionContainer extends StatelessWidget {
   final VoidCallback onRetryPressed;
 
-  const RetryActionContainer({@required this.onRetryPressed}) : assert(onRetryPressed != null);
+  const RetryActionContainer({required this.onRetryPressed});
 
   @override
   Widget build(BuildContext context) => Center(

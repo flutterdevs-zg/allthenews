@@ -29,11 +29,13 @@ class MostPopularNewsNotifier extends PaginationNotifier<Article, SecondaryNewsL
 
   @override
   Future<void> loadFirstPage() async {
-    super.setNotifierState(const PaginatedViewState(isLoading: true));
+    super.setNotifierState(PaginatedViewState(isLoading: true));
     await _settingsRepository.getPopularNewsCriterion().then((criterion) {
       _mostPopularNewsPageTitle = _popularNewsCriterionMessageMapper.map(criterion);
       super.loadFirstPage();
-    }).catchError((error) => setNotifierState(PaginatedViewState(error: error)));
+    }).catchError((error) {
+      setNotifierState(PaginatedViewState(error: error));
+    });
   }
 }
 
@@ -48,7 +50,7 @@ class MostPopularPaginatedViewState<T> {
 
   bool get isLoading => _baseViewState.isLoading;
 
-  PaginatedItems<T> get paginatedItems => _baseViewState.paginatedItems;
+  PaginatedItems<T>? get paginatedItems => _baseViewState.paginatedItems;
 
-  Object get error => _baseViewState.error;
+  Object? get error => _baseViewState.error;
 }

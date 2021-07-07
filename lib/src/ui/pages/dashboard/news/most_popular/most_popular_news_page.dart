@@ -45,7 +45,7 @@ class _MostPopularNewsListPageState extends State<MostPopularNewsListPage> {
         if (viewState.isLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (viewState.paginatedItems != null) {
-          return _buildLoadedContent(viewState.paginatedItems, viewState.mostPopularNewsPageTitle);
+          return _buildLoadedContent(viewState.paginatedItems!, viewState.mostPopularNewsPageTitle);
         } else if (viewState.error != null) {
           return _buildErrorContent(providerContext);
         } else {

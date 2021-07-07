@@ -41,9 +41,14 @@ class HttpClient {
       );
   }
 
-  Future<void> _onRequest(RequestOptions options) async {
+  Future<void> _onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final apiKey = await _apiKeyRepository.getKey();
-    options.queryParameters = {_Constants.apiKeyParam: apiKey.value};
+    if (apiKey == null){
+      throw Exception("Api key is not set");
+    } else {
+      options.queryParameters = {_Constants.apiKeyParam: apiKey.value};
+      handler.next(options);
+    }
   }
 
   Future<dynamic> get(Request request) async {

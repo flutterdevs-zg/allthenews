@@ -12,27 +12,27 @@ abstract class PaginationNotifier<D, V> extends ChangeNotifier {
   final GetPageUseCase<D> _getPageUseCase;
   final Mapper<D, V> mapper;
 
-  PaginatedViewState<V> _state = const PaginatedViewState();
+  PaginatedViewState<V> _state = PaginatedViewState();
 
-  PaginatedItems<V> get _paginatedItems => _state.paginatedItems;
+  PaginatedItems<V>? get _paginatedItems => _state.paginatedItems;
 
   PaginationNotifier(this._getPageUseCase, this.mapper);
 
   PaginatedViewState<V> get state => _state;
 
   void loadFirstPage() {
-    setNotifierState(const PaginatedViewState(isLoading: true));
+    setNotifierState(PaginatedViewState(isLoading: true));
     _getPageUseCase(Page(1, _Constants.pageSize))
-        .then((items) => _setLoadedState(items.cast()))
+        .then((items) => _setLoadedState(items?.cast()))
         .catchError((error) => _onFetchError(error));
   }
 
   void loadNextPage() {
-    if (_paginatedItems.hasMoreElements) {
+    if (_paginatedItems != null && _paginatedItems!.items.isNotEmpty && _paginatedItems!.hasMoreElements) {
       _setPageLoadingState();
-      final nextPageNumber = (_paginatedItems.items.length ~/ _Constants.pageSize) + 1;
+      final nextPageNumber = (_paginatedItems!.items.length ~/ _Constants.pageSize) + 1;
       _getPageUseCase(Page(nextPageNumber, _Constants.pageSize))
-          .then((items) => _setLoadedState(items.cast()))
+          .then((items) => _setLoadedState(items?.cast()))
           .catchError((error) => _onFetchError(error));
     }
   }
@@ -50,16 +50,16 @@ abstract class PaginationNotifier<D, V> extends ChangeNotifier {
       PaginatedViewState(
         paginatedItems: PaginatedItems<V>(
           items: [
-            ..._paginatedItems.items,
+            ..._paginatedItems?.items ?? [],
             PaginatedLoadingItem(),
           ],
-          hasMoreElements: _paginatedItems.hasMoreElements,
+          hasMoreElements: _paginatedItems?.hasMoreElements ?? false,
         ),
       ),
     );
   }
 
-  void _setLoadedState(List<D> items) {
+  void _setLoadedState(List<D>? items) {
     final List<PaginatedItem<V>> currentItems = _paginatedItems?.contentItems ?? [];
 
     setNotifierState(
@@ -67,7 +67,7 @@ abstract class PaginationNotifier<D, V> extends ChangeNotifier {
         paginatedItems: PaginatedItems<V>(
           items: [
             ...currentItems,
-            ...toViewEntities(items).map((item) => PaginatedContentItem(item)),
+            ...toViewEntities(items!).map((item) => PaginatedContentItem(item)),
           ],
           hasMoreElements: items.length == _Constants.pageSize,
         ),
@@ -75,13 +75,13 @@ abstract class PaginationNotifier<D, V> extends ChangeNotifier {
     );
   }
 
-  void _onFetchError(Object error) {
+  void _onFetchError(dynamic error) {
     if (_paginatedItems != null) {
       setNotifierState(
         PaginatedViewState(
           paginatedItems: PaginatedItems<V>(
             items: [
-              ..._paginatedItems.items,
+              ..._paginatedItems!.items,
               ...[PaginationErrorItem()],
             ],
             hasMoreElements: true,

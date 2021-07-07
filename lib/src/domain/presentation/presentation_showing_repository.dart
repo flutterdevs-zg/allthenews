@@ -1,6 +1,6 @@
 abstract class PresentationShowingRepository {
 
-  Future<bool> shouldShowPresentation();
+  Future<bool?> shouldShowPresentation();
 
   Future<void> savePresentationShowed();
 }

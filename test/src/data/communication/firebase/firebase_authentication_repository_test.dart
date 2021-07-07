@@ -7,26 +7,24 @@ import 'package:allthenews/src/domain/communication/exception_mapper.dart';
 import 'package:allthenews/src/domain/model/user.dart' as domain;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+import 'firebase_authentication_repository_test.mocks.dart';
 
-class MockExceptionMapper extends Mock implements ExceptionMapper {}
-
-class MockConnectionStatusProvider extends Mock implements ConnectionStatusProvider {}
-
-class MockFirebaseUser extends Mock implements User {}
-
+@GenerateMocks([FirebaseAuth, ExceptionMapper, ConnectionStatusProvider, User, UserCredential])
 void main() {
-  MockFirebaseAuth mockFirebaseAuth;
-  MockExceptionMapper mockExceptionMapper;
-  MockConnectionStatusProvider mockConnectionStatusProvider;
-  AuthenticationRepository authenticationRepository;
+  late MockFirebaseAuth mockFirebaseAuth;
+  late MockExceptionMapper mockExceptionMapper;
+  late MockConnectionStatusProvider mockConnectionStatusProvider;
+  late AuthenticationRepository authenticationRepository;
+  late MockUserCredential mockUserCredential;
 
   const testEmail = "email";
   const testPassword = "password";
 
   setUp(() {
+    mockUserCredential = MockUserCredential();
     mockFirebaseAuth = MockFirebaseAuth();
     mockExceptionMapper = MockExceptionMapper();
     mockConnectionStatusProvider = MockConnectionStatusProvider();
@@ -41,7 +39,7 @@ void main() {
     test("creates an user successfully", () {
       when(mockFirebaseAuth.createUserWithEmailAndPassword(
               email: testEmail, password: testPassword))
-          .thenAnswer((realInvocation) => Future.value());
+          .thenAnswer((_) => Future.value(mockUserCredential));
 
       authenticationRepository.createUser(testEmail, testPassword);
       verifyZeroInteractions(mockExceptionMapper);
@@ -49,14 +47,14 @@ void main() {
 
     test("signs in successfully", () {
       when(mockFirebaseAuth.signInWithEmailAndPassword(email: testEmail, password: testPassword))
-          .thenAnswer((_) => Future.value());
+          .thenAnswer((_) => Future.value(mockUserCredential));
 
       authenticationRepository.signIn(testEmail, testPassword);
       verifyZeroInteractions(mockExceptionMapper);
     });
 
     test("throws error when signing in fails", () {
-      final firebaseException = FirebaseAuthException(message: "no connection");
+      final firebaseException = FirebaseAuthException(message: "no connection", code: "");
       when(mockFirebaseAuth.signInWithEmailAndPassword(email: testEmail, password: testPassword))
           .thenAnswer((_) => Future.error(firebaseException));
 
@@ -68,7 +66,7 @@ void main() {
     });
 
     test("updates user successfully", () {
-      final User testUser = MockFirebaseUser();
+      final User testUser = MockUser();
       const testUserName = "tomek";
       when(mockFirebaseAuth.currentUser).thenReturn(testUser);
 
@@ -78,11 +76,13 @@ void main() {
     });
 
     test("gets user when observing the stream", () async {
-      final User testUser = MockFirebaseUser();
+      final User testUser = MockUser();
       when(mockConnectionStatusProvider.getConnectionStatus()).thenAnswer((answer) {
         return Future.value(ConnectionStatus.mobile);
       });
       when(mockFirebaseAuth.userChanges()).thenAnswer((_) => Stream.value(testUser));
+      when(testUser.email).thenReturn("email");
+      when(testUser.displayName).thenReturn("imie");
 
       final userStream = await authenticationRepository.observeUserChanges();
 

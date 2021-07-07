@@ -6,19 +6,18 @@ import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/articles_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular_news_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../../../common/change_notifier_test_util.dart';
 import '../fake_popular_news_criterion_message_mapper.dart';
+import 'most_popular_news_notifier_test.mocks.dart';
 
-class MockGetPageUseCase extends Mock implements GetPageUseCase<Article> {}
-
-class MockSettingsRepository extends Mock implements SettingsRepository {}
-
+@GenerateMocks([GetPageUseCase, SettingsRepository])
 void main() {
-  MostPopularNewsNotifier mostPopularNewsNotifier;
-  MockGetPageUseCase mockGetPageUseCase;
-  MockSettingsRepository mockSettingsRepository;
+  late MostPopularNewsNotifier mostPopularNewsNotifier;
+  late MockGetPageUseCase<Article> mockGetPageUseCase;
+  late MockSettingsRepository mockSettingsRepository;
   FakePopularNewsCriterionMessageMapper fakePopularNewsCriterionMessageMapper;
 
   setUp(() {

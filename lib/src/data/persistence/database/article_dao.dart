@@ -59,7 +59,7 @@ class ArticleDao extends DatabaseAccessor<AppDatabase> with _$ArticleDaoMixin {
     });
   }
 
-  Future<ArticleDto> getLatestArticle() => (select(articles)
+  Future<ArticleDto?> getLatestArticle() => (select(articles)
         ..where((article) => article.type.equals(ArticleDtoType.newest.toString()))
         ..orderBy(
           ([
@@ -68,9 +68,9 @@ class ArticleDao extends DatabaseAccessor<AppDatabase> with _$ArticleDaoMixin {
           ]),
         )
         ..limit(1))
-      .getSingle();
+      .getSingleOrNull();
 
-  Future<ArticleDto> getLatestMostPopularArticle(PopularNewsCriterion popularNewsCriterion) => (select(articles)
+  Future<ArticleDto?> getLatestMostPopularArticle(PopularNewsCriterion popularNewsCriterion) => (select(articles)
         ..where((article) => article.type.equals(popularNewsCriterion.toDtoType().toString()))
         ..orderBy(
           ([
@@ -79,7 +79,7 @@ class ArticleDao extends DatabaseAccessor<AppDatabase> with _$ArticleDaoMixin {
           ]),
         )
         ..limit(1))
-      .getSingle();
+      .getSingleOrNull();
 }
 
 extension PopularNewsCriterionExtension on PopularNewsCriterion {
@@ -91,8 +91,6 @@ extension PopularNewsCriterionExtension on PopularNewsCriterion {
         return ArticleDtoType.mostShared;
       case PopularNewsCriterion.emailed:
         return ArticleDtoType.mostEmailed;
-      default:
-        return null;
     }
   }
 }

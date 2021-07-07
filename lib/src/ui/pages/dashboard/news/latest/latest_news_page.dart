@@ -47,7 +47,7 @@ class _LatestNewsListPageState extends State<LatestNewsListPage> {
         if (viewState.isLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (viewState.paginatedItems != null) {
-          return _buildLoadedContent(viewState.paginatedItems);
+          return _buildLoadedContent(viewState.paginatedItems!);
         } else if (viewState.error != null) {
           return _buildErrorContent(providerContext);
         } else {

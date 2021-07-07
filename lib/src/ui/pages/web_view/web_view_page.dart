@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class WebViewPage extends StatelessWidget {
   final String url;
 
-  const WebViewPage(this.url) : assert(url != null);
+  const WebViewPage(this.url);
 
   @override
   Widget build(BuildContext context) {

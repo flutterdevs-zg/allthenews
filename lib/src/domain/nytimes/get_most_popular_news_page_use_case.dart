@@ -11,5 +11,5 @@ class GetMostPopularNewsPageUseCase extends GetPageUseCase<Article> {
   GetMostPopularNewsPageUseCase(this._nyTimesPaginatedRepository);
 
   @override
-  Future<List<Article>> call(Page page) => _nyTimesPaginatedRepository.getMostPopularArticlesPage(page);
+  Future<List<Article>?> call(Page page) => _nyTimesPaginatedRepository.getMostPopularArticlesPage(page);
 }

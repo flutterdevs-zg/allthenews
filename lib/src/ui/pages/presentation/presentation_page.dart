@@ -65,7 +65,7 @@ class _PresentationPageState extends State<PresentationPage> {
         ],
       );
     } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _navigateToHomePage(context));
+      WidgetsBinding.instance?.addPostFrameCallback((_) => _navigateToHomePage(context));
       return _buildProgressIndicator();
     }
   }
@@ -80,7 +80,7 @@ class _PresentationPageState extends State<PresentationPage> {
         child: PrimaryTextButton(
           text: Strings.current.next,
           onPressed: () {
-            if (_controller.page.toInt() == _presentationStepsProvider.provide().length - 1) {
+            if (_controller.page?.toInt() == _presentationStepsProvider.provide().length - 1) {
               _navigateToHomePage(context);
             } else {
               _goNextPage();
@@ -103,7 +103,7 @@ class _PresentationPageState extends State<PresentationPage> {
             onPageSelected: (int page) => _goToPage(page),
           ),
           const Spacer(),
-          FlatButton(
+          TextButton(
             onPressed: () => _navigateToHomePage(context),
             child: Text(Strings.current.skip),
           )
@@ -120,7 +120,7 @@ class _PresentationPageState extends State<PresentationPage> {
             final presentationSteps = _presentationStepsProvider.provide();
             return (index < presentationSteps.length)
                 ? _buildPresentationStep(context, presentationSteps[index])
-                : null;
+                : Container();
           },
         ),
       );
@@ -135,7 +135,7 @@ class _PresentationPageState extends State<PresentationPage> {
             const SizedBox(height: _Constants.presentationStepVerticalSpacing),
             Text(
               presentationStep.title,
-              style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: _Constants.presentationStepVerticalSpacing),
             Text(presentationStep.description),
@@ -146,7 +146,7 @@ class _PresentationPageState extends State<PresentationPage> {
     );
   }
 
-  void _goNextPage() => _goToPage(_controller.page.toInt() + 1);
+  void _goNextPage() => _goToPage(_controller.page!.toInt() + 1);
 
   void _goToPage(int page) {
     _controller.animateToPage(

@@ -14,10 +14,9 @@ NewestArticleResponse _$NewestArticleResponseFromJson(
     json['byline'] as String,
     json['title'] as String,
     json['abstract'] as String,
-    (json['multimedia'] as List)
-        ?.map((e) =>
-            e == null ? null : Multimedia.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    (json['multimedia'] as List<dynamic>?)
+        ?.map((e) => Multimedia.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
@@ -25,7 +24,7 @@ Map<String, dynamic> _$NewestArticleResponseToJson(
         NewestArticleResponse instance) =>
     <String, dynamic>{
       'url': instance.url,
-      'updated_date': instance.updated?.toIso8601String(),
+      'updated_date': instance.updated.toIso8601String(),
       'byline': instance.author,
       'title': instance.title,
       'abstract': instance.abstract,

@@ -2,8 +2,8 @@ import 'package:allthenews/src/domain/location/location.dart';
 
 class LocationViewState {
   final bool isLoading;
-  final Location location;
-  final LocationErrorViewEntity error;
+  final Location? location;
+  final LocationErrorViewEntity? error;
 
   const LocationViewState({
     this.isLoading = false,

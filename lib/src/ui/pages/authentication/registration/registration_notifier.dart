@@ -22,7 +22,7 @@ class RegistrationNotifier extends ChangeNotifier {
 
   String get emptyFieldError => _fieldErrorMessageProvider.getMessage(FieldError.isEmpty);
 
-  VoidCallback returnToProfile;
+  VoidCallback? returnToProfile;
 
   void validateFieldsAndCreateUser() {
     _validateFields(
@@ -59,7 +59,7 @@ class RegistrationNotifier extends ChangeNotifier {
     }
   }
 
-  void _validateFields({@required VoidCallback onValid, @required VoidCallback onInvalid}) {
+  void _validateFields({required VoidCallback onValid, required VoidCallback onInvalid}) {
     _state = _state.copyWithFieldsError(
       emailError: _state.email.isEmpty ? emptyFieldError : null,
       nameError: _state.name.isEmpty ? emptyFieldError : null,

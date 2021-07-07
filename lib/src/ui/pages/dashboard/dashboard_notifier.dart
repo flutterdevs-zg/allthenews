@@ -15,7 +15,7 @@ class DashboardNotifier extends ChangeNotifier {
   final NYTimesReactiveRepository _nyTimesReactiveRepository;
   final SettingsRepository _settingsRepository;
   final PopularNewsCriterionMessageMapper _popularNewsCriterionMessageMapper;
-  StreamSubscription _streamSubscription;
+  StreamSubscription? _streamSubscription;
 
   DashboardViewState _state = const DashboardViewState();
 
@@ -39,10 +39,10 @@ class DashboardNotifier extends ChangeNotifier {
       ],
       (data) => DashboardViewState(
         viewEntity: DashboardViewEntity(
-          newestArticles: data[0] as List<Article>,
-          mostPopularArticles: data[1][0] as List<Article>,
+          newestArticles: data[0]! as List<Article>,
+          mostPopularArticles: (data[1]! as List)[0] as List<Article>,
           popularNewsTitle:
-              _popularNewsCriterionMessageMapper.map(data[1][1] as PopularNewsCriterion),
+              _popularNewsCriterionMessageMapper.map((data[1]! as List)[1] as PopularNewsCriterion),
         ),
       ),
     )

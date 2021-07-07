@@ -45,9 +45,9 @@ class _LocationPageState extends State<LocationPage> {
           if (viewState.isLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (viewState.error != null) {
-            return _buildErrorContent(viewState.error);
+            return _buildErrorContent(viewState.error!);
           } else if (viewState.location != null) {
-            return LocationMap(viewState.location);
+            return LocationMap(viewState.location!);
           } else {
             return Container();
           }

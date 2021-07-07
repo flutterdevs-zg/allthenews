@@ -9,9 +9,9 @@ class ThemeNotifier extends ChangeNotifier {
 
   ThemeNotifier(this._settingsRepository);
 
-  ThemeData _themeData;
+  ThemeData? _themeData;
 
-  ThemeData get themeData => _themeData;
+  ThemeData? get themeData => _themeData;
   bool get isLoading => _themeData == null;
 
   Future<void> initTheme() async {

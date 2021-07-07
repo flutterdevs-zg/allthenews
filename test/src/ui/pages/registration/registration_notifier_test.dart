@@ -3,21 +3,18 @@ import 'package:allthenews/src/domain/authentication/authentication_repository.d
 import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/registration/registration_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../common/change_notifier_test_util.dart';
+import 'registration_notifier_test.mocks.dart';
 
-class MockAuthenticationRepository extends Mock implements AuthenticationRepository {}
-
-class MockAuthenticationMessageProvider extends Mock implements MessageProvider {}
-
-class MockFieldMessageProvider extends Mock implements MessageProvider {}
-
+@GenerateMocks([AuthenticationRepository, MessageProvider])
 void main() {
-  RegistrationNotifier registrationNotifier;
-  MockAuthenticationRepository mockAuthenticationRepository;
-  MockAuthenticationMessageProvider mockAuthenticationMessageProvider;
-  MockFieldMessageProvider mockFieldMessageProvider;
+  late RegistrationNotifier registrationNotifier;
+  late MockAuthenticationRepository mockAuthenticationRepository;
+  late MockMessageProvider mockAuthenticationMessageProvider;
+  late MockMessageProvider mockFieldMessageProvider;
 
   const testErrorMessage = "error";
   const testEmail = "email";
@@ -26,8 +23,8 @@ void main() {
 
   setUp(() {
     mockAuthenticationRepository = MockAuthenticationRepository();
-    mockAuthenticationMessageProvider = MockAuthenticationMessageProvider();
-    mockFieldMessageProvider = MockFieldMessageProvider();
+    mockAuthenticationMessageProvider = MockMessageProvider();
+    mockFieldMessageProvider = MockMessageProvider();
     registrationNotifier = RegistrationNotifier(
       mockAuthenticationRepository,
       mockAuthenticationMessageProvider,

@@ -27,10 +27,6 @@ class RoutePageManager extends ChangeNotifier {
   List<Page> _buildInitialPages(BottomBarNotifier state) {
     return [
       MaterialPage(
-        child: HomePage(state),
-        key: const ValueKey(PagePathLocation.homePage),
-      ),
-      MaterialPage(
         child: PresentationPage(),
         key: const ValueKey(PagePathLocation.presentationPage),
       )
@@ -48,7 +44,7 @@ class RoutePageManager extends ChangeNotifier {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   AppPath get currentPath {
-    final lastPageKeyValue = (_pages.last.key as ValueKey<String>).value;
+    final lastPageKeyValue = (_pages.last.key as ValueKey<String>?)!.value;
     final currentPath = parseRoute(Uri.parse(lastPageKeyValue));
     if (currentPath == const HomePath()) {
       return _bottomBarNotifier.selectedIndex == 0 ? const DashboardPath() : const ProfilePath();
@@ -74,6 +70,7 @@ class RoutePageManager extends ChangeNotifier {
         key: const ValueKey(PagePathLocation.settingsPage),
       ));
     } else if (configuration is PresentationPath) {
+      _pages.clear();
       _pages.add(MaterialPage(
         child: PresentationPage(),
         key: const ValueKey(PagePathLocation.presentationPage),
@@ -120,7 +117,11 @@ class RoutePageManager extends ChangeNotifier {
         key: ValueKey('${PagePathLocation.webViewPage}?url=${configuration.url}'),
       ));
     } else if (configuration is HomePath) {
-      _pages.removeWhere((element) => element.key != const Key(PagePathLocation.homePage));
+      _pages.clear();
+      _pages.add(MaterialPage(
+        child: HomePage(_bottomBarNotifier),
+        key: const ValueKey(PagePathLocation.homePage),
+      ));
     }
     notifyListeners();
     return;

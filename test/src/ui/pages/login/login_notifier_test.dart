@@ -3,21 +3,18 @@ import 'package:allthenews/src/domain/authentication/authentication_repository.d
 import 'package:allthenews/src/ui/common/message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../common/change_notifier_test_util.dart';
+import 'login_notifier_test.mocks.dart';
 
-class MockAuthenticationRepository extends Mock implements AuthenticationRepository {}
-
-class MockAuthenticationMessageProvider extends Mock implements MessageProvider {}
-
-class MockFieldErrorMessageProvider extends Mock implements MessageProvider {}
-
+@GenerateMocks([AuthenticationRepository, MessageProvider])
 void main() {
-  LoginNotifier loginNotifier;
-  MockAuthenticationRepository mockAuthenticationRepository;
-  MockAuthenticationMessageProvider mockAuthenticationMessageProvider;
-  MockFieldErrorMessageProvider mockFieldErrorMessageProvider;
+  late LoginNotifier loginNotifier;
+  late MockAuthenticationRepository mockAuthenticationRepository;
+  late MockMessageProvider mockAuthenticationMessageProvider;
+  late MockMessageProvider mockFieldErrorMessageProvider;
 
   const testErrorMessage = "error";
   const testEmail = "email";
@@ -25,8 +22,8 @@ void main() {
 
   setUp(() {
     mockAuthenticationRepository = MockAuthenticationRepository();
-    mockAuthenticationMessageProvider = MockAuthenticationMessageProvider();
-    mockFieldErrorMessageProvider = MockFieldErrorMessageProvider();
+    mockAuthenticationMessageProvider = MockMessageProvider();
+    mockFieldErrorMessageProvider = MockMessageProvider();
     loginNotifier = LoginNotifier(
       mockAuthenticationRepository,
       mockAuthenticationMessageProvider,

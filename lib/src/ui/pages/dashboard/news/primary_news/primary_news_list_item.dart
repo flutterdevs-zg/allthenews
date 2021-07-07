@@ -1,6 +1,5 @@
 import 'package:allthenews/src/app/navigation/route_page_manager.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,9 +19,7 @@ abstract class _Constants {
 class PrimaryNewsListItem extends StatelessWidget {
   final PrimaryNewsListEntity news;
 
-  const PrimaryNewsListItem({Key key, @required this.news})
-      : assert(news != null),
-        super(key: key);
+  const PrimaryNewsListItem({required this.news});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +96,7 @@ class PrimaryNewsListItem extends StatelessWidget {
           ),
           Text(
             news.authorName,
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
                   color: Colors.white,
                 ),
           ),
@@ -116,7 +113,7 @@ class PrimaryNewsListItem extends StatelessWidget {
         children: [
           Text(
             news.title,
-            style: Theme.of(context).textTheme.subtitle2.copyWith(
+            style: Theme.of(context).textTheme.subtitle2?.copyWith(
                   color: Colors.white,
                 ),
             overflow: TextOverflow.ellipsis,

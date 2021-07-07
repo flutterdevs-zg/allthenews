@@ -5,16 +5,16 @@ part 'multimedia.g.dart';
 
 @JsonSerializable()
 class Multimedia {
-  final String type;
+  final String? type;
 
-  final String subtype;
+  final String? subtype;
 
-  final String caption;
+  final String? caption;
 
-  final ImageFormat format;
+  final ImageFormat? format;
 
   @JsonKey(name: 'url')
-  final String thumbnail;
+  final String? thumbnail;
 
   const Multimedia(
     this.type,

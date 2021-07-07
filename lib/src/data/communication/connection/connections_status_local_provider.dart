@@ -17,6 +17,5 @@ class ConnectionStatusLocalProvider implements ConnectionStatusProvider {
       case ConnectivityResult.none:
         return ConnectionStatus.none;
     }
-    return ConnectionStatus.none;
   }
 }

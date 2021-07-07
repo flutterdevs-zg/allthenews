@@ -1,6 +1,7 @@
 import 'package:allthenews/src/data/response/image_format.dart';
 import 'package:allthenews/src/data/response/multimedia.dart';
 import 'package:allthenews/src/domain/model/article.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:json_annotation/json_annotation.dart';
 
 part 'newest_article_response.g.dart';
@@ -20,7 +21,7 @@ class NewestArticleResponse {
 
   final String abstract;
 
-  final List<Multimedia> multimedia;
+  final List<Multimedia>? multimedia;
 
   const NewestArticleResponse(
     this.url,
@@ -40,8 +41,8 @@ class NewestArticleResponse {
         abstract: response.abstract,
         updateDateTime: response.updated,
         url: response.url,
-        thumbnail: response?.multimedia
-            ?.firstWhere((element) => element.format == ImageFormat.medium, orElse: () => null)
+        thumbnail: response.multimedia
+            ?.firstWhereOrNull((element) => element.format == ImageFormat.medium)
             ?.thumbnail,
       );
 }

@@ -10,10 +10,9 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const PrimaryButton({
-    @required this.child,
-    @required this.onPressed,
-  })  : assert(onPressed != null),
-        assert(child != null);
+    required this.child,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

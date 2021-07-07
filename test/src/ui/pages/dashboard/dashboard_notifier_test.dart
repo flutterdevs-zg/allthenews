@@ -6,19 +6,18 @@ import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../../common/change_notifier_test_util.dart';
+import 'dashboard_notifier_test.mocks.dart';
 import 'news/fake_popular_news_criterion_message_mapper.dart';
 
-class MockNYTimesReactiveRepository extends Mock implements NYTimesReactiveRepository {}
-
-class MockSettingsRepository extends Mock implements SettingsRepository {}
-
+@GenerateMocks([NYTimesReactiveRepository, SettingsRepository])
 void main() {
-  DashboardNotifier dashboardNotifier;
-  MockNYTimesReactiveRepository mockNYTimesReactiveRepository;
-  MockSettingsRepository mockSettingsRepository;
+  late DashboardNotifier dashboardNotifier;
+  late MockNYTimesReactiveRepository mockNYTimesReactiveRepository;
+  late MockSettingsRepository mockSettingsRepository;
   FakePopularNewsCriterionMessageMapper fakePopularNewsCriterionMessageMapper;
 
   setUp(() {

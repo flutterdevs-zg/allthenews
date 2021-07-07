@@ -11,7 +11,7 @@ import 'package:allthenews/src/domain/settings/settings_repository.dart';
 class NyTimesReactiveRestRepository extends NYTimesReactiveRepository {
   final NYTimesRepository _nyTimesRepository;
   final NyTimesCachedRepository _nyTimesCachedRepository;
-  final CachePolicy<Article> _articleCachePolicy;
+  final CachePolicy<Article?> _articleCachePolicy;
   final SettingsRepository _settingsRepository;
 
   NyTimesReactiveRestRepository(
@@ -24,7 +24,7 @@ class NyTimesReactiveRestRepository extends NYTimesReactiveRepository {
   @override
   Stream<List<Article>> getMostPopularArticlesStream() async* {
     final PopularNewsCriterion popularNewsCriterion = await _settingsRepository.getPopularNewsCriterion();
-    final Article latestCachedArticle = await _nyTimesCachedRepository.getLatestMostPopularArticle(popularNewsCriterion);
+    final Article? latestCachedArticle = await _nyTimesCachedRepository.getLatestMostPopularArticle(popularNewsCriterion);
     if (_articleCachePolicy.isValid(latestCachedArticle)) {
       yield await _nyTimesCachedRepository.getMostPopularArticles(popularNewsCriterion);
     }
@@ -36,7 +36,7 @@ class NyTimesReactiveRestRepository extends NYTimesReactiveRepository {
 
   @override
   Stream<List<Article>> getNewestArticlesStream() async* {
-    final Article latestCachedArticle = await _nyTimesCachedRepository.getLatestArticle();
+    final Article? latestCachedArticle = await _nyTimesCachedRepository.getLatestArticle();
     if (_articleCachePolicy.isValid(latestCachedArticle)) {
       yield await _nyTimesCachedRepository.getNewestArticles();
     }

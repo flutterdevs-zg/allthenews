@@ -12,10 +12,10 @@ abstract class _Constants {
 class ApiKeyLocalRepository extends ApiKeyRepository {
   final ApiKeyRepository _apiKeyRepository = _ApiKeyCompositeRepository();
 
-  ApiKey _cachedKey;
+  ApiKey? _cachedKey;
 
   @override
-  Future<ApiKey> getKey() async => _cachedKey ??= await _apiKeyRepository.getKey();
+  Future<ApiKey?> getKey() async => _cachedKey ??= await _apiKeyRepository.getKey();
 }
 
 class _ApiKeyCompositeRepository extends ApiKeyRepository {
@@ -24,23 +24,30 @@ class _ApiKeyCompositeRepository extends ApiKeyRepository {
       _ApiKeyEnvironmentalVariableRepository();
 
   @override
-  Future<ApiKey> getKey() async =>
-      await _apiKeyEnvironmentalVariableRepository.getKey() ?? await _apiKeyFileRepository.getKey();
+  Future<ApiKey?> getKey() async {
+    final apiKeyFromEnvironment = await _apiKeyEnvironmentalVariableRepository.getKey();
+
+    if (apiKeyFromEnvironment?.value == null) {
+      return _apiKeyFileRepository.getKey();
+    } else {
+      return apiKeyFromEnvironment;
+    }
+  }
 }
 
 class _ApiKeyEnvironmentalVariableRepository extends ApiKeyRepository {
-  static const _apiKey = String.fromEnvironment(
-    'nyTimesApiKey',
-    defaultValue: null,
-  );
+  static const _apiKey =
+      bool.hasEnvironment("nyTimesApiKey") ? String.fromEnvironment("nyTimesApiKey") : null;
 
   @override
-  Future<ApiKey> getKey() => _apiKey == null ? Future.value() : Future.value(ApiKey(_apiKey));
+  Future<ApiKey?> getKey() {
+    return _apiKey == null ? Future.value() : Future.value(ApiKey(_apiKey));
+  }
 }
 
 class _ApiKeyFileRepository extends ApiKeyRepository {
   @override
-  Future<ApiKey> getKey() {
+  Future<ApiKey?> getKey() {
     return rootBundle.loadStructuredData<ApiKey>(
       _Constants.newYorkTimesApiKeyFileLocation,
       (jsonStr) async {

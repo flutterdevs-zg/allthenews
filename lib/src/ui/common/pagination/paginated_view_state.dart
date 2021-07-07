@@ -1,9 +1,9 @@
 class PaginatedViewState<T> {
   final bool isLoading;
-  final PaginatedItems<T> paginatedItems;
-  final Object error;
+  final PaginatedItems<T>? paginatedItems;
+  final Object? error;
 
-  const PaginatedViewState({
+  PaginatedViewState({
     this.isLoading = false,
     this.paginatedItems,
     this.error,
@@ -14,12 +14,12 @@ class PaginatedItems<T> {
   final List<PaginatedItem<T>> items;
   final bool hasMoreElements;
 
-  const PaginatedItems({
-    this.items,
+  PaginatedItems({
+    required this.items,
     this.hasMoreElements = false,
   });
 
-  List<PaginatedContentItem<T>> get contentItems => items.whereType<PaginatedContentItem<T>>().toList();
+  List<PaginatedContentItem<T>>? get contentItems => items.whereType<PaginatedContentItem<T>>().toList();
 
 }
 

@@ -5,25 +5,22 @@ import 'package:allthenews/src/domain/nytimes/ny_times_repository.dart';
 import 'package:allthenews/src/domain/settings/popular_news_criterion.dart';
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../domain/article.dart';
 import 'fake_ny_times_cached_repository.dart';
+import 'ny_times_paginated_rest_repository_test.mocks.dart';
 
-class MockHttpClient extends Mock implements HttpClient {}
-
-class MockSettingsRepository extends Mock implements SettingsRepository {}
-
-class MockNyTimesRepository extends Mock implements NYTimesRepository {}
-
+@GenerateMocks([HttpClient, SettingsRepository, NYTimesRepository])
 void main() {
-  NyTimesPaginatedRestRepository nyTimesPaginatedRestRepository;
-  MockNyTimesRepository mockNyTimesRepository;
-  FakeNyTimesCachedRepository fakeNyTimesCachedRepository;
-  MockSettingsRepository mockSettingsRepository;
+  late NyTimesPaginatedRestRepository nyTimesPaginatedRestRepository;
+  late MockNYTimesRepository mockNyTimesRepository;
+  late FakeNyTimesCachedRepository fakeNyTimesCachedRepository;
+  late MockSettingsRepository mockSettingsRepository;
 
   setUp(() {
-    mockNyTimesRepository = MockNyTimesRepository();
+    mockNyTimesRepository = MockNYTimesRepository();
     fakeNyTimesCachedRepository = FakeNyTimesCachedRepository();
     mockSettingsRepository = MockSettingsRepository();
     nyTimesPaginatedRestRepository = NyTimesPaginatedRestRepository(

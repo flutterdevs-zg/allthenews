@@ -16,7 +16,7 @@ abstract class _Constants {
 }
 
 void main() {
-  FirebaseExceptionMapper firebaseExceptionMapper;
+  late FirebaseExceptionMapper firebaseExceptionMapper;
 
   setUpAll(() {
     firebaseExceptionMapper = FirebaseExceptionMapper();

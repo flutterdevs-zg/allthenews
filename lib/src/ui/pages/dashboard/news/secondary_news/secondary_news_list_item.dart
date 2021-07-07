@@ -21,9 +21,7 @@ abstract class _Constants {
 class SecondaryNewsListItem extends StatelessWidget {
   final SecondaryNewsListEntity news;
 
-  const SecondaryNewsListItem({Key key, @required this.news})
-      : assert(news != null),
-        super(key: key);
+  const SecondaryNewsListItem({required this.news});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +74,7 @@ class SecondaryNewsListItem extends StatelessWidget {
       );
 
   Widget _buildSubtitle(BuildContext context) {
-    final subtitleStyle = Theme.of(context).textTheme.overline;
+    final subtitleStyle = Theme.of(context).textTheme.overline!;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,8 +87,8 @@ class SecondaryNewsListItem extends StatelessWidget {
           alignment: Alignment.center,
           width: _Constants.subtitleHorizontalPadding,
           child: DotSeparator(
-            size: subtitleStyle.fontSize,
-            color: subtitleStyle.color,
+            size: subtitleStyle.fontSize!,
+            color: subtitleStyle.color!,
           ),
         ),
         Text(

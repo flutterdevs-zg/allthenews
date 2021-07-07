@@ -34,6 +34,5 @@ extension PresentationImageTypeExtenstions on PresentationImageType {
       case PresentationImageType.newsIcon:
         return SvgPicture.asset('assets/images/news.svg', color: Colors.grey);
     }
-    return null;
   }
 }

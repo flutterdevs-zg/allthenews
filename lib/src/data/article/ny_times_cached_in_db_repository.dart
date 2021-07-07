@@ -25,10 +25,10 @@ class NyTimesCachedInDbRepository extends NyTimesCachedRepository {
   Future<void> saveNewestArticles(List<Article> articles) => _articleDao.insertArticles(articles.map((article) => article.toNewestArticleCompanion()).toList());
 
   @override
-  Future<Article> getLatestArticle() async => (await _articleDao.getLatestArticle())?.toDomain();
+  Future<Article?> getLatestArticle() async => (await _articleDao.getLatestArticle())?.toDomain();
 
   @override
-  Future<Article> getLatestMostPopularArticle(PopularNewsCriterion popularNewsCriterion) async =>
+  Future<Article?> getLatestMostPopularArticle(PopularNewsCriterion popularNewsCriterion) async =>
       (await _articleDao.getLatestMostPopularArticle(popularNewsCriterion))?.toDomain();
 
   @override

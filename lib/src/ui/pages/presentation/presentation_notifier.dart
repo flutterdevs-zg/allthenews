@@ -7,13 +7,16 @@ class PresentationNotifier extends ChangeNotifier {
 
   PresentationNotifier(this._presentationShowingRepository);
 
-  bool _shouldShowPresentation;
+  bool _shouldShowPresentation = false;
+  bool _isLoading = false;
 
   bool get shouldShowPresentation => _shouldShowPresentation;
-  bool get isLoading => _shouldShowPresentation == null;
+  bool get isLoading => _isLoading;
 
   Future<void> checkAppPresentation() async {
-    _shouldShowPresentation = await _presentationShowingRepository.shouldShowPresentation();
+    _isLoading = true;
+    _shouldShowPresentation = await _presentationShowingRepository.shouldShowPresentation() ?? true;
+    _isLoading = false;
     notifyListeners();
   }
 

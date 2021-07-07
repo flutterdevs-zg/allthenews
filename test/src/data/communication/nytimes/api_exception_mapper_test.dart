@@ -6,18 +6,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  ApiExceptionMapper apiExceptionMapper;
+  late ApiExceptionMapper apiExceptionMapper;
 
   setUpAll(() {
     apiExceptionMapper = ApiExceptionMapper();
   });
 
   group('api exception mappings tests', () {
+    final requestOptions = RequestOptions(path: "");
     final inputsToMatchers = {
-      DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 500)): isA<ServerErrorException>(),
-      DioError(error: const SocketException('')): isA<ConnectionException>(),
-      DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 401)): isA<UnauthorizedException>(),
-      DioError(type: DioErrorType.RESPONSE, response: Response(statusCode: 404)): isA<InvalidUrlException>(),
+      DioError(type: DioErrorType.response, response: Response(statusCode: 500,requestOptions: requestOptions),requestOptions: requestOptions): isA<ServerErrorException>(),
+      DioError(error: const SocketException(''),requestOptions: requestOptions): isA<ConnectionException>(),
+      DioError(type: DioErrorType.response, response: Response(statusCode: 401,requestOptions: requestOptions),requestOptions: requestOptions): isA<UnauthorizedException>(),
+      DioError(type: DioErrorType.response, response: Response(statusCode: 404,requestOptions: requestOptions,),requestOptions: requestOptions): isA<InvalidUrlException>(),
     };
     inputsToMatchers.forEach((input, matcher) {
       test("$input -> $matcher", () {

@@ -6,8 +6,8 @@ class DashboardViewEntity {
   final String popularNewsTitle;
 
   DashboardViewEntity({
-    this.mostPopularArticles,
-    this.newestArticles,
-    this.popularNewsTitle,
+    required this.mostPopularArticles,
+    required this.newestArticles,
+    required this.popularNewsTitle,
   }) : super();
 }
