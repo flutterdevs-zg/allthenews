@@ -48,5 +48,6 @@
   "emailAlreadyInUseError": "Adres e-mail jest zajęty",
   "weakPasswordError": "Hasło jest zbyt słabe",
   "operationNotAllowedError": "Logowanie za pomocą e-maila i hasła zostało wyłączone",
-  "tooManyRequests": "Zbyt dużo nieudanych prób. Spróbuj ponownie później."
+  "tooManyRequests": "Zbyt dużo nieudanych prób. Spróbuj ponownie później.",
+  "tools": "Narzędzia"
 }

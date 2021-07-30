@@ -40,7 +40,7 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
   @override
   Future<void> updateUser(String name) async {
     try {
-      return await _auth.currentUser?.updateProfile(displayName: name);
+      return await _auth.currentUser?.updateDisplayName(name);
     } on Exception catch (exception) {
       throw _exceptionMapper.toDomainException(exception);
     }

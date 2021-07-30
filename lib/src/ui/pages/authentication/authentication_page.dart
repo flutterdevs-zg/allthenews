@@ -10,12 +10,7 @@ abstract class _Constants {
   static const buttonHorizontalPadding = 20.0;
 }
 
-class AuthenticationPage extends StatefulWidget {
-  @override
-  _AuthenticationPageState createState() => _AuthenticationPageState();
-}
-
-class _AuthenticationPageState extends State<AuthenticationPage> {
+class AuthenticationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

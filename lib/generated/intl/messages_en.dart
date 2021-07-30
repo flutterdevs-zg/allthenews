@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "tooManyRequests": MessageLookupByLibrary.simpleMessage(
             "We have blocked all requests from this device due to unusual activity. Try again later."),
+        "tools": MessageLookupByLibrary.simpleMessage("Tools"),
         "unknownError": MessageLookupByLibrary.simpleMessage("Unknown error"),
         "userDisabledError": MessageLookupByLibrary.simpleMessage(
             "User corresponding to the given e-mail has been disabled"),
