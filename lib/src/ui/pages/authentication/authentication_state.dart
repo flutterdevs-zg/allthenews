@@ -1,11 +1,11 @@
 import 'package:allthenews/src/domain/model/user.dart';
 
-class ProfileState {
+class AuthenticationState {
   final bool isLoading;
   final User? user;
   final String? error;
 
-  const ProfileState({
+  const AuthenticationState({
     this.isLoading = false,
     this.user,
     this.error,

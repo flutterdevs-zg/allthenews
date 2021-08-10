@@ -1,5 +1,9 @@
 include: package:lint/analysis_options.yaml
 
+linter:
+  rules:
+    sort_pub_dependencies: false
+
 analyzer:
   errors:
     invalid_assignment: info # because analyzer doesn't respect excluded files: https://github.com/dart-lang/sdk/issues/25551

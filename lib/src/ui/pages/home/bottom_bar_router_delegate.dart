@@ -13,18 +13,8 @@ class BottomBarRouterDelegate extends RouterDelegate<BottomBarAppPath>
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   BottomBarNotifier _bottomBarNotifier;
-  final List<PreferredSizeWidget> _appBars = [
-    const NyTimesAppBar(
-      title: UntranslatableStrings.newYorkTimes,
-      hasSearchAction: true,
-      hasSettingsAction: true,
-    ),
-    NyTimesAppBar(title: Strings.current.profile),
-  ];
 
   BottomBarNotifier get bottomBarNotifier => _bottomBarNotifier;
-
-  PreferredSizeWidget get appBar => _appBars[bottomBarNotifier.selectedIndex];
 
   set bottomBarNotifier(BottomBarNotifier value) {
     if (value == _bottomBarNotifier) {
@@ -79,6 +69,22 @@ class BottomBarRouterDelegate extends RouterDelegate<BottomBarAppPath>
     } else {
       _bottomBarNotifier.selectedIndex = 0;
       return Future.value(false);
+    }
+  }
+
+  NyTimesAppBar? getAppBar({required bool isAuthenticated}) {
+    if (bottomBarNotifier.selectedIndex == 0) {
+      return const NyTimesAppBar(
+        title: UntranslatableStrings.newYorkTimes,
+        hasSearchAction: true,
+        hasSettingsAction: true,
+      );
+    } else {
+      if (isAuthenticated) {
+        return const NyTimesAppBar(hasSettingsAction: true,);
+      } else {
+        return NyTimesAppBar(title: Strings.current.profile);
+      }
     }
   }
 }

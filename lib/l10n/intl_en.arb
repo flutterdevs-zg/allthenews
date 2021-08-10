@@ -48,5 +48,6 @@
   "emailAlreadyInUseError": "E-mail address already in use",
   "weakPasswordError": "The password is too weak",
   "operationNotAllowedError": "E-mail/password accounts are not enabled for the project",
-  "tooManyRequests": "We have blocked all requests from this device due to unusual activity. Try again later."
+  "tooManyRequests": "We have blocked all requests from this device due to unusual activity. Try again later.",
+  "tools": "Tools"
 }

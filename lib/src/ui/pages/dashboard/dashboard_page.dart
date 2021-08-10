@@ -90,7 +90,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(height: _Constants.sectionSpacing),
                 _buildNewsSectionHeader(
                   title: Strings.current.newest,
-                    navigationAction: () => context.read<RoutePageManager>().openLatestNews(),
+                  navigationAction: () => context.read<RoutePageManager>().openLatestNews(),
                 ),
                 const SizedBox(height: _Constants.sectionHeaderPadding),
                 _buildSecondaryNewsItems(homePageViewEntity.newestArticles),

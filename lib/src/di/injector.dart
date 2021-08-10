@@ -38,8 +38,8 @@ import 'package:allthenews/src/domain/presentation/presentation_showing_reposito
 import 'package:allthenews/src/domain/settings/settings_repository.dart';
 import 'package:allthenews/src/ui/common/theme/theme_notifier.dart';
 import 'package:allthenews/src/ui/common/util/mapper.dart';
-import 'package:allthenews/src/ui/pages/authentication/authentication_message_provider.dart';
-import 'package:allthenews/src/ui/pages/authentication/field_error_message_provider.dart';
+import 'package:allthenews/src/ui/pages/authentication/message/authentication_message_provider.dart';
+import 'package:allthenews/src/ui/pages/authentication/message/field_error_message_provider.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_notifier.dart';
 import 'package:allthenews/src/ui/pages/authentication/registration/registration_notifier.dart';
 import 'package:allthenews/src/ui/pages/dashboard/dashboard_notifier.dart';
@@ -49,11 +49,11 @@ import 'package:allthenews/src/ui/pages/dashboard/news/most_popular/most_popular
 import 'package:allthenews/src/ui/pages/dashboard/news/popular_news_criterion_message_mapper.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/primary_news/primary_news_list_entity.dart';
 import 'package:allthenews/src/ui/pages/dashboard/news/secondary_news/secondary_news_list_entity.dart';
+import 'package:allthenews/src/ui/pages/authentication/authentication_notifier.dart';
 import 'package:allthenews/src/ui/pages/location/geolocator_location_provider.dart';
 import 'package:allthenews/src/ui/pages/location/location_error_view_entity_mapper.dart';
 import 'package:allthenews/src/ui/pages/location/location_notifier.dart';
 import 'package:allthenews/src/ui/pages/presentation/presentation_notifier.dart';
-import 'package:allthenews/src/ui/pages/profile/profile_notifier.dart';
 import 'package:allthenews/src/ui/pages/settings/settings_notifier.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
@@ -159,10 +159,10 @@ void _injectNotifiers() {
   _locator.registerFactory(() => LatestNewsNotifier(
       _locator<GetPageUseCase<Article>>(instanceName: _Constants.latestNews),
       _locator<Mapper<Article, SecondaryNewsListEntity>>()));
-  _locator.registerFactory(() => ProfileNotifier(
-        _locator<AuthenticationRepository>(),
-        AuthenticationMessageProvider(),
-      ));
+  _locator.registerFactory(() => AuthenticationNotifier(
+    _locator<AuthenticationRepository>(),
+    AuthenticationMessageProvider(),
+  ));
   _locator.registerFactory(() => RegistrationNotifier(
         _locator<AuthenticationRepository>(),
         AuthenticationMessageProvider(),

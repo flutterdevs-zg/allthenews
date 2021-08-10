@@ -276,93 +276,42 @@ class $ArticlesTable extends Articles
   final String? _alias;
   $ArticlesTable(this._db, [this._alias]);
   final VerificationMeta _urlMeta = const VerificationMeta('url');
-  @override
-  late final GeneratedTextColumn url = _constructUrl();
-  GeneratedTextColumn _constructUrl() {
-    return GeneratedTextColumn(
-      'url',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> url = GeneratedColumn<String?>(
+      'url', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _updateDateTimeMeta =
       const VerificationMeta('updateDateTime');
-  @override
-  late final GeneratedDateTimeColumn updateDateTime =
-      _constructUpdateDateTime();
-  GeneratedDateTimeColumn _constructUpdateDateTime() {
-    return GeneratedDateTimeColumn(
-      'update_date_time',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<DateTime?> updateDateTime =
+      GeneratedColumn<DateTime?>('update_date_time', aliasedName, false,
+          typeName: 'INTEGER', requiredDuringInsert: true);
   final VerificationMeta _authorNameMeta = const VerificationMeta('authorName');
-  @override
-  late final GeneratedTextColumn authorName = _constructAuthorName();
-  GeneratedTextColumn _constructAuthorName() {
-    return GeneratedTextColumn(
-      'author_name',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> authorName = GeneratedColumn<String?>(
+      'author_name', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _titleMeta = const VerificationMeta('title');
-  @override
-  late final GeneratedTextColumn title = _constructTitle();
-  GeneratedTextColumn _constructTitle() {
-    return GeneratedTextColumn(
-      'title',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
+      'title', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _abstractMeta = const VerificationMeta('abstract');
-  @override
-  late final GeneratedTextColumn abstract = _constructAbstract();
-  GeneratedTextColumn _constructAbstract() {
-    return GeneratedTextColumn(
-      'abstract',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> abstract = GeneratedColumn<String?>(
+      'abstract', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _thumbnailMeta = const VerificationMeta('thumbnail');
-  @override
-  late final GeneratedTextColumn thumbnail = _constructThumbnail();
-  GeneratedTextColumn _constructThumbnail() {
-    return GeneratedTextColumn(
-      'thumbnail',
-      $tableName,
-      true,
-    );
-  }
-
+  late final GeneratedColumn<String?> thumbnail = GeneratedColumn<String?>(
+      'thumbnail', aliasedName, true,
+      typeName: 'TEXT', requiredDuringInsert: false);
   final VerificationMeta _typeMeta = const VerificationMeta('type');
-  @override
-  late final GeneratedTextColumn type = _constructType();
-  GeneratedTextColumn _constructType() {
-    return GeneratedTextColumn(
-      'type',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumnWithTypeConverter<ArticleDtoType, String?> type =
+      GeneratedColumn<String?>('type', aliasedName, false,
+              typeName: 'TEXT', requiredDuringInsert: true)
+          .withConverter<ArticleDtoType>($ArticlesTable.$converter0);
   @override
   List<GeneratedColumn> get $columns =>
       [url, updateDateTime, authorName, title, abstract, thumbnail, type];
   @override
-  $ArticlesTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'articles';
   @override
-  String get $tableName => _alias ?? 'articles';
-  @override
-  final String actualTableName = 'articles';
+  String get actualTableName => 'articles';
   @override
   VerificationContext validateIntegrity(Insertable<ArticleDto> instance,
       {bool isInserting = false}) {

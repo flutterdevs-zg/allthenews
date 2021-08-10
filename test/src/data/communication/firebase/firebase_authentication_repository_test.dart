@@ -71,7 +71,7 @@ void main() {
       when(mockFirebaseAuth.currentUser).thenReturn(testUser);
 
       authenticationRepository.updateUser(testUserName);
-      verify(testUser.updateProfile(displayName: testUserName)).called(1);
+      verify(testUser.updateDisplayName(testUserName)).called(1);
       verifyZeroInteractions(mockExceptionMapper);
     });
 

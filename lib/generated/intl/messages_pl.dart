@@ -89,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "skip": MessageLookupByLibrary.simpleMessage("Pomiń"),
         "tooManyRequests": MessageLookupByLibrary.simpleMessage(
             "Zbyt dużo nieudanych prób. Spróbuj ponownie później."),
+        "tools": MessageLookupByLibrary.simpleMessage("Narzędzia"),
         "unknownError": MessageLookupByLibrary.simpleMessage("Nieznany błąd"),
         "userDisabledError": MessageLookupByLibrary.simpleMessage(
             "Użytkownik powiązany z podanym e-mailem został zablokowany"),

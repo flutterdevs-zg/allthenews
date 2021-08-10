@@ -4,7 +4,7 @@ import 'package:allthenews/src/di/injector.dart';
 import 'package:allthenews/src/ui/common/widget/ny_times_appbar.dart';
 import 'package:allthenews/src/ui/common/widget/primary_text_button.dart';
 import 'package:allthenews/src/ui/pages/authentication/auth_text_field.dart';
-import 'package:allthenews/src/ui/pages/authentication/authentication_error_message.dart';
+import 'package:allthenews/src/ui/pages/authentication/message/authentication_error_message.dart';
 import 'package:allthenews/src/ui/pages/authentication/login/login_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

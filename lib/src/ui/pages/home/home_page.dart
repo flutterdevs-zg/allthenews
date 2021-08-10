@@ -1,3 +1,5 @@
+import 'package:allthenews/src/di/injector.dart';
+import 'package:allthenews/src/ui/pages/authentication/authentication_notifier.dart';
 import 'package:allthenews/src/ui/pages/home/bottom_bar_notifier.dart';
 import 'package:allthenews/src/ui/pages/home/bottom_bar_router_delegate.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +27,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _backButtonDispatcher =
-        Router.of(context).backButtonDispatcher?.createChildBackButtonDispatcher();
+    _backButtonDispatcher = Router.of(context)
+        .backButtonDispatcher
+        ?.createChildBackButtonDispatcher();
   }
 
   @override
@@ -38,12 +41,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     _backButtonDispatcher?.takePriority();
-    return ChangeNotifierProvider.value(
-      value: widget._bottomBarNotifier,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: widget._bottomBarNotifier),
+        ChangeNotifierProvider(create: (context) => inject<AuthenticationNotifier>()..initUserState()),
+      ],
       builder: (providerContext, child) {
-        final index = providerContext.select((BottomBarNotifier state) => state.selectedIndex);
+        final index = providerContext
+            .select((BottomBarNotifier state) => state.selectedIndex);
+
+        final isAuthenticated = providerContext
+            .select((AuthenticationNotifier notifier) => notifier.state.user != null);
+
         return Scaffold(
-          appBar: _routerDelegate.appBar,
+          appBar: _routerDelegate.getAppBar(isAuthenticated: isAuthenticated),
           backgroundColor: Theme.of(context).backgroundColor,
           body: WillPopScope(
             onWillPop: () => _routerDelegate.onWillPop(),
@@ -53,7 +64,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            onTap: (index) => providerContext.read<BottomBarNotifier>().selectedIndex = index,
+            onTap: (index) =>
+                providerContext.read<BottomBarNotifier>().selectedIndex = index,
             items: _routerDelegate.buildBottomNavigationItems(),
             currentIndex: index,
           ),
